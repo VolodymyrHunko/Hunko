@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <title>Title</title>
+    <style>
+        p{color:red};
+    </style>
+</head>
+<body>
+<div class=itemContent>
+
+    <span class="title ng-binding" ng-bind="food.name">Apple butter</span>
+    <span class="description ng-binding" ng-bind="food._servingDesc">1 Tbsp</span>
+
+    <span class="title ng-binding" ng-bind="food.name">Apple(s) fresh</span>
+    <span class="description ng-binding" ng-bind="food._servingDesc">1 medium</span>
+
+    <span class="title ng-binding" ng-bind="food.name">Applesauce, unsweetened</span>
+    <span class="description ng-binding" ng-bind="food._servingDesc">1/2 cup(s)</span>
+
+    <span class="title ng-binding" ng-bind="food.name">Apple(s), dried</span>
+    <span class="description ng-binding" ng-bind="food._servingDesc">1/4 cup(s)</span>
+
+
+    <p class="title ng-binding" ng-bind="food.name">Juice, Cranberry-apple drink</p>
+    <p class="description ng-binding" ng-bind="food._servingDesc">8 fl oz</p>
+
+    <p id="Title" style="color:blue; margin-left:30px;">This is a AJAX example</p>
+
+</div>
+
+<div ng-app="">
+    <p>Enter something here: <input type="text" ng-model="name" ></p>
+    <p ng-bind="name"></p>
+</div>
+
+</body>
+</html>

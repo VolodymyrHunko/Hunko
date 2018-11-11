@@ -1,0 +1,36 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite thread-count="1" verbose="1" name="Suite_1" annotations="JDK" parallel="tests">
+
+    <test name="Test_1">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="TestNGparemetrize"/>
+        </classes>
+    </test>
+
+    <test name="Test_2">
+        <classes>
+            <class name="TestNG_Examples"/>
+            <class name="TestNG_Example2"/>
+        </classes>
+    </test>
+
+    <test name="Test_3">
+        <groups>
+            <run>
+                <include name = "fool" />
+            </run>
+        </groups>
+        <classes>
+            <class name="TestNG_Example2"/>
+        </classes>
+    </test>
+
+
+
+    <listeners>
+        <listener class-name="helpers.listenerSimple"/>
+    </listeners>
+
+
+</suite>

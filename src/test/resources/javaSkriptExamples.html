@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSExamples</title>
+</head>
+
+<body>
+<!--example of manage Arrays-->
+<!--<script type="text/javascript">-->
+		<!--var students = new Array("John", "Ann", "Aaron", "Edwin", "Elizabeth");-->
+		<!--Array.prototype.displayItems=function(){-->
+			<!--for (i=0;i<this.length;i++){-->
+				<!--document.write(this[i] + "<br />");-->
+			<!--}-->
+		<!--}-->
+		<!--document.write("students array<br />");-->
+		<!--students.displayItems();-->
+		<!--document.write("<br />The number of items in students array is " + students.length + "<br />");-->
+		<!--document.write("<br />The SORTED students array<br />");-->
+		<!--students.sort();-->
+		<!--students.displayItems();-->
+		<!--document.write("<br />The REVERSED students array<br />");-->
+		<!--students.reverse();-->
+		<!--students.displayItems();-->
+		<!--document.write("<br />THE students array after REMOVING the LAST item<br />");-->
+		<!--students.pop();-->
+		<!--students.displayItems();-->
+        <!--document.write("<br />THE students array after PUSH<br />");-->
+        <!--students.push("New Stuff");-->
+		<!--students.displayItems();-->
+<!--</script>-->
+
+<!--example of external JS: Create a sample form program that collects the-->
+<!--first name, last name, email, user id, password and confirms password from the user.-->
+<script  src="JSExample.js"></script>
+<table id="table1">
+    <tr>
+        <td>First Name:</td>
+        <td><input type="text" id="first" onkeyup="validate();" /></td>
+        <td><div id="errFirst"></div></td>
+    </tr>
+    <tr>
+        <td>Last Name:</td>
+        <td><input type="text" id="last" onkeyup="validate();"/></td>
+        <td><div id="errLast"></div></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><input type="text" id="email" onkeyup="validate();"/></td>
+        <td><div id="errEmail"></div></td>
+    </tr>
+    <tr>
+        <td>User Id:</td>
+        <td><input type="text" id="uid" onkeyup="validate();"/></td>
+        <td><div id="errUid"></div></td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td><input type="password" id="password" onkeyup="validate();"/></td>
+        <td><div id="errPassword"></div></td>
+    </tr>
+    <tr>
+        <td>Confirm Password:</td>
+        <td><input type="password" id="confirm" onkeyup="validate();"/></td>
+        <td><div id="errConfirm"></div></td>
+    </tr>
+    <tr>
+        <td><input type="button" id="create" value="Create" onclick="validate();finalValidate();"/></td>
+        <td><div id="errFinal"></div></td>
+    </tr>
+</table>
+
+<!--Example of working with JSON files-->
+<p id="demo"></p>
+<script>
+var myObj, myJSON, text, obj;
+
+//Storing data:+++++++++++++++++++++++++++++++++++++
+myObj = { name: "John", age: 31, city: "New York" }; //create object
+myJSON = JSON.stringify(myObj);  //convert object to string
+localStorage.setItem("testJSON", myJSON);  //store string in local
+
+//Retrieving data:----------------------------------
+text = localStorage.getItem("testJSON");  //get string from local
+obj = JSON.parse(text);   //convert string to object
+document.getElementById("demo").innerHTML = obj.name;   //display
+</script>
+
+<!--Example to work with JSON Objects-->
+<script src="jsonExample.js"></script>
+<script >document.write(getAge());</script>
+<script >document.write(getPet(1));</script>
+
+</body>
+</html>
