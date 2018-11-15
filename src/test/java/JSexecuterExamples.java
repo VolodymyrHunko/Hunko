@@ -7,7 +7,7 @@
 
 public class JSexecuterExamples {
     private static WebDriver driver;
-    private String baseURL = "http://www.google.com";
+    private String baseURL = "https://jquery.com/";
 
 
     @Test
@@ -28,8 +28,11 @@ public class JSexecuterExamples {
         //Uncomment each scenario by using Ctrl + Shift + \ (backslash) and find the solution
 
         //to change attribute of elements
-        WebElement element = driver.findElement(By.xpath(".//a[@data-pid = '23']"));
+        WebElement element = driver.findElement(By.cssSelector(".menu-item"));
         js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+
+        //to hide element using JQuery
+        js.executeScript("return $(\".logo\").hide()");
         Reporter.log("Script finished.");
 
         /*//to type text in Selenium WebDriver without using sendKeys() method

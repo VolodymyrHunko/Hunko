@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery</title>
+    <!--tag to connect to JQuery source, must be on header-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<h2>This is a heading</h2>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<p><a href="https://www.w3schools.com" id="w3s">This is a link</a></p>
+<p>Input field: <input type="text" id="test3" value="Mickey Mouse"></p>
+<button id="hide">Click me</button>
+<button id="text">Get the Text</button>
+<button id="value">Set the Value</button>
+
+<!--script to illustrate JQuery -->
+<script>
+    $(document).ready(function(){
+      $("#hide").click(function(){
+        $("p").hide();
+      });
+    });
+</script>
+
+<!--script to get the text of 3d (2+1) 'p' element-->
+<script>
+    $("#text").click(function(){
+        alert($("p").eq(2).text());
+    });
+</script>
+
+<!--script to get attribute of element-->
+<script>
+    alert("URL of link: "+$("a").attr("href"));
+</script>
+
+<!--script to set a value into input-->
+<script>
+    $("#value").click(function(){
+        $("input").val("Hunko");
+    });
+</script>
+
+<!--set CSS to first sibling element-->
+<script>
+    $("h2").next().css("background-color", "yellow");
+</script>
+
+</body>
+</html>
+
