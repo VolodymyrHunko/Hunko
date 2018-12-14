@@ -1,4 +1,4 @@
-import java.io.IOException;
+package coreJava;
 
 public class interfaceExample {
     public static void main(String args[]) throws Exception {

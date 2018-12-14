@@ -1,4 +1,4 @@
-package generatedJavaFormat;
+package ProtoBuffExample;
 
 import java.util.ArrayList;
 import java.util.List;

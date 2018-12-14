@@ -1,6 +1,6 @@
 syntax = "proto3";
 option java_outer_classname = "AlbumProtos";
-option java_package = "generatedJavaFormat";
+option java_package = "generatedGoogleFormatMessages";
 
 message Album {
     string title = 1;

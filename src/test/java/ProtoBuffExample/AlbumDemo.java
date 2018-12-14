@@ -1,6 +1,8 @@
-package generatedJavaFormat;
+package ProtoBuffExample;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import generatedGoogleFormatMessages.AlbumProtos;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +18,7 @@ public class AlbumDemo {
      *
      * @return Instance of Album to be used in demonstration.
      */
-    public Album generateAlbum() {
+    private Album generateAlbum() {
         return new Album.Builder("Songs from the Big Chair", 1985)
                 .artist("Tears For Fears")
                 .artist("Someone else")
@@ -34,7 +36,7 @@ public class AlbumDemo {
     /**
      * For practice use data entered by user
      *
-     * @return
+     * @return new album
      */
     public Album enterCostomiseAlbum(){
         Scanner scan = new Scanner(System.in);
@@ -64,7 +66,7 @@ public class AlbumDemo {
      * of an Album; may be {@code null} if an error is encountered
      * while trying to process the provided binary data.
      */
-    public Album instantiateAlbumFromBinary(final byte[] binaryAlbum) {
+    private Album instantiateAlbumFromBinary(final byte[] binaryAlbum) {
         Album album = null;
         try {
             final AlbumProtos.Album copiedAlbumProtos = AlbumProtos.Album.parseFrom(binaryAlbum);
@@ -92,7 +94,7 @@ public class AlbumDemo {
     public static void main(final String[] arguments) {
         final AlbumDemo instance = new AlbumDemo();
         Album album = instance.generateAlbum();
-        album = instance.enterCostomiseAlbum();
+        //album = instance.enterCostomiseAlbum();
         final AlbumProtos.Album albumMessage
                 = AlbumProtos.Album.newBuilder()
                 .setTitle(album.getTitle())
@@ -103,6 +105,6 @@ public class AlbumDemo {
         final byte[] binaryAlbum = albumMessage.toByteArray();
         final Album copiedAlbum = instance.instantiateAlbumFromBinary(binaryAlbum);
         out.println("BEFORE Album's hash code (" + System.identityHashCode(album) + "): " + album);
-        out.println(" AFTER Album's hash code (" + System.identityHashCode(copiedAlbum) + "): " + String.valueOf(copiedAlbum));
+        out.println(" AFTER Album's hash code (" + System.identityHashCode(copiedAlbum) + "): " + copiedAlbum);
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class practice {
     public static void main(String[] args){
+        System.out.println(Arrays.toString(args));
         List<String> list = new ArrayList<>();
         list.add("Vova");
         list.add("Lena");

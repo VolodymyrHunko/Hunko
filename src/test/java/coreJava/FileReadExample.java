@@ -1,3 +1,5 @@
+package coreJava;
+
 import java.io.*;
 
 public class FileReadExample {

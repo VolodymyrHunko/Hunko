@@ -1,3 +1,5 @@
+package coreJava;
+
 interface oneInterface{
     void method_A(int a);
     void method_B();
