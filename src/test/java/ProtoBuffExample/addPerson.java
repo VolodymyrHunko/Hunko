@@ -1,9 +1,9 @@
 package ProtoBuffExample;
 
-import generatedGoogleFormatMessages.AddressBookProtos;
-import generatedGoogleFormatMessages.AddressBookProtos.AddressBook;
-import generatedGoogleFormatMessages.AddressBookProtos.Person;
-import generatedGoogleFormatMessages.AddressBookProtos.Email;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.AddressBook;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.Person;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.Email;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.EmailType;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -11,10 +11,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.util.Arrays;
 
 public class addPerson {
+
+    private static int maxNumber; //to store the size of existing array
 
     /**
      * Main class - reads the entire address book from stored file
@@ -33,13 +33,16 @@ public class addPerson {
 
         //read the existing file
         try{
+            System.out.println("Reading the file...");
             myAddressBook.mergeFrom(new FileInputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt"));//args[0]));
         }catch (FileNotFoundException e){
-            System.out.println(args[0] + " =>  No file exists, creating a new one...");
+            System.out.println(args[0] + " =>  No file exists, create a new one...");
         }
 
+        //get the number of existing persons
+        maxNumber = myAddressBook.getEmployeesList().size()+1;
         //add a new address
-        myAddressBook.addEmployees(PromptForAddress(new BufferedReader(new InputStreamReader(System.in)),System.out));
+        myAddressBook.addEmployees(PromptForAddress(new BufferedReader(new InputStreamReader(System.in))));
 
         //write the updated object to file
         FileOutputStream output = new FileOutputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt");//args[0]));
@@ -51,11 +54,10 @@ public class addPerson {
      * static class to fill up the Person message based on user input
      *
      * @param input read the user's input
-     * @param output System.out.println
      * @return instance of Person class
      * @throws IOException check IO
      */
-   static Person PromptForAddress(BufferedReader input, PrintStream output) throws IOException{
+   private static Person PromptForAddress(BufferedReader input) throws IOException{
        //create a new instance of Person class
        Person.Builder nextPerson = Person.newBuilder();
        System.out.println("Enter Person's SSN:");
@@ -76,13 +78,10 @@ public class addPerson {
            nextEmail.setEmails(newEmail);
            System.out.println("Enter type as 'PERSONAL', 'WORK', or leave blank (by default it is 'PERSONAL')");
            String emailType = input.readLine();
-           switch (emailType.toUpperCase()){
-               case "WORK":
-                   nextEmail.setEmailType(AddressBookProtos.EmailType.WORK);
-                   break;
-               default:
-                   nextEmail.setEmailType(AddressBookProtos.EmailType.PERSONAL);
-                   break;
+           if ("WORK".equals(emailType.toUpperCase())) {
+               nextEmail.setEmailType(EmailType.WORK);
+           } else {
+               nextEmail.setEmailType(EmailType.PERSONAL);
            }
            nextPerson.addEmail(nextEmail);
        }
@@ -111,6 +110,9 @@ public class addPerson {
            }
            nextPerson.addPhones(nextPhone);
        }
+       //creating a new id from max number was assigned before
+       System.out.println("Setting the current counter of persons: "+maxNumber);
+       nextPerson.setLastId(maxNumber);
         // build a new object
        return nextPerson.build();
    }

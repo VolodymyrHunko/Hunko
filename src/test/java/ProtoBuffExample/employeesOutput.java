@@ -1,10 +1,11 @@
 package ProtoBuffExample;
 
-import generatedGoogleFormatMessages.AddressBookProtos.AddressBook;
-import generatedGoogleFormatMessages.AddressBookProtos.Person;
-import generatedGoogleFormatMessages.AddressBookProtos.Email;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.AddressBook;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.Person;
+import generatedGoogleFormatMessages.AddressBookProtosUpdated.Email;
 
 import java.io.FileInputStream;
+import java.util.Scanner;
 
 public class employeesOutput {
 
@@ -23,6 +24,7 @@ public class employeesOutput {
                 "/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt"));//args[0]));
         //print info
         printBoook(addressBook);
+        printPersonInfo(addressBook);
     }
 
     /**
@@ -30,20 +32,20 @@ public class employeesOutput {
      *
      * @param addressBook instance of adressBook class
      */
-    static  void printBoook(AddressBook addressBook){
+    private static  void printBoook(AddressBook addressBook){
         for(Person somePerson : addressBook.getEmployeesList()){
-            System.out.println("Person ID: "+ somePerson.getId());
-            System.out.println("First Name: "+somePerson.getFirstName());
-            System.out.println("Last name: " + somePerson.getLasName());
+            System.out.format("%-20s:%s","Person ID",somePerson.getId()+"\n");
+            System.out.format("%-20s:%s","First Name",somePerson.getFirstName()+"\n");
+            System.out.format("%-20s:%s","Last name",somePerson.getLasName()+"\n");
             //loop all emails
             for(Email oneEmail : somePerson.getEmailList()){
                 String correctType = String.valueOf(oneEmail.getEmailType());
                 switch (correctType.toUpperCase()){
                     case "PERSONAL":
-                        System.out.print("Personal e-Mail: ");
+                        System.out.format("%-20s:","Personal e-Mail");
                         break;
                     case "WORK":
-                        System.out.print("Work e-Mail: ");
+                        System.out.format("%-20s:","Work e-Mail: ");
                         break;
                     default:
                         System.out.print("No e-Mail ");
@@ -55,13 +57,13 @@ public class employeesOutput {
                 String correctPhoneType = String.valueOf(oneNumber.getPhoneType());
                 switch (correctPhoneType.toUpperCase()){
                     case "MOBILE" :
-                        System.out.print("Mobile #: ");
+                        System.out.format("%-20s:","Mobile #");
                         break;
                     case "HOME":
-                        System.out.print("Home #: ");
+                        System.out.format("%-20s:","Home #");
                         break;
                     case "WORK":
-                        System.out.print("Work #: ");
+                        System.out.format("%-20s:","Work #");
                         break;
                     default:
                         System.out.println("No phone #");
@@ -69,8 +71,73 @@ public class employeesOutput {
                 }
                 System.out.println(oneNumber.getPhoneNumber());
             }
-
+            if(somePerson.hasLastId()) {
+                System.out.format("%-20s:%s", "Order of input", somePerson.getLastId() + "\n");
+            }else{
+                System.out.format("%-20s:%s", "Order of input","Order was not assigned!\n");
+            }
+            System.out.println("\n");
         }
 
+    }
+
+    /**
+     * print selected fields person's info
+     */
+    private static void printPersonInfo (AddressBook addressBook){
+        System.out.println("What user's SNN would you like to print?");
+        Scanner scan = new Scanner(System.in);
+        int input = Integer.parseInt(scan.nextLine());
+        int count = addressBook.getEmployeesList().size();
+        for(Person somePerson : addressBook.getEmployeesList()){
+            if(somePerson.getId() == input){
+                System.out.format("%-20s:%s","Person ID",somePerson.getId()+"\n");
+                System.out.format("%-20s:%s","First Name",somePerson.getFirstName()+"\n");
+                System.out.format("%-20s:%s","Last name",somePerson.getLasName()+"\n");
+                //loop all emails
+                for(Email oneEmail : somePerson.getEmailList()){
+                    String correctType = String.valueOf(oneEmail.getEmailType());
+                    switch (correctType.toUpperCase()){
+                        case "PERSONAL":
+                            System.out.format("%-20s:","Personal e-Mail");
+                            break;
+                        case "WORK":
+                            System.out.format("%-20s:","Work e-Mail: ");
+                            break;
+                        default:
+                            System.out.print("No e-Mail ");
+                    }
+                    System.out.println(oneEmail.getEmails());
+                }
+                //loop all phones
+                for(Person.PhoneNumber oneNumber : somePerson.getPhonesList()){
+                    String correctPhoneType = String.valueOf(oneNumber.getPhoneType());
+                    switch (correctPhoneType.toUpperCase()){
+                        case "MOBILE" :
+                            System.out.format("%-20s:","Mobile #");
+                            break;
+                        case "HOME":
+                            System.out.format("%-20s:","Home #");
+                            break;
+                        case "WORK":
+                            System.out.format("%-20s:","Work #");
+                            break;
+                        default:
+                            System.out.println("No phone #");
+                            break;
+                    }
+                    System.out.println(oneNumber.getPhoneNumber());
+                }
+                if(somePerson.hasLastId()) {
+                    System.out.format("%-20s:%s", "Order of input", somePerson.getLastId() + "\n");
+                }else{
+                    System.out.format("%-20s:%s", "Order of input","Order was not assigned!\n");
+                }
+                break;
+            }
+        }
+        if(addressBook.getEmployeesList().get(count-1).getId() != input){
+            System.out.print("No user found with ID:"+input);
+        }
     }
 }

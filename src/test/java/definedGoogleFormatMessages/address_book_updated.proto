@@ -1,0 +1,45 @@
+syntax = "proto2";
+package  generatedGoogleFormatMessages;
+
+option java_outer_classname = "AddressBookProtosUpdated";
+option java_package = "generatedGoogleFormatMessages";
+
+//main class to create a list of objects 'Person'
+message AddressBook{
+    repeated Person employees_ = 1;
+}
+
+//class 'Person' has 6 fields: -firstName, -lastName, -id, -email, -phones, -lastID
+message Person {
+    required string first_Name = 3;
+    required string las_Name = 2;
+    optional int32 id_ = 1;
+
+    //external class can renders inside or outside main any other class
+    message PhoneNumber {
+        optional string phone_Number = 1;
+        optional PhoneType phone_Type = 2 ;
+        //define the values of enum, can be inside or outside class
+        enum PhoneType {
+            MOBILE = 0; //value = 0 always is default value in 'proto3'
+            HOME = 1;
+            WORK = 2;
+        }
+    }
+
+    repeated Email email_ = 5;
+    repeated PhoneNumber phones_ = 4;
+    optional int32 last_id = 6 [default = 1];
+}
+
+//example of declaration of external class outside of class where it resides
+message Email {
+    optional string emails_ = 3;
+    optional EmailType email_Type = 4;
+}
+//example of declaration of external enum class outside of class where it is resides
+enum EmailType {
+    PERSONAL = 0;
+    WORK = 2;
+}
+
