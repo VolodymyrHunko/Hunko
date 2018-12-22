@@ -1,13 +1,18 @@
 package coreJava;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class FileReadExample {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws FileNotFoundException {
+        /*
+         *read the file by using BufferedInputStream ()
+         */
         //Specify the path of the file here
-        File file = new File("src\\test\\resources\\myFile.txt");
-        BufferedInputStream bis = null;
-        FileInputStream fis = null;
+        File file = new File("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/myFile.txt");
+        BufferedInputStream bis;
+        FileInputStream fis;
         try {
             //FileInputStream to read the file
             fis = new FileInputStream(file);
@@ -30,12 +35,15 @@ public class FileReadExample {
         catch(IOException ioe) {
             System.out.println("I/O Exception: " + ioe);
         }
-        //read the file by using Buffer Reader
-        BufferedReader br = null;
+
+        /*
+         *read the file by using Buffer Reader
+         */
+        BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader("src\\test\\resources\\myFile2.txt"));
+            br = new BufferedReader(new FileReader("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/myFile.txt"));
             //One way of reading the file
-            System.out.println("Reading the file using readLine() method:");
+            System.out.println("\nReading the file using readLine() method:");
             String contentLine = br.readLine();
             while (contentLine != null) {
                 System.out.println(contentLine);
@@ -44,6 +52,13 @@ public class FileReadExample {
             br.close();
         }catch (IOException ioe) {
             System.out.println("I/O Exception: " + ioe);
+        }
+
+        //read the file using Scanner() start from Java 1.5
+        Scanner scan = new Scanner(file);
+        int line = 1;
+        while (scan.hasNext()){
+            System.out.println("\n"+line++ +": "+scan.nextLine());
         }
     }
 }

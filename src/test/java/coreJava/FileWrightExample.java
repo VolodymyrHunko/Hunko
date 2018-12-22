@@ -4,26 +4,27 @@ import java.io.*;
 
 public class FileWrightExample {
     public static void main(String[] args) {
-        FileOutputStream fos = null;
-        BufferedWriter bw = null;
+        FileOutputStream fos;
+        BufferedWriter bw;
         File file;
         File file2;
         String myContent = "This is my Data which needs to be written into the file";
         try {
             //Specify the file path here
-            file = new File("src\\test\\resources\\myFile.txt");
-            file2 = new File("src\\test\\resources\\myFile2.txt");
+            file = new File("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/myFile.txt");
+            file2 = new File("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/myFile2.txt");
 
             /* This logic will check whether the file
              * exists or not. If the file is not found
              * at the specified location it would create
-             * a new file*/
+             * a new file
+             * */
             if (!file.exists()) {
                 file.createNewFile();
             }
             /*
              * first method by using File Output Stream
-             *String content cannot be directly written into
+             * String content cannot be directly written into
              * a file. It needs to be converted into bytes
              */
             fos = new FileOutputStream(file);
@@ -32,12 +33,14 @@ public class FileWrightExample {
             fos.flush();
             fos.close();
             System.out.println("File Written Successfully");
+
             //Here true is to append the content to file
             FileWriter fw1 = new FileWriter(file,true);
             BufferedWriter bw1 = new BufferedWriter(fw1);
             PrintWriter pw = new PrintWriter(bw1);
             //This will add a new line to the file content
-            pw.println("");
+            pw.println("\n");
+
             /* Below three statements would add three
              * mentioned Strings to the file in new lines.
              */
