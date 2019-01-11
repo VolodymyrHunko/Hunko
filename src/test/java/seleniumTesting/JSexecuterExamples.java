@@ -1,8 +1,10 @@
 package seleniumTesting;
 
+import helpers.eventHandler;
 import org.openqa.selenium.*;
-        import org.openqa.selenium.chrome.ChromeDriver;
-        import org.testng.Reporter;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.Reporter;
         import org.testng.annotations.Test;
 
 public class JSexecuterExamples {
@@ -12,8 +14,16 @@ public class JSexecuterExamples {
 
     @Test
     public void main() throws InterruptedException {
-        driver = new ChromeDriver();
-        driver.get(baseURL);
+        System.setProperty("webdriver.firefox.logfile","TestLog.txt");
+        driver = new FirefoxDriver();
+        //driver.get(baseURL);
+        //to implement event listener
+        EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+        eventHandler handler = new eventHandler();
+        eventDriver.register(handler);
+        // driver.get("http://toolsqa.wpengine.com/automation-practice-switch-windows/");
+        // driver.get("https://jquery.com/");
+        eventDriver.get(baseURL);
 
 
         /*
@@ -33,7 +43,7 @@ public class JSexecuterExamples {
 
         //to hide element using JQuery
         js.executeScript("return $(\".logo\").hide()");
-        Reporter.log("Script finished.");
+        System.out.println("Script finished.");
 
         /*//to type text in Selenium WebDriver without using sendKeys() method
         js.executeScript("document.getElementById('q'),value='vhun0001@gmail.com';");
@@ -75,7 +85,10 @@ public class JSexecuterExamples {
 		//Vertical scroll - down by 50  pixels
 		js.executeScript("window.scrollBy(0,50)");
 		// for scrolling till the bottom of the page we can use the code like
-		//js.executeScript("window.scrollBy(0,document.body.scrollHeight)");*/
+		//js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+		//to scroll until top of element will visible (true)
+		js.executeScript("document.getElementById('text-8').scrolIntoView(true)");
+		*/
 
 		/* // to click on a SubMenu which is only visible on mouse hover on Menu?
 		//Hover on Automation Menu on the MenuBar
@@ -85,6 +98,6 @@ public class JSexecuterExamples {
 	    //Navigate to new Page
 	    js.executeScript("window.location = 'https://www.softwaretestingmaterial.com");*/
 
-        //driver.quit();
+        driver.quit();
     }
 }

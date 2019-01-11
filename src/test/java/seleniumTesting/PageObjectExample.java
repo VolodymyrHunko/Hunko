@@ -1,11 +1,14 @@
 package seleniumTesting;
 
+import helpers.eventHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
@@ -21,12 +24,16 @@ public class PageObjectExample {
 
         @BeforeTest
         public void launchBrowser() {
-            driver = new ChromeDriver();
+            driver = new FirefoxDriver();
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
-            String baseURL = "file:///C://Users//vhunko047//IdeaProjects//Hunko//src//test//resources//sampleHTML.html";
-            driver.get(baseURL);
+            String baseURL = "file:/home/volodymyr/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
+            //String baseURL = "file:///C://Users//vhunko047//IdeaProjects//Hunko//src//test//resources//sampleHTML.html";
+            EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+            eventHandler handler = new eventHandler();
+            eventDriver.register(handler);
+            eventDriver.get(baseURL);
         }
 
         /**
@@ -53,6 +60,7 @@ public class PageObjectExample {
          */
         @Test (priority=2, enabled = true)
         public void printMap() {
+
             recipePage.printRecipe(driver);
         }
 

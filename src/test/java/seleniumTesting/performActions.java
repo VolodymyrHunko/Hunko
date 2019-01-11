@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class performActions {
@@ -11,7 +12,7 @@ public class performActions {
     public static void main(String[] args) throws InterruptedException {
         String[] baseUrl = {"http://newtours.demoaut.com/",
                 "file:\\C:\\Users\\vhunko047\\IdeaProjects\\Hunko\\src\\test\\resources\\sampleHTML.html"};
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.get(baseUrl[1]);
         Thread.sleep(500);
 

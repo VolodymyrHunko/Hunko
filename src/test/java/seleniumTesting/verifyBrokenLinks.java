@@ -1,10 +1,22 @@
 package seleniumTesting;
 
+import helpers.eventHandler;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.ProfilesIni;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -12,22 +24,51 @@ import java.util.List;
  */
 public class verifyBrokenLinks {
 
-    public static void  main(String [] args) throws InterruptedException{
-        WebDriver driver = new FirefoxDriver();
-        driver.get("https://jquery.com/");
+    public static void  main(String [] args) throws IOException {
+        WebDriverManager.firefoxdriver().setup();
+        FirefoxProfile profile = new FirefoxProfile();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setCapability("automation", profile);
+        WebDriver driver = new FirefoxDriver(options);
+        //to implement event listener
+        EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+        eventHandler handler = new eventHandler();
+        eventDriver.register(handler);
+       // driver.get("http://toolsqa.wpengine.com/automation-practice-switch-windows/");
+       // driver.get("https://jquery.com/");
+        eventDriver.get("https://jquery.com/");
+
+        List<WebElement> allLinks = findAllLinks(driver);
+        System.out.println("Total number of links: "+allLinks.size());
+        for(WebElement element : allLinks){
+            if(!getBrokenLinks(new URL(element.getAttribute("href"))).equals("OK")) {
+                System.out.println("URL: "+ element.getAttribute("href")+" is broken, response is:"+
+                        getBrokenLinks(new URL(element.getAttribute("href"))));
+            }
+        }
         driver.close();
-        //driver.get("http://localhost:63342/Hunko/JQueryExamples.html");
     }
 
     //first - collect all links with attribute href
-    public static List findAllLinks(WebDriver driver){
-
-        return null;
+    private static List findAllLinks(WebDriver driver){
+        List <WebElement> elements = driver.findElements(By.tagName("a"));
+        elements.addAll(driver.findElements(By.tagName("img")));
+        List <WebElement>fullList = new ArrayList<>();
+        for(WebElement link : elements){
+            if(link.getAttribute("href") != null){
+                fullList.add(link);
+            }
+        }
+        return fullList;
     }
 
     //second - make HTTP request for all collected links
-    public static String getBrokenLinks(URL url){
-
-        return null;
+    private static String getBrokenLinks(URL url) throws IOException {
+        String response;
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.connect();
+        response = connection.getResponseMessage();
+        connection.disconnect();
+        return response;
     }
 }

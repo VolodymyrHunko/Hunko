@@ -1,15 +1,18 @@
 package seleniumTesting;
 
+import helpers.eventHandler;
 import helpers.listenerSimple;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
-    @Listeners(listenerSimple.class)//include this annotation to get listener's output
+    @Listeners({listenerSimple.class})//include this annotation to get listener's output
     public class listenerExample {
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver = new FirefoxDriver();
 
     //TC should to pass
     @Test
