@@ -21,7 +21,7 @@ public class employeesOutput {
 
         //read the file if it is exists
         AddressBook addressBook = AddressBook.parseFrom(new FileInputStream(
-                "/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt"));//args[0]));
+                "src/test/resources/Address_Book_File.txt"));//args[0]));
         //print info
         printBoook(addressBook);
         printPersonInfo(addressBook);

@@ -42,7 +42,7 @@ public class JSexecuterExamples {
         js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
 
         //to hide element using JQuery
-        js.executeScript("return $(\".logo\").hide()");
+//        js.executeScript("return $(\".logo\").hide()");
         System.out.println("Script finished.");
 
         /*//to type text in Selenium WebDriver without using sendKeys() method

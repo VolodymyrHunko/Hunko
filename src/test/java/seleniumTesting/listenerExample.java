@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
     @Listeners({listenerSimple.class})//include this annotation to get listener's output
     public class listenerExample {
-    WebDriver driver = new FirefoxDriver();
+    WebDriver driver = new ChromeDriver();
 
     //TC should to pass
     @Test

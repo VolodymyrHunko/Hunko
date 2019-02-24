@@ -34,7 +34,7 @@ public class addPerson {
         //read the existing file
         try{
             System.out.println("Reading the file...");
-            myAddressBook.mergeFrom(new FileInputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt"));//args[0]));
+            myAddressBook.mergeFrom(new FileInputStream("src/test/resources/Address_Book_File.txt"));//args[0]));
         }catch (FileNotFoundException e){
             System.out.println(args[0] + " =>  No file exists, create a new one...");
         }
@@ -45,7 +45,7 @@ public class addPerson {
         myAddressBook.addEmployees(PromptForAddress(new BufferedReader(new InputStreamReader(System.in))));
 
         //write the updated object to file
-        FileOutputStream output = new FileOutputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/Address_Book_File.txt");//args[0]));
+        FileOutputStream output = new FileOutputStream("src/test/resources/Address_Book_File.txt");//args[0]));
         myAddressBook.build().writeTo(output);
         output.close();
     }
