@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 public class practice {
     public static void main(String[] args){
@@ -22,7 +19,9 @@ public class practice {
 //            }
 //        }
 
-
+        ImmutableList<String> il = ImmutableList.of("sssss");
+        String a = il.get(0);
+        System.out.println(a);
 
     }
 }

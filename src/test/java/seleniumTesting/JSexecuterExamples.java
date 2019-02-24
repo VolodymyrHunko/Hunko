@@ -1,11 +1,13 @@
 package seleniumTesting;
 
 import helpers.eventHandler;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.Reporter;
-        import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 
 public class JSexecuterExamples {
     private static WebDriver driver;
@@ -44,6 +46,7 @@ public class JSexecuterExamples {
         //to hide element using JQuery
 //        js.executeScript("return $(\".logo\").hide()");
         System.out.println("Script finished.");
+
 
         /*//to type text in Selenium WebDriver without using sendKeys() method
         js.executeScript("document.getElementById('q'),value='vhun0001@gmail.com';");
