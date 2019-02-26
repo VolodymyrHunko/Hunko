@@ -1,14 +1,15 @@
 package AutoValue;
 
+import com.google.auto.value.AutoValue;
 
 @AutoValue
 abstract class Animal {
-    abstract String name();
-    abstract int legs();
+    abstract String getName();
+    abstract int getLegs();
 
-    static Animal create (String name, int legs){
-
+    static Animal create(String name, int legs) {
         return new AutoValue_Animal(name, legs);
     }
-
 }
+
+
