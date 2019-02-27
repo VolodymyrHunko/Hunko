@@ -79,10 +79,11 @@ public class abstractClassExample {
         System.out.println("Hashcode: "+foo.hashCode()+"\nString passed: "+ foo.getQ());
         System.out.println("Hashcode: "+foo2.hashCode()+"\nString passed: "+ foo2.getQ());
         System.out.println(foo.equals(foo2));
-        Student st = new Student("some object");
+        Student <String> st = new Student<>("some object");
+        Student <Integer> st2 = new Student<>(33);
         st.method_A(44);
         st.method_C(111);
-        System.out.println(st.a +"..."+ st.b +" -> "+ st.c);
+        System.out.println(st.a +"..."+ st.b +" -> "+ st.c+"***"+st2.c);
     }
 }
 
