@@ -1,8 +1,4 @@
-import com.google.common.collect.ImmutableList;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class practice {
@@ -22,6 +18,8 @@ public class practice {
         System.out.println(list2.equals(list));
         System.out.println(list.hashCode()+"..."+list2.hashCode());
         System.out.println(list.getClass()+"..."+list2.getClass());
+
+
 
 //        for(int a=1; a<list.size();a++) {
 //            for (int i = 0; i < list.size() - 1; i++) {

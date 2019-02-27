@@ -26,5 +26,6 @@ public class AutoValueTest {
                 .build();
         System.out.println("GRN == RUB : "+grivna.equals(rubl));
         System.out.println(grivna.toString());
+
     }
 }

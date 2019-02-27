@@ -22,7 +22,7 @@ abstract class oneAbstractClass implements oneInterface{ //abstract class does n
         System.out.println("Method B: "+z);
     }
 
-    abstract void method_F();
+    abstract int method_F();
 
     String getQ() {
         return q;
@@ -34,14 +34,16 @@ abstract class oneAbstractClass implements oneInterface{ //abstract class does n
 }
 
 class oneRealClass extends oneAbstractClass{
+    int www;
     oneRealClass(int z, String s) {//must implement constructor if no default constructor in supper class
         super(z, s);
+        this.www = z;
     }
 
     //must implement all abstract methods except 'method_B' was implemented in abstract class
     @Override
-    public void method_F() {
-
+    public int method_F() {
+         return www;
     }
 
     @Override
@@ -77,5 +79,40 @@ public class abstractClassExample {
         System.out.println("Hashcode: "+foo.hashCode()+"\nString passed: "+ foo.getQ());
         System.out.println("Hashcode: "+foo2.hashCode()+"\nString passed: "+ foo2.getQ());
         System.out.println(foo.equals(foo2));
+        Student st = new Student("some object");
+        st.method_A(44);
+        st.method_C(111);
+        System.out.println(st.a +"..."+ st.b +" -> "+ st.c);
+    }
+}
+
+//class implements Generic parameter <T>
+class Student <T> implements oneInterface{
+    int a;
+    long b;
+    T c;
+    Student(T object){ //constructor accept any kind of objects <T>
+        this.c=object;
+    }
+
+    @Override
+    public void method_A(int a) {
+       this.a = a;
+    }
+
+    @Override
+    public void method_B() {
+
+        System.out.println();
+    }
+
+    @Override
+    public void method_C(long b) {
+        this.b = b;
+    }
+
+    @Override
+    public void method_D() {
+
     }
 }
