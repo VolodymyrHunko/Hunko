@@ -4,28 +4,27 @@ import org.testng.annotations.Test;
 
 public class EnumExample {
 
-    enum parameterINT{  //enum defined
-        FIRST(10),
-        SECOND(1),
-        THERD(44),
-        FORTH(999);
+    enum parameterINT{  //enum defined with parameters (can avoid it)
+        PENNY(1),
+        NICKLE(5),
+        DIME(10),
+        QUOTER(25);
 
-        int argument; //var for keeping value of argument
+        private int argument; //var for keeping value of argument
 
         parameterINT(int argument){ //constructor to initialize var argument by passing constant
             this.argument = argument;
         }
 
-        int getArgument(){ //method to return argument
+        public int getArgument(){ //method to return argument
             return argument;
         }
     }
 
     @Test
-    public void testEnum() {
-        EnumExample.parameterINT param;
-        System.out.println("Parameter can be send as argument: "+parameterINT.FIRST.getArgument());
-        parameterINT ar = parameterINT.valueOf("SECOND");
+    void testEnum() {
+        System.out.println("Parameter can be send as argument: "+parameterINT.PENNY.getArgument());
+        parameterINT ar = parameterINT.valueOf("DIME");
         System.out.println("Value can be send as argument: "+ ar);
     }
 }
