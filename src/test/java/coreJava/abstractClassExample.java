@@ -18,6 +18,8 @@ abstract class oneAbstractClass implements oneInterface{ //abstract class does n
         this.q = q;
     }
 
+    oneAbstractClass(){} //default constructor
+
     public void method_B(){
         System.out.println("Method B: "+z);
     }
@@ -34,10 +36,14 @@ abstract class oneAbstractClass implements oneInterface{ //abstract class does n
 }
 
 class oneRealClass extends oneAbstractClass{
-    int www;
+    private int www;
     oneRealClass(int z, String s) {//must implement constructor if no default constructor in supper class
         super(z, s);
         this.www = z;
+    }
+
+    <T extends Number> oneRealClass(T setNumber){ //implement Generic constructor
+        www=setNumber.intValue();
     }
 
     //must implement all abstract methods except 'method_B' was implemented in abstract class
@@ -74,10 +80,12 @@ public class abstractClassExample {
     public static void main(String [] args){
         oneRealClass foo = new oneRealClass(7, "Some string");
         oneAbstractClass foo2 = new oneRealClass(7, "Some string");
+        oneAbstractClass foo3 = new oneRealClass(7.5); //call generic constructor
         foo.method_B();
         foo.method_A(6);
-        System.out.println("Hashcode: "+foo.hashCode()+"\nString passed: "+ foo.getQ());
-        System.out.println("Hashcode: "+foo2.hashCode()+"\nString passed: "+ foo2.getQ());
+        System.out.println("Hashcode foo: "+foo.hashCode()+"\nString passed: "+ foo.getQ());
+        System.out.println("Hashcode foo2: "+foo2.hashCode()+"\nString passed: "+ foo2.getQ());
+        System.out.println("Hashcode foo3: "+foo3.hashCode()+" Generic passed: "+ foo3.method_F());
         System.out.println(foo.equals(foo2));
         Student <String> st = new Student<>("some object");
         Student <Integer> st2 = new Student<>(33);
@@ -122,6 +130,6 @@ class Student <T> implements oneInterface{
     //method implements Generic
     <T1, T2> void methodGeneric (T1 t1, T2 t2){
         System.out.println(t1.getClass().getName()+ " -> "+ t1);
-        System.out.println(t2.getClass().getName()+ " -> "+ t2.toString());
+        System.out.println(t2.getClass().getName()+ " -> "+ t2);
     }
 }
