@@ -83,7 +83,9 @@ public class abstractClassExample {
         Student <Integer> st2 = new Student<>(33);
         st.method_A(44);
         st.method_C(111);
-        System.out.println(st.a +"..."+ st.b +" -> "+ st.c+"***"+st2.c);
+        System.out.println(st.a +"..."+ st.b +" -> "+ st.c+"***");
+        st2.method_B();
+        st2.methodGeneric("Some String", foo);
     }
 }
 
@@ -104,7 +106,7 @@ class Student <T> implements oneInterface{
     @Override
     public void method_B() {
 
-        System.out.println();
+        System.out.println(c);
     }
 
     @Override
@@ -115,5 +117,11 @@ class Student <T> implements oneInterface{
     @Override
     public void method_D() {
 
+    }
+
+    //method implements Generic
+    <T1, T2> void methodGeneric (T1 t1, T2 t2){
+        System.out.println(t1.getClass().getName()+ " -> "+ t1);
+        System.out.println(t2.getClass().getName()+ " -> "+ t2.toString());
     }
 }
