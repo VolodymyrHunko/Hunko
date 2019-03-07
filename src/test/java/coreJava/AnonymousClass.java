@@ -1,16 +1,20 @@
 package coreJava;
 
 public class AnonymousClass { //does not implement interface
+    private static String str = "Main class string";
+    //it is a regular implementation of external class as member class (for comparison)
+    private B abc = new B(111);
     public static void main (String [] args){
         // anonymous class from A interface
         // same as local class, but without name (uses the name of parent call)
         // skipp an implementation of interface
         // only ONE interface can implement (real class can multiply)
+        // has access to outer var
         // can be replaced with lambda
         A a = new A() {
             @Override
             public void output() { //must override all methods from interface
-                System.out.println("anonymous of A class");
+                System.out.println("anonymous of A class + "+ str);
             }
         };
         a.output();
@@ -18,14 +22,17 @@ public class AnonymousClass { //does not implement interface
         // anonymous class from B real class
         // CANNOT have constructor (no name)
         B b = new B(333){
-            int z = 123; // added some extra functionality
+            // added some extra functionality, CANNOT be static!!!
+            // but CAN be constant (static final)
+            final int z = 123;
             void output(){ // override the method
                 System.out.println("output of anonymous class: "+z+", from B class:"+v);
             }
         };
         b.output() ;
 
-        //it is local inner class!!!
+        //it is a regular implementation of external class as local class
+        // public, private or protected modifiers are prohibited (for anonymous too)
         B bb = new B(44);
         bb.output();
     }
