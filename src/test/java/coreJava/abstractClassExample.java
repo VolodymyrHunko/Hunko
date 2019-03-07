@@ -121,6 +121,28 @@ class Student <T> implements oneInterface{
         System.out.println(t2.getClass().getName()+ " -> "+ t2);
     }
 
+    oneInterface oI = new oneInterface() { //anonymous inner class to implement interface
+        @Override
+        public void method_A(int a) {
+
+        }
+
+        @Override
+        public <T> void method_B() {
+
+        }
+
+        @Override
+        public void method_C(long b) {
+
+        }
+
+        @Override
+        public void method_D(Integer... parameters) {
+
+        }
+    };
+
 }
 
 
@@ -151,6 +173,7 @@ public class abstractClassExample {
         System.out.println("Student2 class: "+st2.a +"..."+ st2.b +" -> "+ st2.c); //a & b did not initialize
         st2.methodGeneric("Some String", foo); //pass String and object
         st2.method_B(); //return sub method (override)
+        st2.oI.method_A(33); //call inner class
 
     }
 }
