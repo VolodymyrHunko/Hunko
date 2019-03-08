@@ -11,20 +11,21 @@ public class innerClassExample {
     private int[] arrayOfInts = new int[SIZE];
 
     //constructor to initializing
-    public innerClassExample() {
+    private innerClassExample() {
         // fill the array with ascending integer values
         for (int i = 0; i < SIZE; i++) {
             arrayOfInts[i] = i;
         }
     }
 
-    public void printEven() {
-        // Print out values of even indices of the array
+    private void printEven() {
+        // Print out values of even inside of the array
+        // example of local inner class declared externally
         EvenIterator iterator = this.new EvenIterator();
         while (iterator.hasNext()) {
             System.out.print(iterator.next() + " ");
         }
-        System.out.println();
+        System.out.println("end of method");
     }
 
     private void localClassExample(int b){ //method of outer class
@@ -43,6 +44,7 @@ public class innerClassExample {
 
 
     // Inner class implements the Iterator<E> interface,
+    // unlike outer class, inner class can be private!
     private class EvenIterator implements Iterator {
         // Start stepping through the array from the beginning
         private int nextIndex = 0;
@@ -76,4 +78,41 @@ public class innerClassExample {
 
     }
 
+    @Test
+    void testOneMoreOuterClass(){
+        oneMoreOuterClass omoc = new oneMoreOuterClass();
+        System.out.println(omoc.stOut);
+
+        oneMoreOuterClass
+                .innerClass_1 in1 = omoc.new innerClass_1();
+        System.out.println(in1.stInner_1);
+
+        oneMoreOuterClass
+                .innerClass_1
+                .innerClass_2 in2 = in1.new innerClass_2();
+        System.out.println(in2.stInner_2);
+
+        oneMoreOuterClass
+                .innerClass_1
+                .innerClass_2
+                .innerClass_3 in3 = in2.new innerClass_3();
+        System.out.println(in3.stInner_3);
+
+        System.out.println(in3.stInner_3 + in2.stInner_2 + in1.stInner_1 + omoc.stOut);
+    }
+
+}
+
+class oneMoreOuterClass{
+    String stOut = "Outer class";
+    //inner class
+    class innerClass_1 {
+        String stInner_1 = "Inner class 1";
+        class innerClass_2 {
+            String stInner_2 = "Inner class 2";
+            class innerClass_3 {
+                String stInner_3 = "Inner class 3";
+            }
+        }
+    }
 }

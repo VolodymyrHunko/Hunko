@@ -1,39 +1,31 @@
-import java.util.ArrayList;
-import java.util.List;
+import org.testng.annotations.Test;
 
 public class practice {
-    public static void main(String[] args){
-//        System.out.println(Arrays.toString(args));
-        List<String> list = new ArrayList<>();
-        list.add("Vova");
-        list.add("Lena");
-        list.add("Max");
-        list.add("Alla");
-        System.out.println(list);
-        List<String> list2 = new ArrayList<>();
-        list2.add("Vova");
-        list2.add("Lena");
-        list2.add("Max");
-        list2.add("Alla");
-        System.out.println(list2.equals(list));
-        System.out.println(list.hashCode()+"..."+list2.hashCode());
-        System.out.println(list.getClass()+"..."+list2.getClass());
-
-
-
-//        for(int a=1; a<list.size();a++) {
-//            for (int i = 0; i < list.size() - 1; i++) {
-//                if (list.get(i).compareTo(list.get(i + 1)) > 0) {
-//                    Collections.swap(list, i, (i + 1));
-//                    System.out.println(list);
-//                }
-//
-//            }
-//        }
-
-//        ImmutableList<String> il = ImmutableList.of("sssss");
-//        String a = il.get(0);
-//        System.out.println(a);
-
+    private int i = 123;
+    int getI(){
+        return i;
     }
+
+    @Test
+    void testPractice(){
+        System.out.println(getI()+new practice_2().st);
+    }
+
+    @Test
+    void testPractice_2(){
+        System.out.println(new practice_2().st);
+    }
+
+    @Test
+    void testPractice_3(){
+        practice_3 p3 = new practice_3();
+    }
+}
+
+class practice_2{
+    String st = " Practice 2 class";
+}
+
+class practice_3{
+
 }
