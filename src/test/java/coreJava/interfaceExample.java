@@ -1,10 +1,10 @@
 package coreJava;
 
 public class interfaceExample {
-    public static void main(String args[]) throws Exception {
+    public static void main(String [] args) throws Exception {
         sample s = new sample();
         s.oldMethod(); //regular implementation
-        s.newMethod(2); //overriding default method (java8)
+        s.newMethod(2); //overloaded default method (java8)
         s.newMethod(); // call default method (Java8)
         sample.staticMethod(); //static from class
         someInterface.staticMethod(); //static from interface (java8)
@@ -24,7 +24,7 @@ interface someInterface {
     }
     //static method only Java8
     static void staticMethod(){
-        System.out.println("interface1");
+        System.out.println("static interface 1");
     }
 }
 
@@ -32,8 +32,8 @@ interface oneMoreInterface{
     //one more method with same name, no issue
     void oldMethod();
     //same static method as diff interface
-    static void staticMethod()throws Exception {
-        System.out.println("interface2");
+    static void staticMethod() {
+        System.out.println("static interface2");
     }
     //default method Java8
     default void newMethod(double ds){
@@ -54,8 +54,8 @@ class sample implements someInterface, oneMoreInterface{
         System.out.println("new method overload from child class");
     }
 
-    public static void staticMethod(){
-        System.out.println("static method");
+    static void staticMethod(){
+        System.out.println("static method of sample class");
     }
 
 
