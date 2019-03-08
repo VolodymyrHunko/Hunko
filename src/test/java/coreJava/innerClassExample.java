@@ -30,13 +30,15 @@ public class innerClassExample {
 
     private void localClassExample(int b){ //method of outer class
         int z = b;
+        //z=8; // var no more effectively final, so will compiling error
         //inner local class
         class localClass {
             private localClass(int x){ //constructor call the method directly (as example)
                 this.getZ();
             }
             private void getZ() {
-                System.out.println("Local Class called from outer method: "+z);
+                //JDK 8 allow access to 'b' and to 'z' if 'z' is final of did not change (<JDK only final)
+                System.out.println("Local Class called from outer method: "+z + b);
             }
         }
         new localClass(z); // invoke inner class
