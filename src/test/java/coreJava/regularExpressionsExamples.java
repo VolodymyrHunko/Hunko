@@ -1,10 +1,12 @@
 package coreJava;
 
+import org.testng.annotations.Test;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class regularExpressionsExamples {
-    public static void main(String args[]){
+    public static void main(String [] args){
         /*
         * 1) java.util.regex.Pattern – Used for defining patterns
         * 2) java.util.regex.Matcher – Used for performing match operations on text using patterns
@@ -53,5 +55,13 @@ public class regularExpressionsExamples {
         while(matcher2.find()) {
             System.out.println("Found at: "+ matcher2.start()+" - " + matcher2.end());
         }
+    }
+    @Test
+    void testRegEx(){
+        String phoneNumber = "123-456-789";
+        String regularExpression = "\\D*"; //"[^0-9]" select all non-numbers
+        String currentNumber = phoneNumber.replaceAll(
+                regularExpression, "");
+        System.out.println(currentNumber);
     }
 }
