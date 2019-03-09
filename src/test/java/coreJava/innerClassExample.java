@@ -28,17 +28,21 @@ public class innerClassExample {
         System.out.println("end of method");
     }
 
-    private void localClassExample(int b){ //method of outer class
+    private void localClassExample(int b) { //method of outer class
         int z = b;
         //z=8; // var no more effectively final, so will compiling error
         //inner local class
         class localClass {
-            private localClass(int x){ //constructor call the method directly (as example)
+            private int www = 4;
+
+            private localClass(int x) { //constructor call the method directly (as example)
                 this.getZ();
             }
+
             private void getZ() {
+                System.out.println("Local Class called from outer method: " + z + www);
                 //JDK 8 allow access to 'b' and to 'z' if 'z' is final of did not change (<JDK only final)
-                System.out.println("Local Class called from outer method: "+z + b);
+                System.out.println("Local Class called from outer method: " + z + b);
             }
         }
         new localClass(z); // invoke inner class
@@ -73,15 +77,17 @@ public class innerClassExample {
         innerClassExample ds = new innerClassExample();
         ds.printEven();
     }
+
     @Test
-    void testLocalClass(){
+    void testLocalClass() {
         innerClassExample lc = new innerClassExample();
         lc.localClassExample(55);
-
+        Outer o = new Outer();
+        o.doStuff();
     }
 
     @Test
-    void testOneMoreOuterClass(){
+    void testOneMoreOuterClass() {
         oneMoreOuterClass omoc = new oneMoreOuterClass();
         System.out.println(omoc.stOut);
 
@@ -101,20 +107,42 @@ public class innerClassExample {
         System.out.println(in3.stInner_3);
 
         System.out.println(in3.stInner_3 + in2.stInner_2 + in1.stInner_1 + omoc.stOut);
+
     }
 
 }
 
-class oneMoreOuterClass{
-    String stOut = "Outer class";
-    //inner class
-    class innerClass_1 {
-        String stInner_1 = "Inner class 1";
-        class innerClass_2 {
-            String stInner_2 = "Inner class 2";
-            class innerClass_3 {
-                String stInner_3 = "Inner class 3";
+
+    class oneMoreOuterClass {
+        String stOut = "Outer class";
+
+        //inner class
+        class innerClass_1 {
+            String stInner_1 = "Inner class 1";
+
+            class innerClass_2 {
+                String stInner_2 = "Inner class 2";
+
+                class innerClass_3 {
+                    String stInner_3 = "Inner class 3";
+                }
             }
         }
+    }
+
+
+class Outer {
+    private String x = "instance variable";
+
+    void doStuff() {
+        String z = "local variable";
+        class Inner {
+            private void seeOuter() {
+                System.out.println("Outer x is : " + x);
+                System.out.println("Local variable z is : " + z); //won't compile, but it compiles in JDK 8
+            }
+        }
+        Inner i = new Inner();
+        i.seeOuter();
     }
 }
