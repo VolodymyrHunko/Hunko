@@ -1,9 +1,11 @@
 package coreJava;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.Test;
 
-import java.util.Iterator;
+import java.util.*;
+import java.util.function.Function;
 
 public class innerClassExample {
     // Create an array
@@ -26,6 +28,20 @@ public class innerClassExample {
             System.out.print(iterator.next() + " ");
         }
         System.out.println("end of method");
+    }
+
+    private void print(@NotNull Iterator iterator){
+        //accept the instance of EventIterator() class as child of Iterator interface
+        while (iterator.hasNext()) {
+            System.out.print(iterator.next() + " ");
+        }
+    }
+
+    void print(Function<Integer, Boolean> iterator, int index){
+       for(int ind : arrayOfInts) {
+
+       }
+
     }
 
     private void localClassExample(int b) { //method of outer class
@@ -54,12 +70,12 @@ public class innerClassExample {
     private class EvenIterator implements Iterator {
         // Start stepping through the array from the beginning
         private int nextIndex = 0;
-
+        @Override
         public boolean hasNext() {
             // Check if the current element is the last in the array
             return (nextIndex <= SIZE - 1);
         }
-
+        @Override
         public Integer next() {
             // GET DIRECT ACCESS TO OUTER CLASS
             Integer retValue = arrayOfInts[nextIndex];
@@ -76,6 +92,41 @@ public class innerClassExample {
         // values of even indices
         innerClassExample ds = new innerClassExample();
         ds.printEven();
+    }
+
+    @Test
+    void testIterator2() {
+        // Fill the array with integer values and print out only
+        // values of even indices as previous example. but:
+        // send new instance of Iterator to method 'print'
+        innerClassExample ds = new innerClassExample();
+        ds.print(new EvenIterator()); //pass an anonymous class
+    }
+
+    @Test
+    void testIterator3(){
+        new innerClassExample().print(new Iterator() {
+            // Start stepping through the array from the first index
+            private int nextIndex = 1;
+            @Override
+            public boolean hasNext() {
+                return (nextIndex <= SIZE - 1);
+            }
+
+            @Override
+            public Object next() {
+                // GET DIRECT ACCESS TO OUTER CLASS
+                Integer retValue = arrayOfInts[nextIndex];
+                // Get the next even element
+                nextIndex += 2;
+                return retValue;
+            }
+        });
+    }
+
+    @Test
+    void testIterator4(){
+        print();
     }
 
     @Test
