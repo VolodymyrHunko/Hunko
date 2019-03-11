@@ -4,6 +4,7 @@ package coreJava;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
+import java.util.function.Function;
 
 public class innerClassExample {
     // Create an array
@@ -26,6 +27,15 @@ public class innerClassExample {
             System.out.print(iterator.next() + " ");
         }
         System.out.println("end of method");
+    }
+
+    //method accept 'Function' standard class instead of 'EventIterator'
+    private void print(java.util.function.Function<Integer, Boolean> function){
+        for(int i=0; i<SIZE; i++){
+            if(function.apply(i)){
+                System.out.println(arrayOfInts[i] + "");
+            }
+        }
     }
 
     private void localClassExample(int b) { //method of outer class
@@ -76,6 +86,25 @@ public class innerClassExample {
         // values of even indices
         innerClassExample ds = new innerClassExample();
         ds.printEven();
+    }
+
+    @Test // implement anonymous function of 'Function' standard class (step 1 of lambda exp)
+    void testIterator3(){
+        innerClassExample ds = new innerClassExample();
+        ds.print(new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                if(integer %2 == 0)
+                return true;
+                else return false;
+            }
+        });
+    }
+
+    @Test // implement lambda exp of 'Function' standard class (step 2 to simplify anonymous exp)
+    void testIterator4(){ //print only even numbers (to print odds - change to '%2 !=0'
+        innerClassExample ds = new innerClassExample();
+        ds.print(integer -> integer % 2 == 0); //simplify 'return' expression
     }
 
     @Test
