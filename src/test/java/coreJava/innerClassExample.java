@@ -37,13 +37,6 @@ public class innerClassExample {
         }
     }
 
-    void print(Function<Integer, Boolean> iterator, int index){
-       for(int ind : arrayOfInts) {
-
-       }
-
-    }
-
     private void localClassExample(int b) { //method of outer class
         int z = b;
         //z=8; // var no more effectively final, so will compiling error
@@ -122,11 +115,6 @@ public class innerClassExample {
                 return retValue;
             }
         });
-    }
-
-    @Test
-    void testIterator4(){
-        print();
     }
 
     @Test
