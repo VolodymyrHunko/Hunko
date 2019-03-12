@@ -37,6 +37,15 @@ public class innerClassExample {
         }
     }
 
+    //method accept 'Function' standard class instead of 'EventIterator'
+    private void print(java.util.function.Function<Integer, Boolean> function){
+        for(int i=0; i<SIZE; i++){
+            if(function.apply(i)){
+                System.out.println(arrayOfInts[i] + "");
+            }
+        }
+    }
+
     private void localClassExample(int b) { //method of outer class
         int z = b;
         //z=8; // var no more effectively final, so will compiling error
@@ -79,7 +88,7 @@ public class innerClassExample {
     }
 
 
-    @Test
+    @Test (priority = 1)
     void testIterator() {
         // Fill the array with integer values and print out only
         // values of even indices
@@ -87,7 +96,7 @@ public class innerClassExample {
         ds.printEven();
     }
 
-    @Test
+    @Test (priority = 2)
     void testIterator2() {
         // Fill the array with integer values and print out only
         // values of even indices as previous example. but:
@@ -96,7 +105,30 @@ public class innerClassExample {
         ds.print(new EvenIterator()); //pass an anonymous class
     }
 
-    @Test
+    // implement anonymous function of 'Function' standard class (step 1 of lambda exp)
+    @Test (priority = 3)
+    void testIterator1(){
+        innerClassExample ds = new innerClassExample();
+        ds.print(new Function<Integer, Boolean>() { //next step will replace anonimous class with lambda exp
+            @Override
+            public Boolean apply(Integer integer) {
+                if(integer %2 == 0)
+                return true;
+                else return false;
+            }
+        });
+    }
+
+    // implement lambda exp of 'Function' standard class (step 2 to simplify anonymous exp)
+    @Test (priority = 4)
+    void testIterator4(){ //print only even numbers (to print odds - change to '%2 !=0'
+        innerClassExample ds = new innerClassExample();
+        ds.print(integer -> integer % 2 == 0); //simplify 'return' expression
+    }
+
+
+    //anonymous class as argument
+    @Test (priority = 5)
     void testIterator3(){
         new innerClassExample().print(new Iterator() {
             // Start stepping through the array from the first index
@@ -117,7 +149,7 @@ public class innerClassExample {
         });
     }
 
-    @Test
+    @Test (priority = 6)
     void testLocalClass() {
         innerClassExample lc = new innerClassExample();
         lc.localClassExample(55);
@@ -125,7 +157,7 @@ public class innerClassExample {
         o.doStuff();
     }
 
-    @Test
+    @Test (priority = 7)
     void testOneMoreOuterClass() {
         oneMoreOuterClass omoc = new oneMoreOuterClass();
         System.out.println(omoc.stOut);
