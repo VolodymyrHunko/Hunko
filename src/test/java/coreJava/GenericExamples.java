@@ -51,8 +51,9 @@ public class GenericExamples {
 
     @Test
     void test3() {
+        // declare class as Int & String Type
         MyClass<Integer, String> mk1 = new MyClass<>(11, "Volo");
-
+        // get the two String as returned from classes and pass it to Generic class
         List<String> myList = new ArrayList<>();
         myList.add("Olena");
         sampleGenericClass<String> myClass = new sampleGenericClass<>("Volo");
@@ -64,16 +65,17 @@ public class GenericExamples {
 
     @Test
     void test4(){
-        sampleGenericClass<MyClass<String, String>> foo =
-                new sampleGenericClass<>(new MyClass<>("one", "two"));
+        //pass instance of Generic class as parameter to another generic class
+        sampleGenericClass<MyClass<Integer, String>> foo =
+                new sampleGenericClass<>(new MyClass<>(1, "two"));
         System.out.println(foo.getVar());
     }
 }
 
 /**
- * example of declaration of Generic class with parameter <T>
+ * example of declaration of Generic class with parameter 'T'
  *
- * @param <T>
+ * @param <T> Type
  */
 class sampleGenericClass<T> { // <T> must be declared as generic type
     private T var; // T stands for 'Type'
@@ -90,6 +92,10 @@ class sampleGenericClass<T> { // <T> must be declared as generic type
 
     T getVar() {
         return var;
+    }
+
+    public String toString(){
+        return "Value is: " + var;
     }
 }
 
@@ -124,8 +130,8 @@ class MyClass<K,V> implements MyInterface<K,V>{
         return this.Value ;
     }
 
-    String getObjectValue(){
-        String name ;
-        return null;
+    @Override
+    public String toString(){
+        return "Value are: "+key+" -> "+Value;
     }
 }
