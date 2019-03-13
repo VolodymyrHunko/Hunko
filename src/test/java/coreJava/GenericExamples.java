@@ -21,12 +21,24 @@ public class GenericExamples {
     }
 
     private void Generic() {
-        List<String> myList = new ArrayList<>(); //not Generic type
+        List<String> myList = new ArrayList<>(); //Generic type
         myList.add("Volo"); //add String
         myList.add("63"); //add Int not allowed, should be String
         String st = myList.get(0); //should NOT be casted to String
         Integer i = Integer.valueOf(myList.get(1)); //should be converted to Int
         System.out.println(st + " " + i);
+    }
+
+    // in static method type 'T' must be before return type
+    private static <T> void genericMethod(T param){
+        System.out.println("Parameter: "+param);
+    }
+
+    @Test
+    void test(){
+        genericMethod("Some String");
+        genericMethod(111);
+        genericMethod(new sampleGenericClass<>("Class var value"));
     }
 
     @Test
