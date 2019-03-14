@@ -96,8 +96,6 @@ class sampleGenericClass<T> { // <T> must be declared as generic type
         this.var = var;
     }
 
-    sampleGenericClass(){}
-
     void setVar(T t) {
         this.var = t;
     }

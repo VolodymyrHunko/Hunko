@@ -1,5 +1,6 @@
 package coreJava;
 
+import org.apache.velocity.util.ArrayListWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -267,6 +268,23 @@ public class LambdaExamples {
                 .map(p -> p.getEmailAddress())
 
                 .forEach(email -> System.out.println(email));
+    }
+
+    //example of aggregation operation
+    @Test
+    void aggregatingOperationTest(){
+        // example to use 'forEach' aggregation operation on sample List
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        list.add(3);
+        list.add(5);
+        list.stream().filter(l -> l>3).forEach(l -> System.out.println(l)); //print all elements in list
+        list.forEach(System.out::println); //replace lambda exp with method reference
+        // aggregation on list of class Person
+        roster
+                .stream()
+                .filter(e -> e.getGender() == Person.Sex.FEMALE)
+                .forEach(e -> System.out.println(e.getName()));
     }
 }
 
