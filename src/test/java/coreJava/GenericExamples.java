@@ -3,6 +3,7 @@ package coreJava;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +35,13 @@ public class GenericExamples {
         System.out.println("Parameter: "+param);
     }
 
+    //using wildcards symbols
+    private void printList(List <?> list){
+        for(Object stuf : list){
+            System.out.println(stuf);
+        }
+    }
+
     @Test
     void test(){
         genericMethod("Some String");
@@ -45,6 +53,14 @@ public class GenericExamples {
     void test1() {
         nonGeneric();
         Generic();
+    }
+
+    @Test
+    void test11(){
+        List<Integer> lI = Arrays.asList(1,2,4); //short form of assigning fixed arrayList
+        List<String> lS = Arrays.asList("one", "two", "three");
+        printList(lI);
+        printList(lS);
     }
 
     @Test
