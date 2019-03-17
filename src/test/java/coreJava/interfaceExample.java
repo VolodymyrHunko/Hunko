@@ -1,5 +1,7 @@
 package coreJava;
 
+import java.util.function.Predicate;
+
 public class interfaceExample {
     public static void main(String [] args) throws Exception {
         sample s = new sample();
@@ -10,8 +12,23 @@ public class interfaceExample {
         someInterface.staticMethod(); //static from interface (java8)
         oneMoreInterface.staticMethod(); //static from second interface(java8)
 
+        //get instance of functional interface by using lambda exp (Java 8)
+        oneMoreInterface oMi = () -> System.out.println("Blah, blah");
+        oMi.oldMethod(); // call interface's method
+        //get instance of functional interface by using lambda exp with parameters
+        therdInterface <String> sI = (a, b) -> {
+            String c = a + b;
+            System.out.println(c);
+        };
+        therdInterface <Integer> iI = (a,b) -> {
+            Integer c = a+b;
+            System.out.println(c);};
+        sI.method("Volo ","Hunko");
+        iI.method(2,5);
 
-
+        // use the standard 'Predicate' interface with return boolean exp
+        Predicate <Integer> pred = (n) -> n%2 == 0;
+        System.out.println(pred.test(3)); //false (3 % 2 =! 0)
     }
 }
 
@@ -28,6 +45,7 @@ interface someInterface {
     }
 }
 
+@FunctionalInterface // only one abstract class in functional interface
 interface oneMoreInterface{
     //one more method with same name, no issue
     void oldMethod();
@@ -43,7 +61,6 @@ interface oneMoreInterface{
 
 
 class sample implements someInterface, oneMoreInterface{
-
     @Override
     public void oldMethod()
     {
@@ -57,6 +74,9 @@ class sample implements someInterface, oneMoreInterface{
     static void staticMethod(){
         System.out.println("static method of sample class");
     }
+}
 
-
+@FunctionalInterface
+interface therdInterface <T>{ //Generic interface
+     void  method (T a, T b);
 }

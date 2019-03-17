@@ -1,6 +1,5 @@
 package coreJava;
 
-import org.apache.velocity.util.ArrayListWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -285,6 +284,17 @@ public class LambdaExamples {
                 .stream()
                 .filter(e -> e.getGender() == Person.Sex.FEMALE)
                 .forEach(e -> System.out.println(e.getName()));
+    }
+
+    //sort list of strings with lambda
+    @Test
+    void sortList(){
+        List<String> list = new ArrayList<>();
+        list.add("Xxxxx");
+        list.add("Aaaaaa");
+        list.add("Ffffff");
+        list.sort((s1, s2) -> s1.compareTo(s2));
+        System.out.println(list);
     }
 }
 
