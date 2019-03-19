@@ -3,6 +3,9 @@ package seleniumTesting;
 import helpers.eventHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -24,11 +27,12 @@ public class PageObjectExample {
 
         @BeforeTest
         public void launchBrowser() {
-            driver = new FirefoxDriver();
+            driver = new ChromeDriver();
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
-            String baseURL = "file:/home/volodymyr/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
+
+            String baseURL = "file:///home/volo/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
             //String baseURL = "file:///C://Users//vhunko047//IdeaProjects//Hunko//src//test//resources//sampleHTML.html";
             EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
             eventHandler handler = new eventHandler();
@@ -43,6 +47,10 @@ public class PageObjectExample {
          */
         @Test (priority=1, enabled = true)
         public void validItems() throws InterruptedException {
+//            Path sampleFile = Paths.get("src/test/resources/sampleHTML.html");
+//            System.out.println(sampleFile.toUri().toString());
+
+            Thread.sleep(3000);
             PageFactory.initElements(driver, recipePage.class);
             String thirdItem = food_3.getText();
             String fifthItem = recipePage.food_5.getText();

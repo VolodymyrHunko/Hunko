@@ -11,6 +11,12 @@ import java.util.List;
  * as notGeneric as well as Generic type
  */
 public class GenericExamples {
+
+    /**
+     * @deprecated example of deprecated annotation
+     */
+    @Deprecated
+    @SuppressWarnings("unchecked") // suppress the legacy warning of unchecked raw List
     private void nonGeneric() {
         List myList = new ArrayList(); //not Generic type
         // not good approach !
@@ -50,6 +56,7 @@ public class GenericExamples {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // method used in deprecated annotation, can be suppress
     void test1() {
         nonGeneric();
         Generic();
@@ -131,6 +138,7 @@ class sampleGenericClass<T> { // <T> must be declared as generic type
  * @param <K> key
  * @param <V> value
  */
+
 interface MyInterface<K, V> {
     K getKey();
     V getValue();
