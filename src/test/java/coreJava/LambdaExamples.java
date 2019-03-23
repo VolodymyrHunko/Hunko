@@ -2,6 +2,7 @@ package coreJava;
 
 import org.apache.velocity.util.ArrayListWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
