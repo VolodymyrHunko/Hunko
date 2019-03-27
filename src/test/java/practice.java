@@ -1,14 +1,15 @@
 import org.testng.annotations.Test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.logging.Logger;
 
-public class practice {
+interface Practical{
+    int getI();
+}
+
+public class practice implements Practical{
 
     private int i = 123;
 
-    int getI(){
+    public int getI(){
         return i;
     }
 
@@ -30,7 +31,8 @@ public class practice {
 
     @Test
     void test4(){
-        new A3();
+       practice_3 x = new A3();
+        System.out.println(x instanceof practice_3);
     }
 
 }
@@ -44,14 +46,14 @@ class practice_3{
     String b = new String("class");
     String c = new String("class");
 
-    boolean method(){
+    static boolean method(){
        return  "aaa".equals("aaa");
     }
 }
 
-class A3{
-    static{
-        System.out.println("static block is invoked");
-        System.exit(0);
+class A3 extends practice_3{
+   String a = "subclass";
+    boolean method(String a){
+        return  a.equals("aaa");
     }
 }
