@@ -1,6 +1,7 @@
 package coreJava;
 
 import org.jetbrains.annotations.NotNull;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,11 +14,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 //functional interface with one ABSTRACT method will used in tests 3 and 4
+@FunctionalInterface
 interface CheckPerson {
     boolean test(Person p);
 }
 
 //functional interface instead 'Predicate' standard interface
+@FunctionalInterface
 interface PrintPersonInfo{
     void printOut(Person p);
 }

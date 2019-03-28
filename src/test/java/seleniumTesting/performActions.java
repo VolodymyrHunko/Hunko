@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.SkipException;
 
 public class performActions {
 
@@ -62,6 +63,7 @@ public class performActions {
         WebElement one = driver.findElement(By.name("one"));
         WebElement three = driver.findElement(By.name("three"));
         WebElement five = driver.findElement(By.name("seven"));
+
         // System.out.println(" X coordinate: "+ one.getLocation(). getX() +
         // 		           " Y coordinate: "+ one.getLocation(). getY());
         //Use the coordinates to move on element
@@ -73,6 +75,7 @@ public class performActions {
         //Use element's name to find it
         builder.click(one).click(five).click(three);
         builder.build().perform();
+
 
 
         // driver.quit();
