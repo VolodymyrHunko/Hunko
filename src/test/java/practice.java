@@ -26,7 +26,7 @@ public class practice implements Practical{
     @Test
     void testPractice_3(){
         practice_3 p3 = new practice_3();
-        System.out.println(p3.method());
+        p3.method();
     }
 
     @Test
@@ -41,14 +41,17 @@ class practice_2{
     String st = " Practice 2 class";
 }
 
-class practice_3{
-    String a = "class";
-    String b = new String("class");
-    String c = new String("class");
-
-    static boolean method(){
-       return  "aaa".equals("aaa");
+class practice_3 {
+    String one = "one";
+    String two = new String("two");
+    void method(){
+        System.out.println( one.concat("two"));
+        System.out.println( one.equals(two)); //true
+        System.out.println(one == two);//false
+        System.out.println( one.equals("onetwo"));//false
+        System.out.println( two == "one"); //falce
     }
+
 }
 
 class A3 extends practice_3{

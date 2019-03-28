@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 //functional interface with one ABSTRACT method will used in tests 3 and 4
 @FunctionalInterface
@@ -296,8 +297,13 @@ public class LambdaExamples {
         list.add("Xxxxx");
         list.add("Aaaaaa");
         list.add("Ffffff");
+        list.add("");
         list.sort((s1, s2) -> s1.compareTo(s2));
-        System.out.println(list);
+        System.out.println(list); // sorted list
+        List<String> filtered =
+                list.stream()
+                .filter(string -> !string.isEmpty()).collect(Collectors.toList());
+        System.out.println(filtered); //filtered new list
     }
 }
 

@@ -28,7 +28,7 @@ public class interfaceExample {
 
         // use the standard 'Predicate' interface with return boolean exp
         Predicate <Integer> pred = (n) -> n%2 == 0;
-        System.out.println(pred.test(3)); //false (3 % 2 =! 0)
+        System.out.println(pred.test(3)); //false (3 % 2 =! 0)`
     }
 }
 

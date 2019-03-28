@@ -2,7 +2,10 @@ package coreJava;
 
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class AggregationExamples {
     // Create sample data
@@ -53,5 +56,33 @@ public class AggregationExamples {
                 .getAsDouble();
 
         System.out.println("Average age of male members (bulk data operations): " + average);
+    }
+
+    //print random 10 positive even numbers sorted
+    @Test
+    void test6(){
+        Random random = new Random();
+        random
+                .ints(0,100)
+                .filter(i -> i%2 == 0)
+                .limit(10)
+                .sorted()
+                .forEach(System.out::println);
+    }
+
+    //use the map to print n^2
+    @Test
+    void test7(){
+        List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+
+        //get list of unique squares
+        List<Integer> squaresList =
+                numbers
+                        .stream()
+                        .map( i -> i*i)
+                        .distinct()
+                        .sorted()
+                .collect(Collectors.toList());
+        System.out.println(numbers+"\n"+squaresList);
     }
 }

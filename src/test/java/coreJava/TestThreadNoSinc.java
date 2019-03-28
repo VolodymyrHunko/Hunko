@@ -14,7 +14,7 @@ class PrintDemo2 {
 }
 
 class ThreadDemo2 extends Thread {
-    private Thread t;
+    private Thread t ;
     private String threadName;
     private PrintDemo2  PD;
 
@@ -29,9 +29,10 @@ class ThreadDemo2 extends Thread {
     }
 
     public void start () {
-        System.out.println("Starting " +  threadName );
+        System.out.println("Starting Thread: " +  threadName );
         if (t == null) {
             t = new Thread (this, threadName);
+            System.out.println("Name of Thread: "+t);
             t.start ();
         }
     }
@@ -42,8 +43,8 @@ public class TestThreadNoSinc {
 
         PrintDemo2 PD = new PrintDemo2();
 
-        ThreadDemo2 T1 = new ThreadDemo2( "Thread - 1 ", PD );
-        ThreadDemo2 T2 = new ThreadDemo2( "Thread - 2 ", PD );
+        ThreadDemo2 T1 = new ThreadDemo2( "Thread_1 ", PD );
+        ThreadDemo2 T2 = new ThreadDemo2( "Thread_2 ", PD );
 
         T1.start();
         T2.start();
