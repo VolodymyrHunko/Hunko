@@ -55,6 +55,7 @@ public class FileReadExample {
         }
 
         //read the file using Scanner() start from Java 1.5
+        System.out.println("\nReading the file using Scanner:");
         Scanner scan = new Scanner(file);
         int line = 1;
         while (scan.hasNext()){
