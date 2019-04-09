@@ -5,7 +5,7 @@ interface Practical{
     int getI();
 }
 
-public class practice implements Practical{
+public class  practice  implements Practical{
 
     private int i = 123;
 
@@ -15,12 +15,16 @@ public class practice implements Practical{
 
     @Test
     void testPractice() {
-        System.out.println(getI()+new practice_2().st);
+        byte x =64;
+        byte y = (byte)(256);
+        System.out.println(y);
+
     }
 
     @Test
     void testPractice_2(){
-        System.out.println(new practice_2().st);
+        practice_2 <practice_3> p_2 = new practice_2<>(new practice_3());
+        System.out.println(p_2);
     }
 
     @Test
@@ -37,8 +41,13 @@ public class practice implements Practical{
 
 }
 
-class practice_2{
-    String st = " Practice 2 class";
+class practice_2<T>{
+    T obj_3;
+    String st = "sss";
+    practice_2(T obj){
+        this.obj_3 = obj;
+    }
+
 }
 
 class practice_3 {
