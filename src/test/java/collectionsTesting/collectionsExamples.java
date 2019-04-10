@@ -96,6 +96,99 @@
 //        while (li.hasNext()){
 //            System.out.println(li.next());
 //        }
+
+
+////1.a convert int to ArrayList : Arrays.asList DOES NOT DEAL with boxing, so array has to be Integer
+//
+//import org.testng.annotations.Test;
+//
+//private ArrayList<Integer> convertToList(Integer [] li) {
+//        return new ArrayList<>(Arrays.asList(li));
+//        }
+//
+////1.b String can be converted with .asList()
+//private ArrayList<String> convertToList(String [] st) {
+//        return new ArrayList<>(Arrays.asList(st));
+//        }
+//
+////2.a sort ArrayList
+//private ArrayList<String> sortingMethod(ArrayList<String> noSort) {
+//        Collections.sort(noSort);
+//        return noSort;
+//        }
+//
+////2.b overloaded sort() method
+//private Integer[] sortingMethod(Integer[] intArray) {
+//        Arrays.sort(intArray);
+//        return intArray;
+//        }
+//
+//@Test // 1 && 2 methods
+//    void test_1_2() {
+//            //test 2.a : sort String ArrayList
+//            System.out.println(sortingMethod(convertToList(str)));
+//            //test 2.b : sort Integer Array
+//            for(int x : sortingMethod(i)) {
+//            System.out.print(x);
+//            }
+//            }
+//
+////3.a binary searching after sorting!
+//private int search(String[] noSort, String comp) {
+//        Arrays.sort(noSort);
+//        return Collections.binarySearch(Arrays.asList(noSort), comp);
+//        }
+//
+////3.b binary searching after sorting!
+//private int search(Integer [] sort, Integer comp) {
+//        return Arrays.binarySearch(sort, comp);
+//        }
+//
+//@Test // 3 method
+//    void test_3() {
+//            System.out.println("Index of 'two' in sorted array:" + search(str, "two"));
+//            System.out.println("Index of '6' in sorted array:" + search(sortingMethod(i), 6));
+//            }
+//
+//            //4.a swap arrayList elements
+//            void swapElements(ArrayList<Integer> sorted) {
+//        System.out.println("before swapping=> " + sorted.toString());
+//        Collections.swap(sorted, 0, sorted.size() - 1);
+//        System.out.println("after swapping=> " + sorted.toString());
+//        }
+//
+//        //5.a max value of Array
+//        void maxValue(ArrayList<Integer> array) {
+//        System.out.println("Max value: " + Collections.max(array));
+//        }
+//
+//        //6.a convert list to treeSet
+//        void listToTreeSet(ArrayList<Integer> aList) {
+//        Set<Integer> hSet = new TreeSet<Integer>(aList);
+//        System.out.println("Sorted hashSet from arrayList=> " + hSet.toString());
+//        }
+//
+////7.a use Comparator for sorting objects by 'name' property
+//static Comparator<SampleCollectionClass> nameComparator = new Comparator<SampleCollectionClass>() {
+//@Override
+//public int compare(SampleCollectionClass o1, SampleCollectionClass o2) {
+//        String compName1 = o1.getName().toLowerCase();
+//        String compName2 = o2.getName().toLowerCase();
+//        //ascending order
+//        return compName1.compareTo(compName2);
+//        }
+//        };
+//
+////7.b use Comparator for sorting the list by var 'rate'
+//static Comparator<SampleCollectionClass> idComparator = new Comparator<SampleCollectionClass>() {
+//@Override
+//public int compare(SampleCollectionClass o1, SampleCollectionClass o2) {
+//        int compId1 = o1.getId();
+//        int compId2 = o2.getId();
+//        return compId1 - compId2;
+//        }
+//        };
+
 //    }
 //
 //

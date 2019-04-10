@@ -52,6 +52,8 @@ public class GenericExamples {
     void test(){
         genericMethod("Some String");
         genericMethod(111);
+        Integer [] intg =  {11,22,33};
+        genericMethod(intg);
         genericMethod(new sampleGenericClass<>("Class var value"));
     }
 
