@@ -1,7 +1,6 @@
 package coreJava;
 
 import org.jetbrains.annotations.NotNull;
-import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 //functional interface with one ABSTRACT method will used in tests 3 and 4
 @FunctionalInterface
@@ -401,7 +401,7 @@ class Person {
  * one more example of lambda ex with interface accepted more than one parameter
  */
 class Calculator {
-
+    @FunctionalInterface
     interface IntegerMath {
         int operation(int a, int b);
     }
@@ -420,5 +420,15 @@ class Calculator {
                 myApp.operateBinary(40, 2, addition));
         System.out.println("20 - 10 = " +
                 myApp.operateBinary(20, 10, subtraction));
+
+        // stream iterating example
+        Stream.iterate(1, element->element+1)
+                .filter(element->element%5==0)
+                .limit(5)
+                .forEach(System.out::println);
+        Stream.iterate(2, v -> v+2)
+                .filter(v -> v%3==0)
+                .limit(5)
+                .forEach(System.out::println);
     }
 }

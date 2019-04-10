@@ -103,7 +103,7 @@ public class GenericExamples {
         //pass instance of Generic class as parameter to another generic class
         sampleGenericClass<MyClass<Integer, String>> foo =
                 new sampleGenericClass<>(new MyClass<>(1, "two"));
-        System.out.println(foo.getVar());
+        System.out.println(foo);
     }
 }
 
@@ -166,6 +166,6 @@ class MyClass<K,V> implements MyInterface<K,V>{
 
     @Override
     public String toString(){
-        return "Value are: "+key+" -> "+Value;
+        return "Object: "+key+" -> "+Value;
     }
 }

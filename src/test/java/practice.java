@@ -1,5 +1,7 @@
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 
 interface Practical{
     int getI();
@@ -14,8 +16,9 @@ public class practice implements Practical{
     }
 
     @Test
-    void testPractice() {
-        System.out.println(getI()+new practice_2().st);
+    void testPractice() throws IOException {
+        byte a = 0b101_0;
+        System.out.println(a);
     }
 
     @Test

@@ -45,8 +45,9 @@ public class TestThreadNoSinc {
 
         ThreadDemo2 T1 = new ThreadDemo2( "Thread_1 ", PD );
         ThreadDemo2 T2 = new ThreadDemo2( "Thread_2 ", PD );
-
+        System.out.println("Go...1");
         T1.start();
+        System.out.println("Go...2");
         T2.start();
     }
 }
