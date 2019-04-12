@@ -26,11 +26,11 @@ public class collectionsExamples {
         //create the arrayList of objects
         sampleCollectionClass object3 = new sampleCollectionClass(10, "Volo", 8.3);
         sampleCollectionClass object4 = new sampleCollectionClass(4, "Max", 9.1);
-        sampleCollectionClass objact5 = new sampleCollectionClass(15, "Ole", 8.3);
+        sampleCollectionClass object5 = new sampleCollectionClass(15, "Ole", 8.3);
         objList = new ArrayList<>();
         objList.add(object3);
         objList.add(object4);
-        objList.add(objact5);
+        objList.add(object5);
     }
 
     /*
@@ -44,15 +44,35 @@ public class collectionsExamples {
         //replace element in index '1'
         intList.set(1,15);
 
-        System.out.println("list.toString()=>"+intList.toString());
+        // print List as .toString()
+        System.out.println("list.toString() => " + intList.toString());
 
         //print list's items by using forEach() and lambda as implementation of 'Consumer' interface !ONLY JAVA 8!
-        System.out.print("forEach() with lambda=> ");
+        System.out.print("forEach() with lambda => ");
         strList.forEach((n)->System.out.print(n + ", "));
 
+        //iterate 'for' loop
         System.out.print("\nforEach() iteration => ");
         for (String n : strList) {
             System.out.print(n + ", ");
+        }
+
+        //using iterator
+        Iterator<Integer> it = intList.iterator();
+        System.out.print("\nUsing iterator => ");
+        while (it.hasNext()) {
+            System.out.print(it.next() + ", ");
+        }
+
+        //using listIterator
+        ListIterator<String> li = strList.listIterator(strList.size());
+        System.out.print("\nUsing listIterator for reverse output => " + li.hasPrevious() + " -> ");
+        while (li.hasPrevious()) {
+            System.out.print(li.previous() + ", ");
+        }
+        System.out.print("\nUsing listIterator for forward output => " + li.hasNext() + " -> ");
+        while (li.hasNext()) {
+            System.out.print(li.next() + ", ");
         }
     }
 
@@ -78,8 +98,8 @@ public class collectionsExamples {
         System.out.println("Sorted as revers Order -> "+strList.toString());
 
         //sorting as Collection/Arrays classes
-        System.out.println("Sorted ArrayList as Collection class=> " + sortingMethod(strList).toString());
-        System.out.println("Sorted Array as Arrays class=>" + Arrays.toString(sortingMethod(ab)));
+        System.out.println("Sorted ArrayList as Collection class => " + sortingMethod(strList).toString());
+        System.out.println("Sorted Array as Arrays class => " + Arrays.toString(sortingMethod(ab)));
 
         //convert List to treeSet
         listToTreeSet(intList);
@@ -104,33 +124,45 @@ public class collectionsExamples {
     }
 
     /*
-     * getting index of element, convert to treeSet
+     * swapping and get max/min value
      */
     @Test
     void test_3() {
-        //get the index of 'Axk' value
-        int index = strList.indexOf("Axk");
-        System.out.println("Index of 'Axk' => " + index);
-
-        //return '-1' index, no value
-        index = intList.indexOf(15);
-        System.out.println("Index of '15' => " + index);
-    }
-
-    /*
-     * searching of value, swapping of elements, get max/min value,
-     */
-    @Test
-    void test_4() {
-        //binary search of Array after sorting, if no found -> return as '-missing point -1' of array
-        System.out.println("Search invalid value 'zxk', index: " + search(strings, "zdk"));
-        System.out.println("Search valid value 'abc', index: " + search(ab, 8));
-
         //swapping of ArrayList's first and Last elements
         swapElements(intList);
 
         //get max/min value
         maxValue(intList);
+    }
+
+    //3.a swap arrayList elements
+    private void swapElements(ArrayList<Integer> s) {
+        System.out.println("before swapping=> " + s.toString());
+        Collections.swap(s, 0, s.size() - 1);
+        System.out.println("after swapping first and last => " + s.toString());
+    }
+
+    //3.b max value of Array
+    private void maxValue(ArrayList<Integer> array) {
+        System.out.println("Max value: " + Collections.max(array));
+    }
+
+    /*
+     * searching of values, linear and binary
+     */
+    @Test
+    void test_4() {
+        //linear search
+        int index = strList.indexOf("Axk");
+        System.out.println("Index of 'Axk' => " + index);
+        //return '-1' index, no value
+        index = intList.indexOf(15);
+        System.out.println("Index of '15' => " + index);
+
+        //binary search of Array after sorting, if no found -> return as '-missing point -1' of array
+        System.out.println("Search invalid value 'zxk', index: " + search(strings, "zdk"));
+        System.out.println("Search valid value '4' in NO sorted list, index: " + search(ab, 4));
+        System.out.println("Search valid value '4' in sorted list, index: " + search(sortingMethod(ab), 4));
     }
 
     //4.a binary searching after sorting!
@@ -144,122 +176,46 @@ public class collectionsExamples {
         return Arrays.binarySearch(sort, comp);
     }
 
-    //4.c swap arrayList elements
-    void swapElements(ArrayList<Integer> s) {
-        System.out.println("before swapping=> " + s.toString());
-        Collections.swap(s, 0, s.size() - 1);
-        System.out.println("after swapping first and last => " + s.toString());
-    }
-
-    //4.d max value of Array
-    void maxValue(ArrayList<Integer> array) {
-        System.out.println("Max value: " + Collections.max(array));
-    }
-
     /*
      * sort ArrayList of objects
      */
     @Test
     void test_5() {
         //before sorting List of obj
-        for ( sampleCollectionClass str : objList) {
-            System.out.println("before sort=> " + str);
+        for (sampleCollectionClass str : objList) {
+            System.out.println("before sort => " + str);
         }
 
         //sort arrayList of objects with comparator (Can use Collections.sort instead)
         objList.sort(sampleCollectionClass::nameComparator);
         for (sampleCollectionClass str : objList) {
-            System.out.println("after sort by name=> " + str);
+            System.out.println("after sort by name => " + str);
         }
 
         //sort arrayList of objects with users defined comparator
         objList.sort(sampleCollectionClass::idComparator);
         for (sampleCollectionClass str : objList) {
-            System.out.println("after sort by id=> " + str);
+            System.out.println("after sort by id => " + str);
         }
 
         //do not need comparator - we implemented Comparable interface in sorted class
         Collections.sort(objList);
         for (sampleCollectionClass str : objList) {
-            System.out.println("after sort by rate and name=> " + str);
+            System.out.println("after sort by rate and name => " + str);
+        }
+
+        //use sort with diff comparator id
+        objList.sort(sampleCollectionClass.id2Comparator);
+        for (sampleCollectionClass str : objList) {
+            System.out.println("after sort by id with comparator => " + str);
+        }
+
+        //use sort with diff comparator name
+        objList.sort(sampleCollectionClass.name2Comparator);
+        for (sampleCollectionClass str : objList) {
+            System.out.println("after sort by name with comparator => " + str);
         }
     }
-
-//    //using iterator
-//    Iterator<Integer> it = intList.iterator();
-//        System.out.println("Using iterator=> ");
-//        while(it.hasNext())
-//
-//    {
-//        System.out.println(it.next());
-//    }
-//
-//    //using listIterator
-//    ListIterator<String> li = strList.listIterator();
-//        System.out.println("Using listIterator for reverse output=> "+li.hasPrevious());
-//        while(li.hasPrevious())
-//
-//    {
-//        System.out.println(li.previous());
-//    }
-//        System.out.println("Using listIterator for forward output=> ");
-//        while(li.hasNext())
-//
-//    {
-//        System.out.println(li.next());
-//    }
-//
-//
-
-//
-
-//    @Test
-//        // 1 && 2 methods
-//    void test_1_2() {
-//        //test 2.a : sort String ArrayList
-//        System.out.println(sortingMethod(convertToList(str)));
-//        //test 2.b : sort Integer Array
-//        for (int x : sortingMethod(i)) {
-//            System.out.print(x);
-//        }
-//    }
-//
-
-//
-//    @Test
-//        // 3 method
-//    void test_3() {
-//        System.out.println("Index of 'two' in sorted array:" + search(str, "two"));
-//        System.out.println("Index of '6' in sorted array:" + search(sortingMethod(i), 6));
-//    }
-//
-
-//
-
-//
-
-//
-//    //7.a use Comparator for sorting objects by 'name' property
-//    static Comparator<sampleCollectionClass> nameComparator = new Comparator<sampleCollectionClass>() {
-//        @Override
-//        public int compare(sampleCollectionClass o1, sampleCollectionClass o2) {
-//            String compName1 = o1.getName().toLowerCase();
-//            String compName2 = o2.getName().toLowerCase();
-//            //ascending order
-//            return compName1.compareTo(compName2);
-//        }
-//    };
-//
-//    //7.b use Comparator for sorting the list by var 'rate'
-//    static Comparator<sampleCollectionClass> idComparator = new Comparator<sampleCollectionClass>() {
-//        @Override
-//        public int compare(sampleCollectionClass o1, sampleCollectionClass o2) {
-//            int compId1 = o1.getId();
-//            int compId2 = o2.getId();
-//            return compId1 - compId2;
-//        }
-//    };
-
 }
 
 
