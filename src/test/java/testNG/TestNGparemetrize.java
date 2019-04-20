@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestNGparemetrize {
         private static WebDriver driver;
-        private String baseURL = "http://www.Google.com";
+        private String baseURL = "http://zoom.com";
 
         @BeforeTest
         @Parameters("browser")
@@ -28,6 +28,11 @@ public class TestNGparemetrize {
             driver.manage().window().maximize();
             driver.get(baseURL);
             System.out.println("Before Test completed.");
+        }
+
+        @Test
+        public void testXpath(){
+
         }
 
         @Test(priority=2, enabled = true, dataProvider = "getData" )

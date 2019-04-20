@@ -18,12 +18,13 @@ public class practice implements Practical{
     @Test
     void testPractice() throws IOException {
         byte a = 0b101_0;
-        System.out.println(a);
+        Double d = new Double("2.3");
+        System.out.println(d);
     }
 
     @Test
     void testPractice_2(){
-        System.out.println(new practice_2().st);
+        System.out.println("Hellow World!");
     }
 
     @Test
