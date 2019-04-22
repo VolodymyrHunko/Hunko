@@ -432,3 +432,29 @@ class Calculator {
                 .forEach(System.out::println);
     }
 }
+
+class findAppiarenceInString {
+    @FunctionalInterface
+    interface searchable {
+        int findAppirance(String s, char c);
+    }
+
+
+
+    public static void main(String [] arg){
+        searchable srch1 = (s, c) -> {
+            char [] ch = s.toCharArray();
+            int count = 0;
+            for(char y : ch){
+                if(y == c)
+                    count++;
+            }
+            return count;
+        };
+
+        System.out.println("Results: "+srch1.findAppirance("Volodymyr", 'y'));
+
+
+    }
+
+}
