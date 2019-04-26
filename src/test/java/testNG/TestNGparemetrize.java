@@ -17,11 +17,11 @@ public class TestNGparemetrize {
             //parameter 'browser' accepted from testNG.xml file
             if(browser.equals("firefox")) {
                 driver = new FirefoxDriver();
-                System.out.println("Browser is Firefox");
+                System.out.println("Browser is: " + browser);
             }
             else {
                 driver = new ChromeDriver();
-                System.out.println("Browser is Chrome");
+                System.out.println("Browser is: " + browser);
             }
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
@@ -30,12 +30,7 @@ public class TestNGparemetrize {
             System.out.println("Before Test completed.");
         }
 
-        @Test
-        public void testXpath(){
-
-        }
-
-        @Test(priority=2, enabled = true, dataProvider = "getData" )
+        @Test(priority=2, enabled = true, dataProvider = "getData", singleThreaded = true)
         public void printTitle(String UID, String PSW) {
             System.out.println("Title is: "+driver.getTitle());
             System.out.println("UID is: "+ UID);
@@ -50,7 +45,7 @@ public class TestNGparemetrize {
 
         //If the name is not supplied, the data provider’s name automatically defaults to the method’s name.
         //A data provider returns an array of objects.
-        @DataProvider(name="getData")
+        @DataProvider(name="getData", parallel = true)
         public Object[][] getData() {
             //Object [][] data = new Object [rowCount][colCount];
             Object[][] data = new Object[2][2];

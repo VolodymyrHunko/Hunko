@@ -1,31 +1,28 @@
 package helpers;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Listeners;
 
+@Listeners
 public class listenerSimple  implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.println("==>The name of the testcase Started is: " + iTestResult.getName());
+        System.out.println("==>The name of the testCase Started is: " + iTestResult.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.println("==>The name of the testcase passed is: " + iTestResult.getName());
+        System.out.println("==>The name of the testCase passed is: " + iTestResult.getName());
 
     }
 
     // When Test case get failed, this method is called.
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.println("The name of the testcase failed is: " + iTestResult.getName());
+        System.out.println("The name of the testCase failed is: " + iTestResult.getName());
     }
 
     @Override

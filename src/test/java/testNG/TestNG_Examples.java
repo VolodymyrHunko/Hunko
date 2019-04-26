@@ -11,7 +11,7 @@ public class TestNG_Examples {
     // test case 1
     @Test (priority = 2, groups = {"fast","fool"})
     public void testCase1() {
-        System.out.println("in test case 1");
+        System.out.println("in test case 1" );
     }
 
     // test case 2
