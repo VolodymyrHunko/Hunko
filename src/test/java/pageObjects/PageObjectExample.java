@@ -1,21 +1,16 @@
-package seleniumTesting;
+package pageObjects;
 
 import helpers.eventHandler;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pageObjects.recipePage;
+
+import java.util.concurrent.TimeUnit;
 
 import static pageObjects.recipePage.food_3;
 
@@ -27,13 +22,13 @@ public class PageObjectExample {
 
         @BeforeTest
         public void launchBrowser() {
-            driver = new ChromeDriver();
+            driver = new FirefoxDriver();
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
 
-            String baseURL = "file:///home/volo/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
-            //String baseURL = "file:///C://Users//vhunko047//IdeaProjects//Hunko//src//test//resources//sampleHTML.html";
+           // String baseURL = "file:///home/volo/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
+            String baseURL = "file:/home/volodymyr/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
             EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
             eventHandler handler = new eventHandler();
             eventDriver.register(handler);
