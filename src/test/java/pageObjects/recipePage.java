@@ -12,9 +12,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class recipePage  {
+    static WebDriver driver;
+    public recipePage(WebDriver driver){
+        this.driver = driver;
+    }
 
     @FindBy(how=How.CSS, using="span.title.ng-binding:nth-of-type(1)")
     public static WebElement food_1;
+
+    public String getFood_1 (){
+        return food_1.getText();
+    }
 
     @FindBy(how=How.CSS, using="span.title.ng-binding:nth-of-type(3)")
     public static WebElement food_2;
@@ -30,9 +38,8 @@ public class recipePage  {
 
     /**
      * method for printing Map entries
-     * @param driver
      */
-    public static void printRecipe(WebDriver driver){
+    public static void printRecipe(){
         List<WebElement> allServings = driver.findElements(By.cssSelector("span.description"));
         List<WebElement> allFoods = driver.findElements(By.cssSelector("span.title"));
         int count = allServings.size();

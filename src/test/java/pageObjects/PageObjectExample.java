@@ -12,8 +12,6 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static pageObjects.recipePage.food_3;
-
 
 public class PageObjectExample {
 
@@ -42,16 +40,16 @@ public class PageObjectExample {
          */
         @Test (priority=1, enabled = true)
         public void validItems() throws InterruptedException {
-//            Path sampleFile = Paths.get("src/test/resources/sampleHTML.html");
-//            System.out.println(sampleFile.toUri().toString());
-
-            Thread.sleep(3000);
-            PageFactory.initElements(driver, recipePage.class);
-            String thirdItem = food_3.getText();
+            // initialize all page class
+            recipePage page = PageFactory.initElements(driver, recipePage.class);
+            //get text of element by calling a method
+            System.out.println(page.getFood_1());
+            //get elements buy calling static members
+            String thirdItem = recipePage.food_3.getText();
             String fifthItem = recipePage.food_5.getText();
 
             Actions action = new Actions(driver);
-            action.moveToElement(food_3).perform();
+            action.moveToElement(recipePage.food_3).perform();
 
             Thread.sleep(3000);
             System.out.println(thirdItem + "\n" + fifthItem + "\n");
@@ -63,8 +61,9 @@ public class PageObjectExample {
          */
         @Test (priority=2, enabled = true)
         public void printMap() {
-
-            recipePage.printRecipe(driver);
+            // initialize all page class
+            recipePage page = PageFactory.initElements(driver, recipePage.class);
+            page.printRecipe();
         }
 
 
