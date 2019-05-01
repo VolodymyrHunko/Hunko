@@ -26,9 +26,9 @@ public class PageObjectExample {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             driver.manage().window().maximize();
+            String base = System.getProperty("user.dir");
+            String baseURL = "file:"+base+"/src/test/resources/sampleHTML.html";
 
-           // String baseURL = "file:///home/volo/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
-            String baseURL = "file:/home/volodymyr/IdeaProjects/Hunko/src/test/resources/sampleHTML.html";
             EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
             eventHandler handler = new eventHandler();
             eventDriver.register(handler);
