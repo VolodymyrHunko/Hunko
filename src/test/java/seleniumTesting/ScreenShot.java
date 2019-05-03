@@ -19,6 +19,8 @@ import java.io.File;
 
 public class ScreenShot {
     private WebDriver driver = new FirefoxDriver();
+    String base = System.getProperty("user.dir");
+
     @Test (description = "take screen in try/catch block")
     public  void captureScreen() throws Exception{
         driver.get("https://zoom.com");
@@ -28,7 +30,7 @@ public class ScreenShot {
             // implement 'TakesScreenshots' interface
             File image = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             //save it in project
-            FileUtils.copyFile(image, new File("/home/volodymyr/IdeaProjects/Hunko/test-output/testScreen.png"));
+            FileUtils.copyFile(image, new File(base+"/test-output/testScreen.png"));
             System.out.println("Screenshot captured successful.");
         }finally {
             driver.quit();
@@ -49,7 +51,7 @@ public class ScreenShot {
                 TakesScreenshot screen = (TakesScreenshot)driver;
                 File image = screen.getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(image,
-                        new File("/home/volodymyr/IdeaProjects/Hunko/test-output/" + result.getName() + ".png"));
+                        new File(base+"/test-output/" + result.getName() + ".png"));
                 System.out.println("Screenshot captured successful.");
             }catch (Exception e){
                 System.out.println("Screenshot did not captured."+e.getMessage());

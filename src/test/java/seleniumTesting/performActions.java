@@ -9,8 +9,9 @@ import org.openqa.selenium.interactions.Actions;
 public class performActions {
 
     public static void main(String[] args) throws InterruptedException {
+        String base = System.getProperty("user.dir");
         String[] baseUrl = {"http://newtours.demoaut.com/",
-                "file:/home/volodymyr/IdeaProjects/Hunko/src/test/resources/sampleHTML.html"};
+                "file:"+base+"/src/test/resources/sampleHTML.html"};
         WebDriver driver = new FirefoxDriver();
         driver.get(baseUrl[1]);
         Thread.sleep(500);

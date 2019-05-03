@@ -14,10 +14,11 @@ import java.io.IOException;
 import java.util.Date;
 
 public class EXCELmanipulation {
+    String base = System.getProperty("user.dir");
 
     @Test
     public void readFile() throws IOException {
-        FileInputStream fis = new FileInputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/TestDataEXCEL.xlsx");
+        FileInputStream fis = new FileInputStream(base+"/src/test/resources/TestDataEXCEL.xlsx");
         XSSFWorkbook book = new XSSFWorkbook(fis);
         XSSFSheet sheet = book.getSheetAt(0);
         Row r = sheet.getRow(0);
@@ -27,7 +28,7 @@ public class EXCELmanipulation {
 
     @Test
     public void wrightFile() throws IOException{
-        FileInputStream fis = new FileInputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/TestDataEXCEL.xlsx");
+        FileInputStream fis = new FileInputStream(base+"/src/test/resources/TestDataEXCEL.xlsx");
         XSSFWorkbook book = new XSSFWorkbook(fis);
         XSSFSheet sheet =book.getSheetAt(0);
         int lastRow = sheet.getLastRowNum();
@@ -36,7 +37,7 @@ public class EXCELmanipulation {
         Cell cell = row.createCell(1, CellType.STRING);
         cell.setCellValue("Max "+ new Date());
 
-        FileOutputStream fos = new FileOutputStream("/home/volodymyr/IdeaProjects/Hunko/src/test/resources/TestDataEXCEL.xlsx");
+        FileOutputStream fos = new FileOutputStream(base+"/src/test/resources/TestDataEXCEL.xlsx");
         book.write(fos);
         fos.close();
         System.out.println("Sheet updated");
