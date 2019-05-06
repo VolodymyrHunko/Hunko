@@ -5,12 +5,72 @@ import org.testng.annotations.Test;
 import java.io.*;
 import java.util.Scanner;
 
-public class FileWrightExample {
+public class FileManipulation{
+    FileWrightExample fwr = new FileWrightExample();
+    @Test
+    void testFirstwriting() {
+        fwr.firstMethod();
+    }
+
+    @Test
+    void testSecondwriting() throws IOException {
+        fwr.secondMethod();
+    }
+
+    @Test
+    void testAppendFile() throws IOException {
+        fwr.appendFileDta();
+    }
+
+    @Test
+    void testReadFileFirst(){
+        FileRead fr = new FileRead();
+        fr.readFirst();
+    }
+
+    @Test
+    void testBufferReader(){
+        FileRead fr = new FileRead();
+        fr.readBufferReader();
+    }
+
+
+    @Test
+    void testScanner() throws FileNotFoundException {
+        FileRead fr = new FileRead();
+        fr.readScanner();
+    }
+
+    @Test
+    void testSerialization() throws IOException {
+        PersonSerialization pr = new PersonSerialization(55, "VoloHu");
+        pr.id = 212;
+        ObjectOutputStream outObject = new ObjectOutputStream(
+                new FileOutputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
+        outObject.writeObject(pr);
+        outObject.flush();
+        outObject.close(); // .close() calls the .flash(), so .flash() is redundant
+
+        System.out.println("Object saved as: "+ pr);
+    }
+
+    @Test
+    void testDeserialization() throws Exception {
+        ObjectInputStream inObject = new ObjectInputStream(
+                new FileInputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
+        PersonSerialization p = (PersonSerialization) inObject.readObject();
+        System.out.println(p);
+        inObject.close();
+    }
+}
+
+ class FileWrightExample {
+    String base = System.getProperty("user.dir");
     FileOutputStream fos;
     BufferedWriter bw;
-    File file = new File("/home/volo/IdeaProjects/Hunko/src/test/resources/myFile.txt");
-    File file2 = new File("/home/volo/IdeaProjects/Hunko/src/test/resources/myFile2.txt");
-    String myContent = "This is my Data which needs to be written into the file";
+    File file = new File(base+"/src/test/resources/myFile.txt");
+    File file2 = new File(base+"/src/test/resources/myFile2.txt");
+    String myContent = "OUTPUT: This is my Data which needs to be written into the file";
 
     /*
      * first method by using File Output Stream
@@ -82,83 +142,12 @@ public class FileWrightExample {
         pw.close();
 
     }
-
-    @Test
-    void testFirstwriting() {
-        firstMethod();
-    }
-
-    @Test
-    void testSecondwriting() throws IOException {
-        secondMethod();
-    }
-
-    @Test
-    void testAppendFile() throws IOException {
-        appendFileDta();
-    }
-
-    @Test
-    void testReadFileFirst(){
-        FileRead fr = new FileRead();
-        fr.readFirst();
-    }
-
-    @Test
-    void testBufferReader(){
-        FileRead fr = new FileRead();
-        fr.readBufferReader();
-    }
-
-
-    @Test
-    void testScanner() throws FileNotFoundException {
-        FileRead fr = new FileRead();
-        fr.readScanner();
-    }
-
-    @Test
-    void testSerialization() throws IOException {
-        Persons pr = new Persons(55, "VoloHu");
-        pr.id = 212;
-        ObjectOutputStream outObject = new ObjectOutputStream(
-                new FileOutputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
-        outObject.writeObject(pr);
-        outObject.flush();
-        outObject.close(); // .close() calls the .flash(), so .flash() is redundant
-
-        System.out.println("Object saved as: "+ pr);
-    }
-
-    @Test
-    void testDeserialization() throws Exception {
-        ObjectInputStream inObject = new ObjectInputStream(
-                new FileInputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
-        Persons p = (Persons) inObject.readObject();
-        System.out.println(p);
-        inObject.close();
-    }
-
-}
-
-//class for test serialization
-class Persons implements Serializable{
-    int age;
-    String name;
-    transient int id; //Static will not serialise as well
-    Persons (int age, String name){
-        this.age = age;
-        this.name = name;
-    }
-
-    public String toString(){
-        return "Person name: " + name + "; age: " + age + "; id: " + id;
-    }
 }
 
 class FileRead{
     //Specify the path of the file here
-    File file = new File("/home/volo/IdeaProjects/Hunko/src/test/resources/myFile.txt");
+    String base = System.getProperty("user.dir");
+    File file = new File(base+"/src/test/resources/myFile.txt");
     BufferedInputStream bis;
     FileInputStream fis;
     BufferedReader br;
@@ -183,12 +172,13 @@ class FileRead{
             while (bis.available() > 0) {
                 System.out.print((char) bis.read());
             }
-            bis.close();
-            fis.close();
+
         } catch (FileNotFoundException fnfe) {
             System.out.println("The specified file not found" + fnfe);
         } catch (IOException ioe) {
             System.out.println("I/O Exception: " + ioe);
+        }finally {
+            System.out.println("File read completely.");
         }
     }
 
@@ -219,5 +209,21 @@ class FileRead{
         while (scan.hasNext()){
             System.out.println(line++ +": "+scan.nextLine());
         }
+    }
+}
+
+
+//class for test serialization
+class PersonSerialization implements Serializable{
+    int age;
+    String name;
+    transient int id; //Static will not serialise as well
+    PersonSerialization (int age, String name){
+        this.age = age;
+        this.name = name;
+    }
+
+    public String toString(){
+        return "Person name: " + name + "; age: " + age + "; id: " + id;
     }
 }
