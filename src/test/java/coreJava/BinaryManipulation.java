@@ -7,11 +7,15 @@ public class BinaryManipulation {
         String binary = Integer.toString(i, 2);
         String octal = Integer.toString(i, 8);
         String hex = Integer.toString(i, 16);
+
         System.out.println("Int = "+i+"\nconverted to binary: "+binary+
                 "\nconverted to octal: "+octal+
                 "\nconverted to hex: "+hex);
         System.out.println("Binary "+binary+" " +
                 "corresponded to int = "+Integer.parseInt(binary, 2));
+
+        System.out.println("Int: -1 -> "+Integer.toBinaryString(-1)+
+                "\n>>> 30: -> "+ (-1>>>30));
     }
 
     @Test
