@@ -3,16 +3,15 @@ package seleniumTesting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.SkipException;
 
 public class performActions {
 
     public static void main(String[] args) throws InterruptedException {
+        String base = System.getProperty("user.dir");
         String[] baseUrl = {"http://newtours.demoaut.com/",
-                "file:\\C:\\Users\\vhunko047\\IdeaProjects\\Hunko\\src\\test\\resources\\sampleHTML.html"};
+                "file:"+base+"/src/test/resources/sampleHTML.html"};
         WebDriver driver = new FirefoxDriver();
         driver.get(baseUrl[1]);
         Thread.sleep(500);
@@ -62,7 +61,7 @@ public class performActions {
         //move By Offset actions
         WebElement one = driver.findElement(By.name("one"));
         WebElement three = driver.findElement(By.name("three"));
-        WebElement five = driver.findElement(By.name("seven"));
+        WebElement five = driver.findElement(By.name("five"));
 
         // System.out.println(" X coordinate: "+ one.getLocation(). getX() +
         // 		           " Y coordinate: "+ one.getLocation(). getY());
