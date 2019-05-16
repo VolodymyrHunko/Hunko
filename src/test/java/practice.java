@@ -17,8 +17,9 @@ public class practice implements Practical{
 
     @Test
     void testPractice() throws IOException {
-        byte a = 0b101_0;
-        System.out.println(a);
+        int a=4, b=8, c=-5;
+
+        System.out.println(a--*b/c--);
     }
 
     @Test
