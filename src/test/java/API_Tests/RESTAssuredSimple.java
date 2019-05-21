@@ -1,10 +1,12 @@
 package API_Tests;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import helpers.listenerSimple;
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Listeners;
@@ -12,37 +14,43 @@ import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
+
 @Listeners(listenerSimple.class)
 public class RESTAssuredSimple {
     private Assertion hardAssert = new Assertion();
     private SoftAssert softAssert = new SoftAssert();
 
-    /**evaluation of GET method*/
-    @Test (priority = 1)
+    /**
+     * evaluation of GET method
+     */
+    @Test(priority = 1)
     public void GET_evaluation() {
 
         RestAssured.baseURI = "http://restapi.demoqa.com/utilities/weather/city";
         RequestSpecification httpRequest = RestAssured.given();
         Response resp = httpRequest.request(Method.GET, "/Honolulu");
         String respBody = resp.getBody().asString();
-        System.out.println("Response Body is => "+respBody);
+        System.out.println("Response Body is => " + respBody);
 
         int statusCode = resp.getStatusCode();
-        hardAssert.assertEquals(statusCode,200, "Correct code returned.");
+        hardAssert.assertEquals(statusCode, 200, "Correct code returned.");
 
         String serverType = resp.header("Server");
-        System.out.println("Server Type is: "+serverType);
+        System.out.println("Server Type is: " + serverType);
 
         //use the JsonPath to retrieve data from body.
         JsonPath jpevaluator = resp.jsonPath();
         String city = jpevaluator.get("City");
-        softAssert.assertEquals(city, "Honolulu", "City is rendered as: "+ city);
+        softAssert.assertEquals(city, "Honolulu", "City is rendered as: " + city);
 
         softAssert.assertAll();
     }
 
-    /**evaluation of POST method*/
-    @Test (priority = 2)
+    /**
+     * evaluation of POST method
+     */
+    @Test(priority = 2)
     public void POST_evaluate() {
         RestAssured.baseURI = "http://restapi.demoqa.com/customer";
         RequestSpecification request = RestAssured.given();
@@ -66,12 +74,110 @@ public class RESTAssuredSimple {
 
         //Validate response
         int statusCode = resp.getStatusCode();
-        hardAssert.assertEquals(statusCode, 200, "Status code is: "+statusCode);
+        hardAssert.assertEquals(statusCode, 200, "Status code is: " + statusCode);
         String successCode = resp.jsonPath().get("SuccessCode");
-        softAssert.assertEquals(successCode, "Correct Success code was returned", "returned code is: "+successCode);
+        softAssert.assertEquals(successCode, "Correct Success code was returned", "returned code is: " + successCode);
         System.out.println("Response body: " + resp.body().asString());
 
         softAssert.assertAll();
     }
 
+    /**
+     * evaluation of authentication
+     */
+    @Test
+    public void AutenticationBasic(){
+        RestAssured.baseURI = "http://restapi.demoqa.com/authentication/CheckForAuthentication";
+        RequestSpecification requst = RestAssured.given();
+
+        Response resp = requst.get();
+        System.out.println("Code: "+ resp.getStatusLine());
+        System.out.println("Message: "+resp.body().asString());
+    }
+
+    /**
+     * deserialize in ArrayList
+     */
+    @Test
+    public void convertToList(){
+        RestAssured.baseURI = "http://restapi.demoqa.com/utilities/books/getallbooks";
+        RequestSpecification request = RestAssured.given();
+        Response resp = request.get("");
+        System.out.println(resp.body().asString());
+
+        JsonPath eval = resp.jsonPath();
+
+        //get a list of all books
+        List<String> allBooks = eval.getList("books.title");
+
+        for(String book : allBooks){
+            System.out.println("Book: "+book);
+        }
+    }
+
+    /**
+     * evaluation of POST method with deserialization on class
+     */
+    @Test(priority = 3)
+    public void POST_Deserialise() {
+        RestAssured.baseURI = "http://restapi.demoqa.com/customer";
+        RequestSpecification request = RestAssured.given();
+
+        //create JSON object with parameters
+        JSONObject requestParam = new JSONObject();
+        requestParam.put("FirstName", "Volodymyr");
+        requestParam.put("LastName", "Hunko");
+        requestParam.put("UserName", "v008");
+        requestParam.put("Password", "Test2$");
+        requestParam.put("Email", "vhun0001+8@gmail.com");
+
+        //add a header
+        request.header("Content_Type", "application/json");
+
+        //add the JSON to body request
+        request.body(requestParam.toJSONString());
+
+        //POST the request
+        Response resp = request.post("/register");
+
+        //get the response body as JASON
+        ResponseBody body = resp.getBody();
+
+        System.out.println(resp.body().asString());
+
+        if(resp.statusCode() == 201) {
+            System.out.println(resp.getStatusCode());
+            //Deserialize the Response's body into class
+            SuccessResponse respBody = body.as(SuccessResponse.class);
+            System.out.println("Message: "+respBody.Message);
+//            softAssert.assertEquals(respBody.SuccessCode, "OPERATION_SUCCESS",
+//                    "User was not registered .");
+//            softAssert.assertEquals(respBody.Message, "Operation completed successfully",
+//            "All fine...");
+//            softAssert.assertAll();
+        }else{
+            System.out.println(resp.getStatusCode());
+            FailureResponse respBody = body.as(FailureResponse.class);
+            System.out.println("fault: "+respBody.fault);
+//            softAssert.assertEquals(respBody.fault, "FAULT_USER_ALREADY_EXISTS",
+//                    "User was already registered, as expected.");
+//            softAssert.assertEquals(respBody.FaultId, "User already exists",
+//                    "As expected...");
+        }
+
+    }
+}
+
+/* class for deserialization of JSON response */
+@JsonIgnoreProperties (ignoreUnknown = false)
+class SuccessResponse{
+    String SuccessCode;
+    String Message;
+}
+
+/* failure response deserialization */
+@JsonIgnoreProperties (ignoreUnknown = true)
+class FailureResponse{
+    String FaultId;
+    String fault;
 }

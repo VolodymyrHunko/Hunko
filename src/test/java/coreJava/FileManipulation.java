@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class FileManipulation{
+
+    String base = System.getProperty("user.dir");
+
     FileWrightExample fwr = new FileWrightExample();
     @Test
     void testFirstwriting() {
@@ -46,7 +49,7 @@ public class FileManipulation{
         PersonSerialization pr = new PersonSerialization(55, "VoloHu");
         pr.id = 212;
         ObjectOutputStream outObject = new ObjectOutputStream(
-                new FileOutputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
+                new FileOutputStream(base+"/src/test/resources/Object_File.txt"));
         outObject.writeObject(pr);
         outObject.flush();
         outObject.close(); // .close() calls the .flash(), so .flash() is redundant
@@ -57,7 +60,7 @@ public class FileManipulation{
     @Test
     void testDeserialization() throws Exception {
         ObjectInputStream inObject = new ObjectInputStream(
-                new FileInputStream("/home/volo/IdeaProjects/Hunko/src/test/resources/Object_File.txt"));
+                new FileInputStream(base+"/src/test/resources/Object_File.txt"));
         PersonSerialization p = (PersonSerialization) inObject.readObject();
         System.out.println(p);
         inObject.close();
