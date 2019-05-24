@@ -230,3 +230,4 @@ class PersonSerialization implements Serializable{
         return "Person name: " + name + "; age: " + age + "; id: " + id;
     }
 }
+
