@@ -1,6 +1,9 @@
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 interface Practical{
@@ -17,9 +20,15 @@ public class practice implements Practical{
 
     @Test
     void testPractice() throws IOException {
-        int a=4, b=8, c=-5;
-
-        System.out.println(a--*b/c--);
+        String s = "My string";
+        StringBuilder sb = new StringBuilder(s);
+        List<Character> l = new ArrayList<>();;
+        for(int i =0; i<s.length(); i++) {
+            l.add(s.charAt(i));
+        }
+        Collections.reverse(l);
+        System.out.println(l.toString());
+        System.out.println(sb.reverse().toString());
     }
 
     @Test
