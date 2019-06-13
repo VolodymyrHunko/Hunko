@@ -24,15 +24,19 @@ public class sampleClass {
 //        options.addArguments("headless");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         //Step #1: navigate to PHP.net site, validate Title
         driver.get("http://php.net/index");
         Assert.assertEquals(driver.getTitle(),"PHP: Hypertext Preprocessor");
+
         //Step #2: enter 'eval' text in search box and hit Enter
         driver.findElement(By.cssSelector("input[type='search']")).sendKeys("eval");
         driver.findElement(By.cssSelector("input[type='search']")).sendKeys(Keys.ENTER);
+
         //Step #3:validate page was redirected
         Assert.assertEquals("http://php.net/manual/en/function.eval.php", driver.getCurrentUrl(),
                 "browser should redirect to http://php.net/manual/en/function.eval.php");
+
         //Step #4: get a list of elements with class '.caution' and validate it is !=0
         List<WebElement> caution = driver.findElements(By.cssSelector("div.caution"));
         Assert.assertNotEquals(0,caution);

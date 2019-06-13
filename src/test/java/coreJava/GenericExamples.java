@@ -55,6 +55,12 @@ public class GenericExamples {
         Integer [] intg =  {11,22,33};
         genericMethod(intg);
         genericMethod(new sampleGenericClass<>("Class var value"));
+
+        //example of wrong implementation
+        sampleGenericClass <String>  samp = new sampleGenericClass<>("some value");
+        //samp.setVar(66);  //types does not match
+        samp.setVar("66"); // looks good
+        System.out.println(samp);
     }
 
     @Test
@@ -93,6 +99,7 @@ public class GenericExamples {
         // get the two String as returned from classes and pass it to Generic class
         List<String> myList = new ArrayList<>();
         myList.add("Olena");
+
         sampleGenericClass<String> myClass = new sampleGenericClass<>("Volo");
         MyClass<String, String> mk2 = new MyClass<>(myList.get(0), myClass.getVar());
 

@@ -7,11 +7,12 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src\\test\\java\\featureFiles\\cucumberFile.feature",
-        glue = "src\\test\\java\\cucumberTest\\MyStepdefs",
-        dryRun = true,
-        monochrome = false,
-        format = {"pretty"}
+        features = {"src/test/resources/featureFiles/"},
+        glue = {"cucumberTest"},
+        //dryRun = true,
+        monochrome = true,
+        format = {"pretty", "html:target/cucumber-html-report"},
+        tags = {"@FullTest","~@LongTest"}
 
 )
 

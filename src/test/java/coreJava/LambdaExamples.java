@@ -313,7 +313,8 @@ public class LambdaExamples {
 class Person {
 
     public enum Sex {
-        MALE, FEMALE
+        MALE,
+        FEMALE
     }
 
     private String name;

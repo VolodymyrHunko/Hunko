@@ -148,9 +148,9 @@ public class AlbumDemo {
          */
         public static class Builder {
             private String title;
-            private ArrayList< String > artists = new ArrayList < > ();
+            private ArrayList< String > artists = new ArrayList<String>();
             private int releaseYear;
-            private ArrayList < String > songsTitles = new ArrayList < > ();
+            private ArrayList < String > songsTitles = new ArrayList<String>();
             public Builder(final String newTitle, final int newReleaseYear) {
                 title = newTitle;
                 releaseYear = newReleaseYear;

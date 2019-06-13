@@ -33,7 +33,7 @@ public class collectionsExamples {
         objList.add(object5);
     }
 
-    /*
+    /**
      *   Addition to, Replacing and printing of Array Lists
      */
     @Test
@@ -76,7 +76,7 @@ public class collectionsExamples {
         }
     }
 
-    /*
+    /**
      * Sorting of ArrayLists and Arrays, HashSet
      */
     @Test
@@ -123,7 +123,7 @@ public class collectionsExamples {
         hSet = new TreeSet<Integer>(aList);
     }
 
-    /*
+    /**
      * swapping and get max/min value
      */
     @Test
@@ -147,7 +147,7 @@ public class collectionsExamples {
         System.out.println("Max value: " + Collections.max(array));
     }
 
-    /*
+    /**
      * searching of values, linear and binary
      */
     @Test
@@ -176,7 +176,7 @@ public class collectionsExamples {
         return Arrays.binarySearch(sort, comp);
     }
 
-    /*
+    /**
      * sort ArrayList of objects
      */
     @Test

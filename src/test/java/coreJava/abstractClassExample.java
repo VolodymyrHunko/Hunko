@@ -27,6 +27,10 @@ abstract class oneAbstractClass implements oneInterface{ //abstract class does n
 
     abstract int method_F(); //method did not get from interface
 
+    private static void method_Y(){
+        System.out.println("Private static method in super class");
+    }
+
     String getQ() {
         return q;
     }
@@ -60,6 +64,7 @@ class oneRealClass extends oneAbstractClass{
 
     @Override
     public void method_C(long b) {
+        method_Y();
     }
 
     @Override
@@ -81,6 +86,10 @@ class oneRealClass extends oneAbstractClass{
     @Override
     public String toString(){
         return "Override toString(): "+www;
+    }
+
+    private static void method_Y(){
+        System.out.println("Private static in child class");
     }
 }
 
@@ -158,6 +167,8 @@ public class abstractClassExample {
 
         foo.method_B(); //return super method (as it's NOT override)
         foo.method_A(6); //return sub method
+
+
         //two objects have same hash code, but not equal
         System.out.println("Hashcode foo: "+foo.hashCode()+"\nString passed: "+ foo.getQ());
         System.out.println("Hashcode foo2: "+foo2.hashCode()+"\nString passed: "+ foo2.getQ());
