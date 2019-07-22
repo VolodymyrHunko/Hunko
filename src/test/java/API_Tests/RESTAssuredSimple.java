@@ -16,7 +16,11 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-@Listeners(listenerSimple.class)
+/**
+ * Examples from Tools QA site
+ */
+
+//@Listeners(listenerSimple.class)
 public class RESTAssuredSimple {
     private Assertion hardAssert = new Assertion();
     private SoftAssert softAssert = new SoftAssert();
@@ -40,8 +44,8 @@ public class RESTAssuredSimple {
         System.out.println("Server Type is: " + serverType);
 
         //use the JsonPath to retrieve data from body.
-        JsonPath jpevaluator = resp.jsonPath();
-        String city = jpevaluator.get("City");
+        JsonPath jpEvaluator = resp.jsonPath();
+        String city = jpEvaluator.get("City");
         softAssert.assertEquals(city, "Honolulu", "City is rendered as: " + city);
 
         softAssert.assertAll();
@@ -57,11 +61,11 @@ public class RESTAssuredSimple {
 
         //create JSON object with parameters
         JSONObject requestParam = new JSONObject();
-        requestParam.put("FirstName", "Volody");
+        requestParam.put("FirstName", "Volodymyr");
         requestParam.put("LastName", "Hunko");
-        requestParam.put("UserName", "v002");
+        requestParam.put("UserName", "v0046");
         requestParam.put("Password", "Test1$");
-        requestParam.put("Email", "vhun0001+2@gmail.com");
+        requestParam.put("Email", "vhun0001+46@gmail.com");
 
         //add a header
         request.header("Content_Type", "application/json");
@@ -74,9 +78,9 @@ public class RESTAssuredSimple {
 
         //Validate response
         int statusCode = resp.getStatusCode();
-        hardAssert.assertEquals(statusCode, 200, "Status code is: " + statusCode);
+        hardAssert.assertEquals(statusCode, 201, "Status code is: " + statusCode);
         String successCode = resp.jsonPath().get("SuccessCode");
-        softAssert.assertEquals(successCode, "Correct Success code was returned", "returned code is: " + successCode);
+        softAssert.assertEquals(successCode, "OPERATION_SUCCESS", "returned code is: " + successCode);
         System.out.println("Response body: " + resp.body().asString());
 
         softAssert.assertAll();
@@ -105,8 +109,18 @@ public class RESTAssuredSimple {
         Response resp = request.get("");
         System.out.println(resp.body().asString());
 
-        JsonPath eval = resp.jsonPath();
+        // We can convert the Json Response directly into a Java Array by using
+        // JsonPath.getObject method. Here we have to specify that we want to
+        // deserialize the Json into an Array of Book. This can be done by specifying
+        // Book[].class as the second argument to the getObject method.
+        Book[] books = resp.jsonPath().getObject("books",Book[].class );
+        for(Book book : books)
+        {
+            System.out.println("Book title " + book.title);
+        }
 
+        //second method to get list of book
+        JsonPath eval = resp.jsonPath();
         //get a list of all books
         List<String> allBooks = eval.getList("books.title");
 
@@ -180,4 +194,20 @@ class SuccessResponse{
 class FailureResponse{
     String FaultId;
     String fault;
+}
+
+/**
+ * class for deserialization book service used in this example
+ */
+@JsonIgnoreProperties (ignoreUnknown = true)
+ class Book {
+    String isbn;
+    String title;
+    String subtitle;
+    String author;
+    String published;
+    String publisher;
+    int pages;
+    String description;
+    String website;
 }
