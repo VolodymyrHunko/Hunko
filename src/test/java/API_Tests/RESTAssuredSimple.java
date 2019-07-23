@@ -8,6 +8,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matcher;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -15,6 +16,13 @@ import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 
 /**
  * Examples from Tools QA site
@@ -49,6 +57,16 @@ public class RESTAssuredSimple {
         softAssert.assertEquals(city, "Honolulu", "City is rendered as: " + city);
 
         softAssert.assertAll();
+
+        //second way to validate REST_assured response
+        given().
+                when().
+                get("http://restapi.demoqa.com/utilities/weather/city").
+                then().
+                assertThat().
+                statusCode(200);
+
+        System.out.println("Status code is 200");
     }
 
     /**
@@ -97,6 +115,7 @@ public class RESTAssuredSimple {
         Response resp = requst.get();
         System.out.println("Code: "+ resp.getStatusLine());
         System.out.println("Message: "+resp.body().asString());
+
     }
 
     /**
