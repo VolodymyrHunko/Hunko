@@ -33,7 +33,9 @@ public class practice implements Practical{
 
     @Test
     void testPractice_2(){
-        System.out.println(new practice_2().st);
+        Object a = String.valueOf(1);
+        Object b = String.valueOf(1);
+        System.out.println(a.equals(b));
     }
 
     @Test

@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -123,29 +124,43 @@ public class RESTAssuredSimple {
      */
     @Test
     public void convertToList(){
-        RestAssured.baseURI = "http://restapi.demoqa.com/utilities/books/getallbooks";
+        RestAssured.baseURI = "http://ergast.com/api/f1/2017/circuits.json";
         RequestSpecification request = RestAssured.given();
         Response resp = request.get("");
-        System.out.println(resp.body().asString());
+        //System.out.println(resp.body().asString());
 
         // We can convert the Json Response directly into a Java Array by using
         // JsonPath.getObject method. Here we have to specify that we want to
-        // deserialize the Json into an Array of Book. This can be done by specifying
-        // Book[].class as the second argument to the getObject method.
-        Book[] books = resp.jsonPath().getObject("books",Book[].class );
-        for(Book book : books)
+        // deserialize the Json into an Array of Races. This can be done by specifying
+        // Race[].class as the second argument to the getObject method.
+        // Use the JsonPath parsing library of RestAssured to Parse the JSON into an object
+
+        Race r1 = resp.jsonPath().getObject("MRData.CircuitTable.Circuits", Race.class);
+        System.out.println(r1.toString());
+
+
+        ResponseBody body = resp.getBody();
+        Race r2 = body.as(Race.class);
+        System.out.println(r1.toString());
+
+        Race[] races = resp.jsonPath().getObject("MRData.CircuitTable.Circuits",Race[].class );
+        int count = 1;
+        for(Race r : races)
         {
-            System.out.println("Book title " + book.title);
+            System.out.println(count+ " Race name: " + r.circuitName);
+            System.out.println(count+ " Race ID: " + r.circuitId);
+            System.out.println(count+ " Race URL: " + r.url);
+            count++;
         }
 
-        //second method to get list of book
-        JsonPath eval = resp.jsonPath();
-        //get a list of all books
-        List<String> allBooks = eval.getList("books.title");
-
-        for(String book : allBooks){
-            System.out.println("Book: "+book);
-        }
+//        //second method to get list of book
+//        JsonPath eval = resp.jsonPath();
+//        //get a list of all books
+//        List<String> allCircus = eval.getList("MRData.CircuitTable.Circuits");
+//
+//        for(String circus : allCircus){
+//            System.out.println("Circus: "+circus);
+//        }
     }
 
     /**
@@ -229,4 +244,15 @@ class FailureResponse{
     int pages;
     String description;
     String website;
+}
+
+@JsonIgnoreProperties (ignoreUnknown = true)
+class Race {
+    String circuitId;
+    String circuitName;
+    String url;
+
+    public String toString(){
+      return "url: "+url;
+    }
 }
