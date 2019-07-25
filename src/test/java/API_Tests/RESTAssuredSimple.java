@@ -8,15 +8,28 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matcher;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Listeners(listenerSimple.class)
+import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+
+/**
+ * Examples from Tools QA site
+ */
+
+//@Listeners(listenerSimple.class)
 public class RESTAssuredSimple {
     private Assertion hardAssert = new Assertion();
     private SoftAssert softAssert = new SoftAssert();
@@ -40,11 +53,21 @@ public class RESTAssuredSimple {
         System.out.println("Server Type is: " + serverType);
 
         //use the JsonPath to retrieve data from body.
-        JsonPath jpevaluator = resp.jsonPath();
-        String city = jpevaluator.get("City");
+        JsonPath jpEvaluator = resp.jsonPath();
+        String city = jpEvaluator.get("City");
         softAssert.assertEquals(city, "Honolulu", "City is rendered as: " + city);
 
         softAssert.assertAll();
+
+        //second way to validate REST_assured response
+        given().
+                when().
+                get("http://restapi.demoqa.com/utilities/weather/city").
+                then().
+                assertThat().
+                statusCode(200);
+
+        System.out.println("Status code is 200");
     }
 
     /**
@@ -57,11 +80,11 @@ public class RESTAssuredSimple {
 
         //create JSON object with parameters
         JSONObject requestParam = new JSONObject();
-        requestParam.put("FirstName", "Volody");
+        requestParam.put("FirstName", "Volodymyr");
         requestParam.put("LastName", "Hunko");
-        requestParam.put("UserName", "v002");
+        requestParam.put("UserName", "v0046");
         requestParam.put("Password", "Test1$");
-        requestParam.put("Email", "vhun0001+2@gmail.com");
+        requestParam.put("Email", "vhun0001+46@gmail.com");
 
         //add a header
         request.header("Content_Type", "application/json");
@@ -74,9 +97,9 @@ public class RESTAssuredSimple {
 
         //Validate response
         int statusCode = resp.getStatusCode();
-        hardAssert.assertEquals(statusCode, 200, "Status code is: " + statusCode);
+        hardAssert.assertEquals(statusCode, 201, "Status code is: " + statusCode);
         String successCode = resp.jsonPath().get("SuccessCode");
-        softAssert.assertEquals(successCode, "Correct Success code was returned", "returned code is: " + successCode);
+        softAssert.assertEquals(successCode, "OPERATION_SUCCESS", "returned code is: " + successCode);
         System.out.println("Response body: " + resp.body().asString());
 
         softAssert.assertAll();
@@ -93,6 +116,7 @@ public class RESTAssuredSimple {
         Response resp = requst.get();
         System.out.println("Code: "+ resp.getStatusLine());
         System.out.println("Message: "+resp.body().asString());
+
     }
 
     /**
@@ -100,19 +124,43 @@ public class RESTAssuredSimple {
      */
     @Test
     public void convertToList(){
-        RestAssured.baseURI = "http://restapi.demoqa.com/utilities/books/getallbooks";
+        RestAssured.baseURI = "http://ergast.com/api/f1/2017/circuits.json";
         RequestSpecification request = RestAssured.given();
         Response resp = request.get("");
-        System.out.println(resp.body().asString());
+        //System.out.println(resp.body().asString());
 
-        JsonPath eval = resp.jsonPath();
+        // We can convert the Json Response directly into a Java Array by using
+        // JsonPath.getObject method. Here we have to specify that we want to
+        // deserialize the Json into an Array of Races. This can be done by specifying
+        // Race[].class as the second argument to the getObject method.
+        // Use the JsonPath parsing library of RestAssured to Parse the JSON into an object
 
-        //get a list of all books
-        List<String> allBooks = eval.getList("books.title");
+        Race r1 = resp.jsonPath().getObject("MRData.CircuitTable.Circuits", Race.class);
+        System.out.println(r1.toString());
 
-        for(String book : allBooks){
-            System.out.println("Book: "+book);
+
+        ResponseBody body = resp.getBody();
+        Race r2 = body.as(Race.class);
+        System.out.println(r1.toString());
+
+        Race[] races = resp.jsonPath().getObject("MRData.CircuitTable.Circuits",Race[].class );
+        int count = 1;
+        for(Race r : races)
+        {
+            System.out.println(count+ " Race name: " + r.circuitName);
+            System.out.println(count+ " Race ID: " + r.circuitId);
+            System.out.println(count+ " Race URL: " + r.url);
+            count++;
         }
+
+//        //second method to get list of book
+//        JsonPath eval = resp.jsonPath();
+//        //get a list of all books
+//        List<String> allCircus = eval.getList("MRData.CircuitTable.Circuits");
+//
+//        for(String circus : allCircus){
+//            System.out.println("Circus: "+circus);
+//        }
     }
 
     /**
@@ -180,4 +228,31 @@ class SuccessResponse{
 class FailureResponse{
     String FaultId;
     String fault;
+}
+
+/**
+ * class for deserialization book service used in this example
+ */
+@JsonIgnoreProperties (ignoreUnknown = true)
+ class Book {
+    String isbn;
+    String title;
+    String subtitle;
+    String author;
+    String published;
+    String publisher;
+    int pages;
+    String description;
+    String website;
+}
+
+@JsonIgnoreProperties (ignoreUnknown = true)
+class Race {
+    String circuitId;
+    String circuitName;
+    String url;
+
+    public String toString(){
+      return "url: "+url;
+    }
 }

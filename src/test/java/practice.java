@@ -1,6 +1,9 @@
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 interface Practical{
@@ -17,13 +20,22 @@ public class practice implements Practical{
 
     @Test
     void testPractice() throws IOException {
-        byte a = 0b101_0;
-        System.out.println(a);
+        String s = "My string";
+        StringBuilder sb = new StringBuilder(s);
+        List<Character> l = new ArrayList<>();;
+        for(int i =0; i<s.length(); i++) {
+            l.add(s.charAt(i));
+        }
+        Collections.reverse(l);
+        System.out.println(l.toString());
+        System.out.println(sb.reverse().toString());
     }
 
     @Test
     void testPractice_2(){
-        System.out.println("Hellow World!");
+        Object a = String.valueOf(1);
+        Object b = String.valueOf(1);
+        System.out.println(a.equals(b));
     }
 
     @Test
