@@ -1,21 +1,37 @@
 package API_Tests;
 
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.ResponseSpecification;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
 /**
  * examples from:
  * techbeacon.com/app-dev-testing/how-perform-api-testing-rest-assured
  */
 public class HamcrestValidation {
+    private static ResponseSpecification responseSpec;
+
+    @BeforeClass (description = "validate spec before request (if called)")
+    public static void createResponseSpec() {
+
+        responseSpec =
+                new ResponseSpecBuilder().
+                        expectStatusCode(200).
+                        expectContentType(ContentType.JSON).
+                        build();
+    }
 
 
     @Test (description = "sample request and assertion")
@@ -39,8 +55,10 @@ public class HamcrestValidation {
 
         String respBody =
                 //given(). /*can be skipped*/
-                get("http://ergast.com/api/f1/2017/circuits.json").
-                        getBody().
+                get("http://api.zippopotam.us/us/08823").
+                        //get("http://ergast.com/api/f1/drivers/max_verstappen.json").
+
+        getBody().
                         asString();
 
         System.out.println("Response Body is => " + respBody);
@@ -54,6 +72,8 @@ public class HamcrestValidation {
                 when().
                 get("http://ergast.com/api/f1/{raceSeason}/circuits.json").
                 then().
+                spec(responseSpec). //check success specification
+                and().
                 assertThat().
                 body("MRData.CircuitTable.Circuits", hasSize(numberOfRaces));
     }
@@ -121,6 +141,19 @@ public class HamcrestValidation {
         System.out.println("Country is: Australia");
     }
 
+    @Test
+    public void checkResponseTimeForApiCall() {
+
+        given().
+                when().
+                get("http://api.zippopotam.us/us/08823").
+                then().
+                assertThat().
+                time(lessThan(1000L), TimeUnit.MILLISECONDS);
+
+        System.out.println("Timeout less than 1000 L: ");
+    }
+
     @Test (description = "deserialization the response to POJO")
     public void deserialization(){
 
@@ -140,6 +173,31 @@ public class HamcrestValidation {
         for (Circuit c : races){
             System.out.println(c.circuitName);
         }
+    }
 
+    @Test(description = "request using query parameters")
+    public void testQuery(){
+        given().
+                queryParam("text", "testcase").
+                when().
+                get("http://md5.jsontest.com").
+                then().
+                assertThat().
+                body("original", equalTo("testcase")).
+                and().
+                body("md5", notNullValue());
+    }
+
+    @Test (description = "communicated with XML response")
+    public void checkTheListContainsOneJapaneseCar() {
+
+        given().
+                when().
+                get("http://ergast.com/api/f1/drivers.xml").
+                then().
+                assertThat().
+                body("MRData.DriverTable.Driver.findAll{it.Nationality == 'Italian'}.size()", equalTo(4)).
+                and().
+                body("MRData.DriverTable.Driver.@driverId.grep(~/ad.*/).size()", equalTo(3));
     }
 }
