@@ -1,29 +1,20 @@
 package API_Tests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import helpers.listenerSimple;
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matcher;
 import org.json.simple.JSONObject;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
 
 /**
  * Examples from Tools QA site
@@ -124,43 +115,29 @@ public class RESTAssuredSimple {
      */
     @Test
     public void convertToList(){
-        RestAssured.baseURI = "http://ergast.com/api/f1/2017/circuits.json";
+        RestAssured.baseURI = "http://restapi.demoqa.com/utilities/books/getallbooks";
         RequestSpecification request = RestAssured.given();
         Response resp = request.get("");
-        //System.out.println(resp.body().asString());
+        System.out.println(resp.body().asString());
 
         // We can convert the Json Response directly into a Java Array by using
         // JsonPath.getObject method. Here we have to specify that we want to
-        // deserialize the Json into an Array of Races. This can be done by specifying
-        // Race[].class as the second argument to the getObject method.
-        // Use the JsonPath parsing library of RestAssured to Parse the JSON into an object
-
-        Race r1 = resp.jsonPath().getObject("MRData.CircuitTable.Circuits", Race.class);
-        System.out.println(r1.toString());
-
-
-        ResponseBody body = resp.getBody();
-        Race r2 = body.as(Race.class);
-        System.out.println(r1.toString());
-
-        Race[] races = resp.jsonPath().getObject("MRData.CircuitTable.Circuits",Race[].class );
-        int count = 1;
-        for(Race r : races)
+        // deserialize the Json into an Array of Book. This can be done by specifying
+        // Book[].class as the second argument to the getObject method.
+        Book[] books = resp.jsonPath().getObject("books",Book[].class );
+        for(Book book : books)
         {
-            System.out.println(count+ " Race name: " + r.circuitName);
-            System.out.println(count+ " Race ID: " + r.circuitId);
-            System.out.println(count+ " Race URL: " + r.url);
-            count++;
+            System.out.println("Book title " + book.title);
         }
 
-//        //second method to get list of book
-//        JsonPath eval = resp.jsonPath();
-//        //get a list of all books
-//        List<String> allCircus = eval.getList("MRData.CircuitTable.Circuits");
-//
-//        for(String circus : allCircus){
-//            System.out.println("Circus: "+circus);
-//        }
+        //second method to get list of book
+        JsonPath eval = resp.jsonPath();
+        //get a list of all books
+        List<String> allBooks = eval.getList("books.title");
+
+        for(String book : allBooks){
+            System.out.println("Book: "+book);
+        }
     }
 
     /**
@@ -246,13 +223,3 @@ class FailureResponse{
     String website;
 }
 
-@JsonIgnoreProperties (ignoreUnknown = true)
-class Race {
-    String circuitId;
-    String circuitName;
-    String url;
-
-    public String toString(){
-      return "url: "+url;
-    }
-}
