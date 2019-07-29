@@ -152,9 +152,9 @@ public class RESTAssuredSimple {
         JSONObject requestParam = new JSONObject();
         requestParam.put("FirstName", "Volodymyr");
         requestParam.put("LastName", "Hunko");
-        requestParam.put("UserName", "v008");
+        requestParam.put("UserName", "v0089");
         requestParam.put("Password", "Test2$");
-        requestParam.put("Email", "vhun0001+8@gmail.com");
+        requestParam.put("Email", "vhun0001+89@gmail.com");
 
         //add a header
         request.header("Content_Type", "application/json");
@@ -174,7 +174,7 @@ public class RESTAssuredSimple {
             System.out.println(resp.getStatusCode());
             //Deserialize the Response's body into class
             SuccessResponse respBody = body.as(SuccessResponse.class);
-            System.out.println("Message: "+respBody.Message);
+            System.out.println("Message: "+respBody.Message + "; Code: "+respBody.SuccessCode);
 //            softAssert.assertEquals(respBody.SuccessCode, "OPERATION_SUCCESS",
 //                    "User was not registered .");
 //            softAssert.assertEquals(respBody.Message, "Operation completed successfully",
@@ -183,7 +183,7 @@ public class RESTAssuredSimple {
         }else{
             System.out.println(resp.getStatusCode());
             FailureResponse respBody = body.as(FailureResponse.class);
-            System.out.println("fault: "+respBody.fault);
+            System.out.println("fault: "+respBody.fault+"; ID: "+respBody.FaultId);
 //            softAssert.assertEquals(respBody.fault, "FAULT_USER_ALREADY_EXISTS",
 //                    "User was already registered, as expected.");
 //            softAssert.assertEquals(respBody.FaultId, "User already exists",
@@ -194,17 +194,17 @@ public class RESTAssuredSimple {
 }
 
 /* class for deserialization of JSON response */
-@JsonIgnoreProperties (ignoreUnknown = false)
+@JsonIgnoreProperties (ignoreUnknown = true)
 class SuccessResponse{
-    String SuccessCode;
-    String Message;
+    public String SuccessCode;
+    public String Message;
 }
 
 /* failure response deserialization */
 @JsonIgnoreProperties (ignoreUnknown = true)
 class FailureResponse{
-    String FaultId;
-    String fault;
+    public String FaultId;
+    public String fault;
 }
 
 /**

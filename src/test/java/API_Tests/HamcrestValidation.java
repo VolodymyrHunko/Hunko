@@ -1,9 +1,9 @@
 package API_Tests;
 
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.ResponseSpecification;
+import io.restassured.builder.*;
+import io.restassured.http.*;
+import io.restassured.response.*;
+import io.restassured.specification.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.BeforeClass;
@@ -198,6 +198,42 @@ public class HamcrestValidation {
                 assertThat().
                 body("MRData.DriverTable.Driver.findAll{it.Nationality == 'Italian'}.size()", equalTo(4)).
                 and().
-                body("MRData.DriverTable.Driver.@driverId.grep(~/ad.*/).size()", equalTo(3));
+                body("MRData.DriverTable.Driver.@driverId.grep(~/ad.*/).size()", equalTo(3)).
+                and().
+                body("MRData.DriverTable.Driver[-1].Nationality", equalTo("British"));
+
     }
+
+    @Test (description = "(de)-serialization POJO class POST-GET flow")
+    public void deserializationPOGO(){
+        Address myAddress =
+                new Address("First", "Last", "First_Last1", "Amsterdam", "xxx+1@gmail.com");
+
+        Response resp = given().
+                body(myAddress).
+                when().
+                post("http://restapi.demoqa.com/customer/register");
+        System.out.println("POST sent");
+
+        //get the response body as JASON
+        ResponseBody body = resp.getBody();
+
+        if(resp.statusCode()==201){
+            System.out.println("Response code: "+resp.getStatusCode());
+            System.out.println(resp.body().asString());
+            //deserialize response to class (one way -> resp.getBody().as(.class)
+            SuccessResponse respBodyS = body.as(SuccessResponse.class);
+            System.out.println("Message: "+respBodyS.Message + "; Code: "+respBodyS.SuccessCode);
+        }else {
+            System.out.println("Response code: "+resp.getStatusCode());
+            System.out.println(resp.body().asString());
+            //deserialize response to class( diff way -> resp.jasonPath.getObject(.class)
+            FailureResponse respBodyF = resp.jsonPath().getObject("",FailureResponse.class);
+            System.out.println("fault: "+respBodyF.fault+"; ID: "+respBodyF.FaultId);
+        }
+    }
+
+
 }
+
+
