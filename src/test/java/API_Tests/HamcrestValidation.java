@@ -1,5 +1,6 @@
 package API_Tests;
 
+import io.restassured.authentication.FormAuthConfig;
 import io.restassured.builder.*;
 import io.restassured.http.*;
 import io.restassured.response.*;
@@ -40,28 +41,41 @@ public class HamcrestValidation {
         given().
                 when().
                 get("http://ergast.com/api/f1/2017/circuits.json").
-                then().
+                then().log().body().
                 assertThat().
                 statusCode(200).
                 and().
                 body("MRData.CircuitTable.Circuits", hasSize(20)).
-                //and().body("MRData.CircuitTable.Circuits",is(array(hasSize(20)))).
                 and().
-                body("MRData.CircuitTable.Circuits[1].circuitId", equalTo("americas"));
+                body("MRData.CircuitTable.Circuits[1].circuitId", equalTo("americas")).
+                and().
+                body("MRData.CircuitTable.Circuits.findAll{it.circuitId == 'americas'}.size()", greaterThan(0));
     }
 
     @Test (description = "print whole body")
     public void printBody() {
 
         String respBody =
-                //given(). /*can be skipped*/
                 get("http://api.zippopotam.us/us/08823").
-                        //get("http://ergast.com/api/f1/drivers/max_verstappen.json").
-
-        getBody().
+                        getBody().
                         asString();
+        String sessionId = get("http://api.zippopotam.us/us/08823").sessionId();
 
-        System.out.println("Response Body is => " + respBody);
+        System.out.println("Response Body is => " + respBody + "\nSession ID: "+sessionId);
+    }
+
+    @Test (description = "parametrize a request")
+    public void checkCityForZipCode() {
+
+        given().
+                pathParam("country","us").
+                pathParam("zipcode","90210").
+                when().
+                get("http://api.zippopotam.us/{country}/{zipcode}").
+                then().
+                log().body().
+                assertThat().
+                body("places.'place name'[0]",equalTo("Beverly Hills"));
     }
 
     @Test(dataProvider = "seasonsAndNumberOfRaces", description = "parametrise test with data provider")
@@ -89,21 +103,34 @@ public class HamcrestValidation {
         };
     }
 
-    @Test (description = "sample Authentication with userName and password" +
-            "")
+    @Test (description = "sample Authentication with userName and password")
     public void test_APIWithBasicAuthentication_ShouldBeGivenAccess() {
 
         given().
                 auth().
                 preemptive().
-                basic("username", "password"). //basic assess with userName & password
+                basic("volodymyr.hunko@capgemini.com", "Gunko$220463"). //basic assess with userName & password
                 when().
-                //get("http://path.to/basic/secured/api").
-                get("http://yahoo.com").
+                get("https://eu1.concursolutions.com/nui/signin").
                 then().
+                log().body().
                 assertThat().
                 statusCode(200);
     }
+
+    @Test (description = "authentication with form")
+    public  void testFormAuthentication(){
+        given().
+                auth().
+                form("volodymyr.hunko@capgemini.com","Gunko$220463",
+                new FormAuthConfig("frmMain","userid","password")).
+                when().
+                get("https://eu1.concursolutions.com/nui/signin").
+                then().
+                log().body().
+                assertThat().
+                statusCode(200);
+}
 
     @Test (description = "authentication with OAuth 2")
     public void test_APIWithOAuth2Authentication_ShouldBeGivenAccess() {
@@ -141,7 +168,7 @@ public class HamcrestValidation {
         System.out.println("Country is: Australia");
     }
 
-    @Test
+    @Test (description = "get response time")
     public void checkResponseTimeForApiCall() {
 
         given().
@@ -154,27 +181,6 @@ public class HamcrestValidation {
         System.out.println("Timeout less than 1000 L: ");
     }
 
-    @Test (description = "deserialization the response to POJO")
-    public void deserialization(){
-
-        Response resp = get("http://ergast.com/api/f1/2017/circuits.json");
-
-        // We can convert the Json Response directly into a Java Array by using
-        // JsonPath.getObject method. Here we have to specify that we want to
-        // deserialize the Json into an Array of Circuits. This can be done by specifying
-        // Circuit[].class as the second argument to the getObject method.
-        Circuit obj = resp.jsonPath().getObject("MRData.CircuitTable.Circuits[0]",Circuit.class);
-        System.out.println(obj.circuitId);
-
-        Location loc = resp.jsonPath().getObject("MRData.CircuitTable.Circuits[0].Location",Location.class);
-        System.out.println(loc.toString());
-
-        Circuit [] races = resp.jsonPath().getObject("MRData.CircuitTable.Circuits",Circuit[].class);
-        for (Circuit c : races){
-            System.out.println(c.circuitName);
-        }
-    }
-
     @Test(description = "request using query parameters")
     public void testQuery(){
         given().
@@ -182,6 +188,7 @@ public class HamcrestValidation {
                 when().
                 get("http://md5.jsontest.com").
                 then().
+                log().body().
                 assertThat().
                 body("original", equalTo("testcase")).
                 and().
@@ -195,12 +202,14 @@ public class HamcrestValidation {
                 when().
                 get("http://ergast.com/api/f1/drivers.xml").
                 then().
+                log().body().
+                rootPath("MRData.DriverTable.Driver"). //use rootPath instead entering it every time
                 assertThat().
-                body("MRData.DriverTable.Driver.findAll{it.Nationality == 'Italian'}.size()", equalTo(4)).
+                body("findAll{it.Nationality == 'Italian'}.size()", equalTo(4)).
                 and().
-                body("MRData.DriverTable.Driver.@driverId.grep(~/ad.*/).size()", equalTo(3)).
+                body("@driverId.grep(~/ad.*/).size()", equalTo(3)).
                 and().
-                body("MRData.DriverTable.Driver[-1].Nationality", equalTo("British"));
+                body("[-1].Nationality", equalTo("British"));
 
     }
 
@@ -210,6 +219,7 @@ public class HamcrestValidation {
                 new Address("First", "Last", "First_Last1", "Amsterdam", "xxx+1@gmail.com");
 
         Response resp = given().
+                contentType("application/json").
                 body(myAddress).
                 when().
                 post("http://restapi.demoqa.com/customer/register");
@@ -233,6 +243,26 @@ public class HamcrestValidation {
         }
     }
 
+    @Test (description = "deserialization the response to POJO")
+    public void deserialization(){
+
+        Response resp = get("http://ergast.com/api/f1/2017/circuits.json");
+
+        // We can convert the Json Response directly into a Java Array by using
+        // JsonPath.getObject method. Here we have to specify that we want to
+        // deserialize the Json into an Array of Circuits. This can be done by specifying
+        // Circuit[].class as the second argument to the getObject method.
+        Circuit obj = resp.jsonPath().getObject("MRData.CircuitTable.Circuits[0]",Circuit.class);
+        System.out.println(obj.circuitId);
+
+        Location loc = resp.jsonPath().getObject("MRData.CircuitTable.Circuits[0].Location",Location.class);
+        System.out.println(loc.toString());
+
+        Circuit [] races = resp.jsonPath().getObject("MRData.CircuitTable.Circuits",Circuit[].class);
+        for (Circuit c : races){
+            System.out.println(c.circuitName);
+        }
+    }
 
 }
 
