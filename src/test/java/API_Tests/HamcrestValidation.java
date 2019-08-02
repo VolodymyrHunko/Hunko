@@ -13,8 +13,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 /**
@@ -109,9 +108,9 @@ public class HamcrestValidation {
         given().
                 auth().
                 preemptive().
-                basic("volodymyr.hunko@capgemini.com", "Gunko$220463"). //basic assess with userName & password
+                basic("postman", "password"). //basic assess with userName & password
                 when().
-                get("https://eu1.concursolutions.com/nui/signin").
+                get("https://postman-echo.com/basic-auth").
                 then().
                 log().body().
                 assertThat().
@@ -139,8 +138,8 @@ public class HamcrestValidation {
                 auth().
                 oauth2("YOUR_AUTHENTICATION_TOKEN_GOES_HERE"). //oAuth2 access with OTP
                 when().
-                get("http://path.to/oath2/secured/api").
-                then().
+                get("https://www.googleapis.com/books/v1/volumes?q=isbn:0735619670").
+                then().log().all().
                 assertThat().
                 statusCode(200);
     }
