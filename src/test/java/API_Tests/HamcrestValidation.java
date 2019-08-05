@@ -121,7 +121,7 @@ public class HamcrestValidation {
     public  void testFormAuthentication(){
         given().
                 auth().
-                form("volodymyr.hunko@capgemini.com","Gunko$220463",
+                form("volodymyr.hunko@gmail.com","Gunko$22",
                 new FormAuthConfig("frmMain","userid","password")).
                 when().
                 get("https://eu1.concursolutions.com/nui/signin").
