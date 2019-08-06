@@ -136,9 +136,11 @@ public class HamcrestValidation {
 
         given().
                 auth().
-                oauth2("YOUR_AUTHENTICATION_TOKEN_GOES_HERE"). //oAuth2 access with OTP
+                oauth2("517db643584bebfa28e53c84c1d45b39b43ff03"). //oAuth2 access with OTP
                 when().
-                get("https://www.googleapis.com/books/v1/volumes?q=isbn:0735619670").
+                get("https://api.imgur.com/3/account/me/images").
+                    //clientID 468a60a045f3267
+                    //client secret 72fae33cc5f3a935f58450c0cc266aa9ee6b354e
                 then().log().all().
                 assertThat().
                 statusCode(200);
