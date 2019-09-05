@@ -1,22 +1,23 @@
 package API_Tests;
 
+import io.restassured.authentication.FormAuthConfig;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 import io.restassured.specification.ResponseSpecification;
+import org.assertj.core.api.SoftAssertions;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import io.restassured.authentication.FormAuthConfig;
-import io.restassured.response.Response;
-import org.assertj.core.api.SoftAssertions;
+import static org.hamcrest.Matchers.*;
 
 /**
  * examples from:
