@@ -1,9 +1,12 @@
 package API_Tests;
 
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.assertj.core.api.SoftAssertions;
+import io.restassured.specification.ResponseSpecification;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -11,12 +14,26 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import io.restassured.authentication.FormAuthConfig;
+import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 
 /**
  * examples from:
  * techbeacon.com/app-dev-testing/how-perform-api-testing-rest-assured
  */
 public class HamcrestValidation {
+    private static ResponseSpecification responseSpec;
+
+    @BeforeClass (description = "validate spec before request (if called)")
+    public static void createResponseSpec() {
+
+        responseSpec =
+                new ResponseSpecBuilder().
+                        expectStatusCode(200).
+                        expectContentType(ContentType.JSON).
+                        build();
+    }
 
 
     @Test (description = "sample request and assertion")
@@ -25,26 +42,41 @@ public class HamcrestValidation {
         given().
                 when().
                 get("http://ergast.com/api/f1/2017/circuits.json").
-                then().
+                then().log().body().
                 assertThat().
                 statusCode(200).
                 and().
                 body("MRData.CircuitTable.Circuits", hasSize(20)).
-                //and().body("MRData.CircuitTable.Circuits",is(array(hasSize(20)))).
                 and().
-                body("MRData.CircuitTable.Circuits[1].circuitId", equalTo("americas"));
+                body("MRData.CircuitTable.Circuits[1].circuitId", equalTo("americas")).
+                and().
+                body("MRData.CircuitTable.Circuits.findAll{it.circuitId == 'americas'}.size()", greaterThan(0));
     }
 
     @Test (description = "print whole body")
     public void printBody() {
 
         String respBody =
-                //given(). /*can be skipped*/
-                get("http://ergast.com/api/f1/2017/circuits.json").
+                get("http://api.zippopotam.us/us/08823").
                         getBody().
                         asString();
+        String sessionId = get("http://api.zippopotam.us/us/08823").sessionId();
 
-        System.out.println("Response Body is => " + respBody);
+        System.out.println("Response Body is => " + respBody + "\nSession ID: "+sessionId);
+    }
+
+    @Test (description = "parametrize a request")
+    public void checkCityForZipCode() {
+
+        given().
+                pathParam("country","us").
+                pathParam("zipcode","90210").
+                when().
+                get("http://api.zippopotam.us/{country}/{zipcode}").
+                then().
+                log().body().
+                assertThat().
+                body("places.'place name'[0]",equalTo("Beverly Hills"));
     }
 
     @Test(dataProvider = "seasonsAndNumberOfRaces", description = "parametrise test with data provider")
@@ -55,6 +87,8 @@ public class HamcrestValidation {
                 when().
                 get("http://ergast.com/api/f1/{raceSeason}/circuits.json").
                 then().
+                spec(responseSpec). //check success specification
+                and().
                 assertThat().
                 body("MRData.CircuitTable.Circuits", hasSize(numberOfRaces));
     }
@@ -70,31 +104,46 @@ public class HamcrestValidation {
         };
     }
 
-    @Test (description = "sample Authentication with userName and password" +
-            "")
+    @Test (description = "sample Authentication with userName and password")
     public void test_APIWithBasicAuthentication_ShouldBeGivenAccess() {
 
         given().
                 auth().
                 preemptive().
-                basic("username", "password"). //basic assess with userName & password
+                basic("postman", "password"). //basic assess with userName & password
                 when().
-                //get("http://path.to/basic/secured/api").
-                get("http://yahoo.com").
+                get("https://postman-echo.com/basic-auth").
                 then().
+                log().body().
                 assertThat().
                 statusCode(200);
     }
+
+    @Test (description = "authentication with form")
+    public  void testFormAuthentication(){
+        given().
+                auth().
+                form("volodymyr.hunko@gmail.com","Gunko$22",
+                new FormAuthConfig("frmMain","userid","password")).
+                when().
+                get("https://eu1.concursolutions.com/nui/signin").
+                then().
+                log().body().
+                assertThat().
+                statusCode(200);
+}
 
     @Test (description = "authentication with OAuth 2")
     public void test_APIWithOAuth2Authentication_ShouldBeGivenAccess() {
 
         given().
                 auth().
-                oauth2("YOUR_AUTHENTICATION_TOKEN_GOES_HERE"). //oAuth2 access with OTP
+                oauth2("517db643584bebfa28e53c84c1d45b39b43ff03"). //oAuth2 access with OTP
                 when().
-                get("http://path.to/oath2/secured/api").
-                then().
+                get("https://api.imgur.com/3/account/me/images").
+                    //clientID 468a60a045f3267
+                    //client secret 72fae33cc5f3a935f58450c0cc266aa9ee6b354e
+                then().log().all().
                 assertThat().
                 statusCode(200);
     }
@@ -120,6 +169,81 @@ public class HamcrestValidation {
                 assertThat().
                 body("MRData.CircuitTable.Circuits.Location[0].country", equalTo("Australia"));
         System.out.println("Country is: Australia");
+    }
+
+    @Test (description = "get response time")
+    public void checkResponseTimeForApiCall() {
+
+        given().
+                when().
+                get("http://api.zippopotam.us/us/08823").
+                then().
+                assertThat().
+                time(lessThan(1000L), TimeUnit.MILLISECONDS);
+
+        System.out.println("Timeout less than 1000 L: ");
+    }
+
+    @Test(description = "request using query parameters")
+    public void testQuery(){
+        given().
+                queryParam("text", "testcase").
+                when().
+                get("http://md5.jsontest.com").
+                then().
+                log().body().
+                assertThat().
+                body("original", equalTo("testcase")).
+                and().
+                body("md5", notNullValue());
+    }
+
+    @Test (description = "communicated with XML response")
+    public void checkTheListContainsOneJapaneseCar() {
+
+        given().
+                when().
+                get("http://ergast.com/api/f1/drivers.xml").
+                then().
+                log().body().
+                rootPath("MRData.DriverTable.Driver"). //use rootPath instead entering it every time
+                assertThat().
+                body("findAll{it.Nationality == 'Italian'}.size()", equalTo(4)).
+                and().
+                body("@driverId.grep(~/ad.*/).size()", equalTo(3)).
+                and().
+                body("[-1].Nationality", equalTo("British"));
+
+    }
+
+    @Test (description = "(de)-serialization POJO class POST-GET flow")
+    public void deserializationPOGO(){
+        Address myAddress =
+                new Address("First", "Last", "First_Last1", "Amsterdam", "xxx+1@gmail.com");
+
+        Response resp = given().
+                contentType("application/json").
+                body(myAddress).
+                when().
+                post("http://restapi.demoqa.com/customer/register");
+        System.out.println("POST sent");
+
+        //get the response body as JASON
+        ResponseBody body = resp.getBody();
+
+        if(resp.statusCode()==201){
+            System.out.println("Response code: "+resp.getStatusCode());
+            System.out.println(resp.body().asString());
+            //deserialize response to class (one way -> resp.getBody().as(.class)
+            SuccessResponse respBodyS = body.as(SuccessResponse.class);
+            System.out.println("Message: "+respBodyS.Message + "; Code: "+respBodyS.SuccessCode);
+        }else {
+            System.out.println("Response code: "+resp.getStatusCode());
+            System.out.println(resp.body().asString());
+            //deserialize response to class( diff way -> resp.jasonPath.getObject(.class)
+            FailureResponse respBodyF = resp.jsonPath().getObject("",FailureResponse.class);
+            System.out.println("fault: "+respBodyF.fault+"; ID: "+respBodyF.FaultId);
+        }
     }
 
     @Test (description = "deserialization the response to POJO")
@@ -151,4 +275,7 @@ public class HamcrestValidation {
         softy.assertThat(a).overridingErrorMessage("more than").isLessThan(b);
         softy.assertAll();
     }
+
 }
+
+
