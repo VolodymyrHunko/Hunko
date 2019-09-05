@@ -1,6 +1,7 @@
 package API_Tests;
 
 import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.DataProvider;
@@ -141,5 +142,13 @@ public class HamcrestValidation {
             System.out.println(c.circuitName);
         }
 
+    }
+    @Test (description = "assertion with assertJ library")
+    public void getAsserJ_example(){
+        int a=5, b=6;
+        SoftAssertions softy = new SoftAssertions();
+        softy.assertThat(a).overridingErrorMessage(a+" should not be equal to "+b).isEqualTo(b);
+        softy.assertThat(a).overridingErrorMessage("more than").isLessThan(b);
+        softy.assertAll();
     }
 }
