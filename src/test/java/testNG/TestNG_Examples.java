@@ -4,22 +4,21 @@ import org.testng.annotations.*;
 
 public class TestNG_Examples {
 
-    // test case 1
+    // test case 2
     @Test (priority = 2, groups = {"fast","fool"})
     public void testCase1() {
-        System.out.println("in test case 1" );
+        System.out.println("in test case 2, id=" + Thread.currentThread().getId());
     }
 
-    // test case 2
+    // test case 1
     @Test (priority = 1, groups = {"fool"})
     public void testCase2() {
-        System.out.println("in test case 2");
-    }
+        System.out.println("in test case 1, id=" + Thread.currentThread().getId()); }
 
     // test case 3
     @Test (priority = 3, enabled = false, groups = {"fast"})
     public void testCase3() {
-        System.out.println("in test case3");
+        System.out.println("in test case3, id="+ Thread.currentThread().getId());
     }
 
     @BeforeMethod

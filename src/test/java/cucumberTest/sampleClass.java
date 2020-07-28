@@ -34,8 +34,8 @@ public class sampleClass {
         driver.findElement(By.cssSelector("input[type='search']")).sendKeys(Keys.ENTER);
 
         //Step #3:validate page was redirected
-        Assert.assertEquals("http://php.net/manual/en/function.eval.php", driver.getCurrentUrl(),
-                "browser should redirect to http://php.net/manual/en/function.eval.php");
+        Assert.assertEquals( driver.getCurrentUrl(),"https://php.net/manual/en/function.eval.php",
+                "browser should redirect to https://php.net/manual/en/function.eval.php");
 
         //Step #4: get a list of elements with class '.caution' and validate it is !=0
         List<WebElement> caution = driver.findElements(By.cssSelector("div.caution"));

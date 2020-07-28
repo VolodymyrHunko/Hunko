@@ -1,25 +1,25 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite thread-count="1" verbose="1" name="Suite_1 defined in testng.xml fil" annotations="JDK" parallel="tests">
+<suite thread-count="2" verbose="1" name="Suite_1 defined in testng.xml fil" annotations="JDK" parallel="methods">
 
-    <test name="Test_1">
+    <test name="Test_1" group-by-instances="true">
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="testNG.TestNGparemetrize"/>
         </classes>
     </test>
 
-    <test name="Test_2">
+    <test name="Test_2" group-by-instances="true">
         <classes>
             <class name="testNG.TestNG_Examples">
                 <methods>
-                    <exclude name="testCase3"/>
+                    <exclude name="testCase2"/>
                 </methods>
             </class>
             <class name="testNG.TestNG_Example2"/>
         </classes>
     </test>
 
-    <test name="Test_3">
+    <test name="Test_3" group-by-instances="true">
         <groups>
             <run>
                 <include name = "fool" />
@@ -31,7 +31,11 @@
         </classes>
     </test>
 
-
+    <test name="Test-method test" group-by-instances="true">
+        <classes>
+            <class name="testNG.TestNFParallelMethods"/>
+        </classes>
+    </test>
 
     <listeners>
         <listener class-name="helpers.listenerSimple"/>
