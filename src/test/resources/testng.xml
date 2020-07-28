@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite thread-count="1" verbose="1" name="Suite_1" annotations="JDK" parallel="tests">
+<suite thread-count="1" verbose="1" name="Suite_1 defined in testng.xml fil" annotations="JDK" parallel="tests">
 
     <test name="Test_1">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="testNG.TestNGparemetrize"/>
         </classes>

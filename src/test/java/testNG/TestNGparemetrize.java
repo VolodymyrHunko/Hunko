@@ -7,6 +7,10 @@ import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
+/*
+Class able to run only with tesng.xml file configured as 'browser' value. To run as single test, need to
+define browser in 'BeforeTest'
+ */
 public class TestNGparemetrize {
         private static WebDriver driver;
         private String baseURL = "http://zoom.com";

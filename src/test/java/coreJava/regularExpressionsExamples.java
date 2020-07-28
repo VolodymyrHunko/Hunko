@@ -64,4 +64,17 @@ public class regularExpressionsExamples {
                 regularExpression, "");
         System.out.println(currentNumber);
     }
+
+    @Test
+    void testSSN(){
+        if("1qw2-222".matches("\\w{4}-\\w{3}")){
+            System.out.println("pass");
+        }
+        else{
+            System.out.println("false");
+        }
+    }
 }
+
+
+

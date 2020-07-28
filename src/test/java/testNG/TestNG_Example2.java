@@ -4,6 +4,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+/*
+Example of depending execution
+ */
+
 public class TestNG_Example2 {
     @BeforeClass
     public void beforeClass() {

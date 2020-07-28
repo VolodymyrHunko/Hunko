@@ -10,12 +10,12 @@ public class listenerSimple  implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.println("==>The name of the testCase Started is: " + iTestResult.getName());
+        System.out.println("==>The name of the testCase Started is (from listener file): " + iTestResult.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.println("==>The name of the testCase passed is: " + iTestResult.getName());
+        System.out.println("==>The name of the testCase passed is(from listener file): " + iTestResult.getName());
 
     }
 
@@ -39,7 +39,7 @@ public class listenerSimple  implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        System.out.println("The context of finished TC is: " + iTestContext.getName());
+        System.out.println("The context of finished TC is (from listener file): " + iTestContext.getName());
     }
 
 

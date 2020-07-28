@@ -163,6 +163,8 @@ public class collectionsExamples {
         System.out.println("Search invalid value 'zxk', index: " + search(strings, "zdk"));
         System.out.println("Search valid value '4' in NO sorted list, index: " + search(ab, 4));
         System.out.println("Search valid value '4' in sorted list, index: " + search(sortingMethod(ab), 4));
+
+        System.out.println("Contains '...' - " + strList.contains("..."));
     }
 
     //4.a binary searching after sorting!

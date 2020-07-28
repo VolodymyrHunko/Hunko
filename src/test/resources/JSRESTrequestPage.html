@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request to fins Capital of Country web swrvice</title>
+</head>
+<body>
+<h3>The country you attempt to search</h3>
+<p id="country">.....</p>
+<button id='try' onclick="myFunction()">Click to Start</button>
+
+<script>
+    var input;
+
+    function myFunction(){
+    input = prompt("Enter the country's name or code to find the capital city", "usa");
+    document.getElementById("country").innerHTML = input;
+      // call function for exersises...
+      exersizes();
+    }
+
+    function exersizes(){
+      let obj = {name:"Volodymyr", lastName:"Hunko", age:54};
+      document.getElementById("data").innerHTML = obj.name;
+    }
+
+    function loadData() {
+    console.log(input)
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("data").innerHTML = this.responseText;
+     }
+    };
+    xhttp.open("GET", "https://restcountries.eu/rest/v2/name/"+input+"?fields=name;capital", true);
+    xhttp.send();
+    }
+
+    function getByCode() {
+    console.log(input);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         document.getElementById("data").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "https://restcountries.eu/rest/v2/callingcode/"+input+"?fields=name;capital", true);
+    xhttp.send();
+    }
+</script>
+
+<button id="code" type="button" onclick="getByCode()">Press to request by code</button>
+
+<button id="name" type="button" onclick="loadData()">Press to request by name</button>
+
+<p id="data"></p>
+</body>
+</html>

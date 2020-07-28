@@ -1,12 +1,8 @@
 package testNG;
 
 import org.testng.annotations.*;
-import org.testng.asserts.Assertion;
-import org.testng.asserts.SoftAssert;
 
 public class TestNG_Examples {
-    private Assertion hardAssert = new Assertion();
-    private SoftAssert softAssert = new SoftAssert();
 
     // test case 1
     @Test (priority = 2, groups = {"fast","fool"})

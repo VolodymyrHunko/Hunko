@@ -46,8 +46,8 @@ public class practice implements Practical{
 
     @Test
     void test4(){
-       practice_3 x = new A3();
-        System.out.println(x instanceof practice_3);
+
+        System.out.println("xxxx");
     }
 
 }
