@@ -200,7 +200,8 @@ public class collectionsExamples {
             System.out.println("after sort by id => " + str);
         }
 
-        //do not need comparator - we implemented Comparable interface in sorted class
+        //do not need comparator - we implemented Comparable interface in sorted class.
+        // compareTo method should be overridden in sample class
         Collections.sort(objList);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by rate and name => " + str);

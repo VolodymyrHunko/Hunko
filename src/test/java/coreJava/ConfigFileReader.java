@@ -16,7 +16,7 @@ public  class ConfigFileReader {
         private final String propPath = System.getProperty("user.dir") + "/src/test/java/seleniumTesting/Configuration.properties";
         private BufferedReader br;
 
-        ConfigFileReader() {
+        ConfigFileReader() { //constructor
             try {
                 br = new BufferedReader(new FileReader(propPath));
                 prop = new Properties();

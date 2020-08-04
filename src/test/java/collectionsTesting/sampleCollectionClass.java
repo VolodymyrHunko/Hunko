@@ -5,6 +5,7 @@ import java.util.Comparator;
 /*
  *   Class for implementation examples of Collection interface
  *   as Generic type <T>
+ *   we need override class's CompareTo method to sort object's array
  */
 public class sampleCollectionClass implements Comparable<sampleCollectionClass> {
     private int id;
