@@ -102,7 +102,6 @@ public class mapExamplees {
         //to sort by value, we should use Comparator (old style)
         //first convert entrySet to List
         List<Map.Entry<Integer, String>> list = new ArrayList<>(hMap.entrySet());
-        System.out.println("\nBefore sorting-> "+list.toString());
         Collections.sort(list, new Comparator() {//create Comparator inside sort()
             @Override
             public int compare(Object o1, Object o2) {
@@ -117,6 +116,18 @@ public class mapExamplees {
             sortedHashMap.put(sortEntry.getKey(), sortEntry.getValue());
         }
         System.out.println("Sorted by value=> " + sortedHashMap.toString());
+
+        // sorted by Value using stream API (new stile)
+        System.out.println("Sorted by value with key >5 => ");
+        hMap.entrySet()
+                //Returns a sequential Stream with this collection as its source
+                .stream()
+                //Sorted according to the provided Comparator
+                .sorted(Map.Entry.comparingByValue())
+                // some filter
+                .filter(e -> e.getKey() > 5)
+                //Performs an action for each element of this stream
+                .forEach(System.out::println);
     }
 
 }

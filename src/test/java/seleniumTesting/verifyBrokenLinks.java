@@ -50,7 +50,7 @@ public class verifyBrokenLinks {
     }
 
     //first - collect all links with attribute href
-    private static List findAllLinks(WebDriver driver){
+    private static List<WebElement> findAllLinks(WebDriver driver){
         List <WebElement> elements = driver.findElements(By.tagName("a"));
         elements.addAll(driver.findElements(By.tagName("img")));
         List <WebElement>fullList = new ArrayList<>();
