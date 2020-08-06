@@ -10,7 +10,7 @@ public class collectionsExamples {
 
     // public static void main(String args[]) {
     private int[] a = {3, 5, 1, 0, 8, 15};
-    private Integer[] ab = {2, 8, 12, 4, -1, 4};
+    private Integer[] ab = {2, 8, 4, 8, 12, 4, -1, 4};
     private String[] strings = {"abc", "Axk", "..."};
     private ArrayList<Integer> intList;
     private ArrayList<String> strList;
@@ -103,7 +103,7 @@ public class collectionsExamples {
 
         //convert List to treeSet
         listToTreeSet(intList);
-        System.out.println("hashSet from arrayList=> " + hSet.toString());
+        System.out.println("TreehSet from arrayList=> " + hSet.toString());
     }
 
     //2.a sort ArrayList
@@ -120,6 +120,7 @@ public class collectionsExamples {
 
     //2.c convert list to treeSet
     private void listToTreeSet(ArrayList<Integer> aList) {
+
         hSet = new TreeSet<Integer>(aList);
     }
 
@@ -218,6 +219,27 @@ public class collectionsExamples {
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by name with comparator => " + str);
         }
+    }
+
+    /*
+    * working with hashSet
+    * find double elements in int array
+     */
+    @Test
+    void test_6() {
+        // create a 2 new hashSet obj
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        // if element exists, add it to hashSet
+        for (Integer integer : intList) {
+            if (!set.contains(integer)) {
+                set.add(integer);
+            } else {
+                set2.add(integer);
+            }
+        }
+        //implement 'Consumer' interface for iteration
+        set2.forEach(e->System.out.println(e));
     }
 }
 

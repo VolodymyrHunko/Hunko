@@ -7,7 +7,9 @@ import org.testng.annotations.Test;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -408,6 +410,7 @@ class Calculator {
     }
 
     private int operateBinary(int a, int b, @NotNull IntegerMath op) {
+
         return op.operation(a, b);
     }
 
@@ -439,9 +442,6 @@ class findAppiarenceInString {
     interface searchable {
         int findAppirance(String s, char c);
     }
-
-
-
     public static void main(String [] arg){
         searchable srch1 = (s, c) -> {
             char [] ch = s.toCharArray();
@@ -452,10 +452,38 @@ class findAppiarenceInString {
             }
             return count;
         };
-
         System.out.println("Results: "+srch1.findAppirance("Volodymyr", 'y'));
-
-
     }
+}
 
+class IterateMapUsingLambda {
+    public static void main(String[] args) {
+        Map<String, Integer> prices = new HashMap<>();
+        prices.put("Apple", 50);
+        prices.put("Orange", 20);
+        prices.put("Banana", 10);
+        prices.put("Grapes", 40);
+        prices.put("Papaya", 50);
+		/* Iterate without
+		   for (Map.Entry<String, Integer> entry : prices.entrySet()) {
+		   System.out.println("Fruit: " + entry.getKey() + ", Price: " + entry.getValue());
+		   }
+		*/
+        prices.forEach((k,v)->System.out.println("Fruit: " + k + ", Price: " + v));
+
+        List names = new ArrayList<>();
+        names.add("Ajay");
+        names.add("Ben");
+        names.add("Cathy");
+        names.add("Dinesh");
+        names.add("Tom");
+		/* Iterate without
+		 Iterator iterator = names.iterator();
+		 while (iterator.hasNext()) {
+			System.out.println(iterator.next());
+		 }
+		 implements 'Consumer' interface
+		*/
+        names.forEach(name->System.out.println(name));
+    }
 }

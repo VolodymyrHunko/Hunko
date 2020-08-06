@@ -15,7 +15,7 @@ public class practice {
     @Test
     void method() {
 
-//        String st=  (x, y) -> x + y;
     }
+
 }
 
