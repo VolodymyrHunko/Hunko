@@ -8,8 +8,8 @@ public class practice {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("enter something here:");
-        String s = scan.nextLine();
-        System.out.println("You entered: " + s);
+        int s = scan.nextInt();
+        System.out.println("You entered %3 = " + s%3);
     }
 
     @Test
