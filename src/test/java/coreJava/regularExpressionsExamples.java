@@ -74,6 +74,21 @@ public class regularExpressionsExamples {
             System.out.println("false");
         }
     }
+
+    @Test (description = "validte IP address")
+    void testIP(){
+        // \d{1,2} - catch 0-9, 00-99
+        // [0-1]\d{2} - catch 000-099, 100-99
+        // 2[0-4]\d - catch 200-249
+        // d|25[0-5] - catch 250-255
+        String ip = "(\\d{1,2}|[0-1]\\d{2}|2[0-4]\\d|25[0-5])";
+        if("000.123.22.255".matches(ip+"\\."+ip+"\\."+ip+"\\."+ip)){
+            System.out.println("pass");
+        }
+        else{
+            System.out.println("false");
+        }
+    }
 }
 
 
