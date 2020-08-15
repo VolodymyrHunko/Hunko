@@ -4,12 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -309,7 +309,7 @@ public class LambdaExamples {
     }
 }
 
-/**
+/*
  * class for testing LambdaExamples
  */
 class Person {
@@ -400,7 +400,7 @@ class Person {
 
 }
 
-/**
+/*
  * one more example of lambda ex with interface accepted more than one parameter
  */
 class Calculator {
@@ -437,7 +437,7 @@ class Calculator {
     }
 }
 
-class findAppiarenceInString {
+class findAppearanceInString {
     @FunctionalInterface
     interface searchable {
         int findAppirance(String s, char c);
@@ -471,7 +471,7 @@ class IterateMapUsingLambda {
 		*/
         prices.forEach((k,v)->System.out.println("Fruit: " + k + ", Price: " + v));
 
-        List names = new ArrayList<>();
+        List <String>names = new ArrayList<>();
         names.add("Ajay");
         names.add("Ben");
         names.add("Cathy");
@@ -484,6 +484,74 @@ class IterateMapUsingLambda {
 		 }
 		 implements 'Consumer' interface
 		*/
-        names.forEach(name->System.out.println(name));
+        names.forEach(System.out::println);
+    }
+}
+
+/*
+* class for using lambda in find ODD/EVEN, PRIME/COMPOSE, PALINDROME numbers
+* using functional interface and MyMath class
+ */
+class Solution {
+    public static void main(String[] args) throws IOException {
+        MyMath ob = new MyMath();
+        PerformOperation op;
+        boolean ret = false;
+        String ans = null;
+        int num = 151;
+
+        op = ob.isOdd(); //get implementation of interface as ODD/EVEN
+        ret = ob.checker(op, num); //return boolean by passing num into implementation of interface
+        String ans1 = (ret) ? "ODD" : "EVEN";
+
+        op = ob.isPrime();
+        ret = ob.checker(op, num);
+        String ans2 = (ret) ? "PRIME" : "COMPOSITE";
+
+        op = ob.isPalindrome();
+        ret = ob.checker(op, num);
+        String ans3 = (ret) ? "PALINDROME" : "NOT PALINDROME";
+
+        System.out.println(ans1 + "..." + ans2 + ",,," + ans3);
+    }
+}
+
+@FunctionalInterface
+interface PerformOperation {
+    boolean check(int a);
+}
+/*
+* class for using lambda in examples of 'Solution' class
+ */
+class MyMath {
+    public PerformOperation isOdd(){
+        return (a -> a%2!=0);
+    }
+    public PerformOperation isPrime(){
+        return (a -> {
+            if(a <= 1)
+                return true;
+          for(int i = 2; i<=a/2; i++){
+              if (a%i == 0)
+                  return false;
+          }
+            return true;
+        });
+    }
+    public PerformOperation isPalindrome(){
+
+        return (a -> {
+            int rem, temp=a, sum=0;
+            while (a>0){
+              rem = a%10;
+              sum = (sum*10)+rem;
+              a = a/10;
+          }
+            return temp == sum;
+        });
+    }
+
+    public boolean checker(PerformOperation p, int num) {
+        return p.check(num);
     }
 }
