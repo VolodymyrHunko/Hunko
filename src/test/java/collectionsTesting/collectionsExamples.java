@@ -11,7 +11,7 @@ public class collectionsExamples {
     // public static void main(String args[]) {
     private int[] a = {3, 5, 1, 0, 8, 15};
     private Integer[] ab = {2, 8, 4, 8, 12, 4, -1, 4};
-    private String[] strings = {"abc", "Axk", "..."};
+    private String[] strings = {"bkc", "cxk", "..."};
     private ArrayList<Integer> intList;
     private ArrayList<String> strList;
     private Set<Integer> hSet;
@@ -34,7 +34,7 @@ public class collectionsExamples {
     }
 
     /**
-     *   Addition to, Replacing and printing of Array Lists
+     *  1. Addition to, Replacing and printing of Array Lists
      */
     @Test
     void test_1() {
@@ -77,7 +77,7 @@ public class collectionsExamples {
     }
 
     /**
-     * Sorting of ArrayLists and Arrays, HashSet
+     * 2. Sorting of ArrayLists and Arrays, HashSet
      */
     @Test
     void test_2() {
@@ -125,7 +125,7 @@ public class collectionsExamples {
     }
 
     /**
-     * swapping and get max/min value
+     * 3. swapping and get max/min value
      */
     @Test
     void test_3() {
@@ -149,11 +149,12 @@ public class collectionsExamples {
     }
 
     /**
-     * searching of values, linear and binary
+     * 4. searching of values, linear and binary
      */
     @Test
+    // 4.a linear search
     void test_4() {
-        //linear search
+
         int index = strList.indexOf("Axk");
         System.out.println("Index of 'Axk' => " + index);
         //return '-1' index, no value
@@ -161,60 +162,72 @@ public class collectionsExamples {
         System.out.println("Index of '15' => " + index);
 
         //binary search of Array after sorting, if no found -> return as '-missing point -1' of array
-        System.out.println("Search invalid value 'zxk', index: " + search(strings, "zdk"));
+        System.out.println("Search invalid value 'adk', index: " + search(strings, "adk"));
         System.out.println("Search valid value '4' in NO sorted list, index: " + search(ab, 4));
         System.out.println("Search valid value '4' in sorted list, index: " + search(sortingMethod(ab), 4));
 
         System.out.println("Contains '...' - " + strList.contains("..."));
     }
 
-    //4.a binary searching after sorting!
+    //4.b binary searching after sorting!
     private int search(String[] noSort, String comp) {
         Arrays.sort(noSort);
+        for(String s : noSort) {
+            System.out.println(s);
+        }
         return Collections.binarySearch(Arrays.asList(noSort), comp);
     }
 
-    //4.b binary searching after sorting!
+    //4.c binary searching after sorting!
     private int search(Integer[] sort, Integer comp) {
+        for(int i : sort){
+            System.out.println(i);
+        }
         return Arrays.binarySearch(sort, comp);
     }
 
     /**
-     * sort ArrayList of objects
+     * 5. sort ArrayList of objects
      */
     @Test
     void test_5() {
-        //before sorting List of obj
+        //5.a before sorting List of obj
         for (sampleCollectionClass str : objList) {
             System.out.println("before sort => " + str);
         }
 
-        //sort arrayList of objects with comparator (Can use Collections.sort instead)
-        objList.sort(sampleCollectionClass::nameComparator);
-        for (sampleCollectionClass str : objList) {
-            System.out.println("after sort by name => " + str);
-        }
+        // IMPLEMENTATION of COMPARABLE interface
 
-        //sort arrayList of objects with users defined comparator
-        objList.sort(sampleCollectionClass::idComparator);
-        for (sampleCollectionClass str : objList) {
-            System.out.println("after sort by id => " + str);
-        }
-
-        //do not need comparator - we implemented Comparable interface in sorted class.
-        // compareTo method should be overridden in sample class
+        /* 5.b sort without comparator - we implemented Comparable interface in sorted class ->
+         *  compareTo method MUST be overridden in sample class */
         Collections.sort(objList);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by rate and name => " + str);
         }
 
-        //use sort with diff comparator id
+        //5.c sort arrayList of objects with users defined comparator by name
+        objList.sort(sampleCollectionClass::nameComparator);
+        for (sampleCollectionClass str : objList) {
+            System.out.println("after sort by name => " + str);
+        }
+
+        //5.d sort arrayList of objects with users defined comparator by id
+        objList.sort(sampleCollectionClass::idComparator);
+        for (sampleCollectionClass str : objList) {
+            System.out.println("after sort by id => " + str);
+        }
+
+        //IMPLEMENTATION of COMPARATOR interface ............................
+
+        /*
+        * 5.e sort by implement COMPARATOR interface with 'compare' method (not 'compareTo)
+         */
         objList.sort(sampleCollectionClass.id2Comparator);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by id with comparator => " + str);
         }
 
-        //use sort with diff comparator name
+        //5.f sort by implement COMPARATOR interface with 'compare' method (not 'compareTo)
         objList.sort(sampleCollectionClass.name2Comparator);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by name with comparator => " + str);
@@ -222,7 +235,7 @@ public class collectionsExamples {
     }
 
     /*
-    * working with hashSet
+    * 6.a working with hashSet
     * find double elements in int array
      */
     @Test
