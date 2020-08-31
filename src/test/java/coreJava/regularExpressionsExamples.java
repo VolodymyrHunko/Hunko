@@ -56,7 +56,8 @@ public class regularExpressionsExamples {
             System.out.println("Found at: "+ matcher2.start()+" - " + matcher2.end());
         }
     }
-    @Test
+
+    @Test (description = "convert phone #")
     void testRegEx(){
         String phoneNumber = "123-456-789";
         String regularExpression = "\\D*"; //"[^0-9]" select all non-numbers
@@ -65,7 +66,7 @@ public class regularExpressionsExamples {
         System.out.println(currentNumber);
     }
 
-    @Test
+    @Test (description = "validate SSN")
     void testSSN(){
         if("1qw2-222".matches("\\w{4}-\\w{3}")){
             System.out.println("pass");
@@ -73,6 +74,35 @@ public class regularExpressionsExamples {
         else{
             System.out.println("false");
         }
+    }
+
+    @Test (description = "validate IP address")
+    void testIP(){
+        // \d{1,2} - catch 0-9, 00-99
+        // [0-1]\d{2} - catch 000-099, 100-99
+        // 2[0-4]\d - catch 200-249
+        // d|25[0-5] - catch 250-255
+        String ip = "(\\d{1,2}|[0-1]\\d{2}|2[0-4]\\d|25[0-5])";
+        if("000.123.22.255".matches(ip+"\\."+ip+"\\."+ip+"\\."+ip)){
+            System.out.println("pass");
+        }
+        else{
+            System.out.println("false");
+        }
+    }
+
+    @Test (description = "delite double words in stringi line")
+    void testDupe(){
+        String input = "This this is a word Word worD";
+        String regex = "\\b(\\w+)(\\s+\\1\\b)+"; /*start any word and assign it as group#1, next word is the same
+        as group #1 after one or more space, + repeat again */
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(input);
+        while (m.find()) {
+            System.out.println("Found at: "+ m.start()+" - " + m.end());
+            input = input.replaceAll(m.group(), m.group(1)); /* replace all found group with first group*/
+        }
+        System.out.println(input);
     }
 }
 

@@ -2,17 +2,22 @@ package coreJava;
 
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class recursionExample {
     /*
     to count factorial i.e. 5! == 120 as 5*4*3*2*1=120
      */
     public long factorialRecursive( long n ) {
+
         return n == 1 ? 1 : n * factorialRecursive( n-1 );
     }
     @Test (description = "test recursive method")
     void test_recursion (){
         System.out.println(factorialRecursive(5));
     }
+
     /*
      same without recursive
      */
@@ -25,5 +30,50 @@ public class recursionExample {
     @Test (description = "output all numbers in factorial raw")
     void test_2(){
         countFactorial(5);
+    }
+
+    /*
+    * to get a sum of all numbers in value '12345'
+     */
+    public int sum (int x){
+       // return x==0?0 : (x%10 + sum(x/10));
+        if(x==0){
+            return 0;
+        }else{
+            return x%10+sum(x/10);
+        }
+    }
+    @Test (description = "grt a sum of numbers")
+    void test_3(){
+        System.out.println(sum (12345));
+    }
+
+    /*
+    to convert decimal to binary
+     */
+    public void convert(int y){
+        if (y > 0) {
+            convert(y / 2);
+            System.out.printf("%d", y % 2);
+        }
+    }
+    @Test (description = "20 == 010100")
+    void test_4 (){
+        convert(20);
+    }
+
+    /*
+    to found Fibonacci
+     */
+    public int fibo (int i){
+        if(i==0)
+            return 0;
+        if(i==1)
+            return 1;
+        return fibo(i - 1) + fibo(i - 2);
+    }
+    @Test
+    void test_5 (){
+        System.out.println("10 element in fibo raw = "+ fibo (10));
     }
 }
