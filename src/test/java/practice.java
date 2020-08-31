@@ -1,6 +1,12 @@
+import org.assertj.core.util.Arrays;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.google.common.primitives.Ints.asList;
 
 public class practice {
 
@@ -14,7 +20,6 @@ public class practice {
 
     @Test
     void method() {
-
     }
 
 }

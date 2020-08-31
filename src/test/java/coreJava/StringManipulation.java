@@ -24,9 +24,8 @@ public class StringManipulation {
         String reverseString = recursiveSwap(s);
         System.out.println(reverseString);
     }
-
     /*
-    recursive method call itself until s.length becomes < 1, then returns reversed string
+    * recursive method call itself until s.length becomes < 1, then returns reversed string
      */
     private String recursiveSwap(String s) {
         if ((null == s) || (s.length() <= 1)) {
@@ -54,17 +53,23 @@ public class StringManipulation {
 
         char[] strArray = s.toCharArray();
 
-        for (char c : strArray)
-        {
-            if(occurrencesMap.containsKey(c))
-            {
+        for (char c : strArray) {
+            if(occurrencesMap.containsKey(c)) {
                 occurrencesMap.put(c, occurrencesMap.get(c)+1);
             }
-            else
-            {
+            else {
                 occurrencesMap.put(c, 1);
             }
         }
         System.out.println(occurrencesMap);
+
+        // to find occurrences of one char:
+        int count = 0;
+        for(char ch : strArray){
+            if(ch == 'a'){
+                count++;
+            }
+        }
+        System.out.println(count);
     }
  }
