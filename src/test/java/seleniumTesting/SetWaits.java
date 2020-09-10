@@ -59,6 +59,6 @@ public class SetWaits {
                         .equals("complete");
             }
         };
-       // wait.until(pageLoaded);
+//        wait.until(pageLoaded);
     }
 }
