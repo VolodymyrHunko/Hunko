@@ -51,20 +51,36 @@ public class StringManipulation {
     @Test(description = "count an occurrences in string")
     void testPractice_3(){
         HashMap<Character, Integer> occurrencesMap = new HashMap<Character, Integer>();
-
         char[] strArray = s.toCharArray();
-
-        for (char c : strArray)
-        {
-            if(occurrencesMap.containsKey(c))
-            {
+        //populate the MAP as Char=Key & Occurrences = value
+        for (char c : strArray) {
+            if(occurrencesMap.containsKey(c)) {
                 occurrencesMap.put(c, occurrencesMap.get(c)+1);
             }
-            else
-            {
+            else {
                 occurrencesMap.put(c, 1);
             }
         }
-        System.out.println(occurrencesMap);
+        //iterate through entrySet to get condition of value
+        for (Map.Entry<Character, Integer> entry : occurrencesMap.entrySet()) {
+            Integer key = entry.getValue();
+            if(key == 1)
+            System.out.println(entry.getKey());
+        }
+
+        /*
+         *one more way to segregate single and double chars in string
+         */
+        Set <Character> set = new HashSet<>();
+        Set <Character> set2 = new HashSet<>();
+        for(Character ch : strArray){
+            if(!set.contains(ch)){
+                set.add(ch);
+            }else{
+                set2.add(ch);
+            }
+        }
+        System.out.println("All unique Chars: "+set.toString());
+        System.out.println("Double Chars: "+set2.toString());
     }
  }

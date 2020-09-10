@@ -8,7 +8,6 @@ import java.util.*;
 
 public class collectionsExamples {
 
-    // public static void main(String args[]) {
     private int[] a = {3, 5, 1, 0, 8, 15};
     private Integer[] ab = {2, 8, 4, 8, 12, 4, -1, 4};
     private String[] strings = {"bkc", "cxk", "..."};
@@ -120,8 +119,7 @@ public class collectionsExamples {
 
     //2.c convert list to treeSet
     private void listToTreeSet(ArrayList<Integer> aList) {
-
-        hSet = new TreeSet<Integer>(aList);
+        hSet = new TreeSet<>(aList);
     }
 
     /**
@@ -152,9 +150,8 @@ public class collectionsExamples {
      * 4. searching of values, linear and binary
      */
     @Test
-    // 4.a linear search
+    // 4.a linear search/home/vlad
     void test_4() {
-
         int index = strList.indexOf("Axk");
         System.out.println("Index of 'Axk' => " + index);
         //return '-1' index, no value

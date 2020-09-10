@@ -100,13 +100,13 @@ public class RESTAssuredSimple {
      * evaluation of authentication
      */
     @Test
-    public void AutenticationBasic(){
+    public void AutenticationBasic() {
         RestAssured.baseURI = "http://restapi.demoqa.com/authentication/CheckForAuthentication";
         RequestSpecification requst = RestAssured.given();
 
         Response resp = requst.get();
-        System.out.println("Code: "+ resp.getStatusLine());
-        System.out.println("Message: "+resp.body().asString());
+        System.out.println("Code: " + resp.getStatusLine());
+        System.out.println("Message: " + resp.body().asString());
 
     }
 
@@ -114,7 +114,7 @@ public class RESTAssuredSimple {
      * deserialize in ArrayList
      */
     @Test
-    public void convertToList(){
+    public void convertToList() {
         RestAssured.baseURI = "http://restapi.demoqa.com/utilities/books/getallbooks";
         RequestSpecification request = RestAssured.given();
         Response resp = request.get("");
@@ -124,9 +124,8 @@ public class RESTAssuredSimple {
         // JsonPath.getObject method. Here we have to specify that we want to
         // deserialize the Json into an Array of Book. This can be done by specifying
         // Book[].class as the second argument to the getObject method.
-        Book[] books = resp.jsonPath().getObject("books",Book[].class );
-        for(Book book : books)
-        {
+        Book[] books = resp.jsonPath().getObject("books", Book[].class);
+        for (Book book : books) {
             System.out.println("Book title " + book.title);
         }
 
@@ -135,8 +134,8 @@ public class RESTAssuredSimple {
         //get a list of all books
         List<String> allBooks = eval.getList("books.title");
 
-        for(String book : allBooks){
-            System.out.println("Book: "+book);
+        for (String book : allBooks) {
+            System.out.println("Book: " + book);
         }
     }
 
@@ -170,20 +169,20 @@ public class RESTAssuredSimple {
 
         System.out.println(resp.body().asString());
 
-        if(resp.statusCode() == 201) {
+        if (resp.statusCode() == 201) {
             System.out.println(resp.getStatusCode());
             //Deserialize the Response's body into class
             SuccessResponse respBody = body.as(SuccessResponse.class);
-            System.out.println("Message: "+respBody.Message + "; Code: "+respBody.SuccessCode);
+            System.out.println("Message: " + respBody.Message + "; Code: " + respBody.SuccessCode);
 //            softAssert.assertEquals(respBody.SuccessCode, "OPERATION_SUCCESS",
 //                    "User was not registered .");
 //            softAssert.assertEquals(respBody.Message, "Operation completed successfully",
 //            "All fine...");
 //            softAssert.assertAll();
-        }else{
+        } else {
             System.out.println(resp.getStatusCode());
             FailureResponse respBody = body.as(FailureResponse.class);
-            System.out.println("fault: "+respBody.fault+"; ID: "+respBody.FaultId);
+            System.out.println("fault: " + respBody.fault + "; ID: " + respBody.FaultId);
 //            softAssert.assertEquals(respBody.fault, "FAULT_USER_ALREADY_EXISTS",
 //                    "User was already registered, as expected.");
 //            softAssert.assertEquals(respBody.FaultId, "User already exists",
@@ -194,15 +193,15 @@ public class RESTAssuredSimple {
 }
 
 /* class for deserialization of JSON response */
-@JsonIgnoreProperties (ignoreUnknown = true)
-class SuccessResponse{
+@JsonIgnoreProperties(ignoreUnknown = true)
+class SuccessResponse {
     public String SuccessCode;
     public String Message;
 }
 
 /* failure response deserialization */
-@JsonIgnoreProperties (ignoreUnknown = true)
-class FailureResponse{
+@JsonIgnoreProperties(ignoreUnknown = true)
+class FailureResponse {
     public String FaultId;
     public String fault;
 }
@@ -210,8 +209,8 @@ class FailureResponse{
 /**
  * class for deserialization book service used in this example
  */
-@JsonIgnoreProperties (ignoreUnknown = true)
- class Book {
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Book {
     String isbn;
     String title;
     String subtitle;
