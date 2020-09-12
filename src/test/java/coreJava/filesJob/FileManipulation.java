@@ -1,4 +1,4 @@
-package coreJava;
+package coreJava.filesJob;
 
 import org.testng.annotations.Test;
 
