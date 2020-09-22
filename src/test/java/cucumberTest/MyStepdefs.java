@@ -20,7 +20,8 @@ public class MyStepdefs {
 
     @Given("^User is on Home Page$")
     public void user_is_on_Home_Page()  {
-        String s = SingletonClass.getInstance().getReader().getBrowser();
+//        String s = SingletonClass.getInstance().getReader().getBrowser();
+        String s = "firefox"; //hardcoded instead of reading prop
         System.out.println(s);
         if(s.equals("firefox")){
             driver = new FirefoxDriver();
@@ -57,6 +58,6 @@ public class MyStepdefs {
 
     @Given("^Chrome has launched$")
     public void chromeHasLaunched() {
-        System.out.println("Chrome browser launched");
+        System.out.println("browser launched");
     }
 }

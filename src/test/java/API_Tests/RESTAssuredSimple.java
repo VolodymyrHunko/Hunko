@@ -22,8 +22,8 @@ import static io.restassured.RestAssured.given;
 
 //@Listeners(listenerSimple.class)
 public class RESTAssuredSimple {
-    private Assertion hardAssert = new Assertion();
-    private SoftAssert softAssert = new SoftAssert();
+    private final Assertion hardAssert = new Assertion();
+    private final SoftAssert softAssert = new SoftAssert();
 
     /**
      * evaluation of GET method
@@ -124,8 +124,8 @@ public class RESTAssuredSimple {
         // JsonPath.getObject method. Here we have to specify that we want to
         // deserialize the Json into an Array of Book. This can be done by specifying
         // Book[].class as the second argument to the getObject method.
-        Book[] books = resp.jsonPath().getObject("books", Book[].class);
-        for (Book book : books) {
+        BookTest[] books = resp.jsonPath().getObject("books", BookTest[].class);
+        for (BookTest book : books) {
             System.out.println("Book title " + book.title);
         }
 
@@ -210,7 +210,7 @@ class FailureResponse {
  * class for deserialization book service used in this example
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Book {
+class BookTest {
     String isbn;
     String title;
     String subtitle;

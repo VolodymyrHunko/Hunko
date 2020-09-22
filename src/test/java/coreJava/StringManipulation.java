@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class StringManipulation {
     String s = "My string for revert";
@@ -82,5 +83,21 @@ public class StringManipulation {
         }
         System.out.println("All unique Chars: "+set.toString());
         System.out.println("Double Chars: "+set2.toString());
+    }
+
+    @Test (description = "count vowels/consonants in string")
+    void test_4(){
+        String str = "wedhuinvycccrr";
+        int vowels=0;
+        int conson=0;
+        for(int i=0; i<str.length(); i++){
+            String c = String.valueOf(str.charAt(i));
+            if(Pattern.matches("[Aa]|[Ee]|[Oo]|[Uu]|[Yy]|[Jj]|[Ii]|[Qq]", c)){
+                vowels++;
+            }else{
+                conson++;
+            }
+        }
+        System.out.println("Vowels: "+vowels+", Consonants: "+conson);
     }
  }

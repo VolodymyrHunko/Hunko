@@ -30,6 +30,8 @@ public class collectionsExamples {
         objList.add(object3);
         objList.add(object4);
         objList.add(object5);
+
+
     }
 
     /**

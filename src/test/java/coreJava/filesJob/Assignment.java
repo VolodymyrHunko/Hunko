@@ -1,40 +1,37 @@
 package coreJava.filesJob;
 
 
-
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.Test;
 
-import java.io.*;
-
-import java.util.Iterator;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class Assignment {
     //Specify the path of the file
     String base = System.getProperty("user.dir");
     XSSFSheet sheet;
-    int record =0;
+    int record = 0;
 
     void readFile() {
         try {
             //read the .xlsx file
-            FileInputStream fis = new FileInputStream(new File(base+"/src/test/resources/Output.xlsx"));
+            FileInputStream fis = new FileInputStream(new File(base + "/src/test/resources/Output.xlsx"));
             //Create Workbook instance
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
-            System.out.println("WorkBook has sheets: "+workbook.getNumberOfSheets());
+            System.out.println("WorkBook has sheets: " + workbook.getNumberOfSheets());
             //get First sheet
             sheet = workbook.getSheetAt(0);
-            System.out.println("Sheet name is: "+ sheet.getSheetName());
-            for(Row sh : sheet){
+            System.out.println("Sheet name is: " + sheet.getSheetName());
+            for (Row sh : sheet) {
                 record++;
             }
-            System.out.println("Total rows: "+ record);
+            System.out.println("Total rows: " + record);
             //close file
             workbook.close();
             fis.close();
@@ -47,15 +44,96 @@ public class Assignment {
     }
 
     @Test
-    void test_4 () throws Exception{
+    void test_2() {
         readFile();
         //iterate through all rows start from 1
-        for(int r=1; r<(record); r++) {
-            double capacity=0;
-            double truckType=0;
-            double onwardWeight=0;
-            double returnWeight=0;
-            String enroutePoint="";
+        for (int r = 1; r < (record); r++) {
+            double truckType = 0;
+            double onwardWeight = 0;
+            double returnWeight = 0;
+            String enroutePoint = "";
+            Row row = sheet.getRow(r);
+            //iterate through all columns
+            for (int i = 0; i < 14; i++) {
+                switch (i) {
+                    case 3:
+                        truckType = row.getCell(3).getNumericCellValue();
+                        break;
+                    case 4:
+                        onwardWeight = row.getCell(4).getNumericCellValue();
+                        break;
+                    case 5:
+                        returnWeight = row.getCell(5).getNumericCellValue();
+                        break;
+                    case 6:
+                        enroutePoint = row.getCell(6).getStringCellValue();
+                        enroutePoint = enroutePoint.replace("[", "");
+                        enroutePoint = enroutePoint.replace("]", "");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // validate condition by requirements
+            if (truckType == 1.0 && enroutePoint.equals("")) {
+                if (onwardWeight == 0 || returnWeight == 0) {
+                    System.out.println("Record #" + r + " has failed. Onward weight:" + onwardWeight + ", Return weight:" + returnWeight);
+                }
+            }
+        }
+    }
+
+    @Test
+    void test_3() {
+        readFile();
+        //iterate through all rows start from 1
+        for (int r = 1; r < (record); r++) {
+            double capacity = 0;
+            double truckType = 0;
+            double onwardWeight = 0;
+            String enroutePoint = "";
+            Row row = sheet.getRow(r);
+            //iterate through all columns
+            for (int i = 0; i < 14; i++) {
+                switch (i) {
+                    case 2:
+                        capacity = row.getCell(2).getNumericCellValue();
+                        break;
+                    case 3:
+                        truckType = row.getCell(3).getNumericCellValue();
+                        break;
+                    case 4:
+                        onwardWeight = row.getCell(4).getNumericCellValue();
+                        break;
+                    case 6:
+                        enroutePoint = row.getCell(6).getStringCellValue();
+                        enroutePoint = enroutePoint.replace("[", "");
+                        enroutePoint = enroutePoint.replace("]", "");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // validate condition by requirements
+            if (truckType == 2.0 && enroutePoint.equals("")) {
+                double expectedWeight = capacity * 0.2;
+                if (onwardWeight < expectedWeight) {
+                    System.out.println("Record #" + r + " has failed. Expected onward weight less than: " + expectedWeight + ", actual: " + onwardWeight);
+                }
+            }
+        }
+    }
+
+    @Test
+    void test_4() {
+        readFile();
+        //iterate through all rows start from 1
+        for (int r = 1; r < (record); r++) {
+            double capacity = 0;
+            double truckType = 0;
+            double onwardWeight = 0;
+            double returnWeight = 0;
+            String enroutePoint = "";
             Row row = sheet.getRow(r);
             //iterate through all columns
             for (int i = 0; i < 14; i++) {
@@ -83,12 +161,17 @@ public class Assignment {
             }
             // validate condition by requirements
             if (truckType == 1.0 && onwardWeight == 0.0 && enroutePoint.equals("")) {
-                double expectedReturn=capacity*0.2;
-                if(returnWeight>=expectedReturn) {
-                    System.out.println("Record #"+r+" has failed. Expected return weight less than: "+expectedReturn+", actual: "+returnWeight);
+                double expectedReturn = capacity * 0.2;
+                if (returnWeight >= expectedReturn) {
+                    System.out.println("Record #" + r + " has failed. Expected return weight less than: " + expectedReturn + ", actual: " + returnWeight);
                 }
             }
         }
+    }
+
+    @Test
+    void test_1() {
+        //requirements for test_1 are not clear...
     }
 }
 

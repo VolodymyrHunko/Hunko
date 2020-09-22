@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static com.google.common.primitives.Ints.asList;
 
@@ -20,6 +21,11 @@ public class practice {
 
     @Test
     void method() {
+        String s = "Nvvvgg";
+        String sub = s.substring(1);
+        Character c = sub.charAt(0);
+
+        System.out.println(Pattern.matches("[Vv]|Nn]",c.toString()));
     }
 
 }
