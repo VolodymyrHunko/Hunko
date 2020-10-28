@@ -3,7 +3,7 @@ package Log4j;
 
 import org.apache.log4j.*;
 
-;import java.io.IOException;
+import java.io.IOException;
 
 public class Log4jHelloWorld {
 
