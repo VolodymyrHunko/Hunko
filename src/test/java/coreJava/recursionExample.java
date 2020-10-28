@@ -43,9 +43,18 @@ public class recursionExample {
             return x%10+sum(x/10);
         }
     }
-    @Test (description = "grt a sum of numbers")
+    public int product (int x){
+        int prod =1;
+        while (x != 0) {
+            prod = prod * (x % 10);
+            x = x / 10;
+        }
+        return prod;
+    }
+    @Test (description = "get a sum and product of numbers")
     void test_3(){
         System.out.println(sum (12345));
+        System.out.println("Product - " + product(12345));
     }
 
     /*
@@ -72,8 +81,7 @@ public class recursionExample {
             return 1;
         return fibo(i - 1) + fibo(i - 2);
     }
-    @Test
-    void test_5 (){
-        System.out.println("10 element in fibo raw = "+ fibo (10));
-    }
+    @Test (description = "fibo raw")
+    void test_5 (){ System.out.println("10 element in fibo raw = "+ fibo (10)); }
+
 }
