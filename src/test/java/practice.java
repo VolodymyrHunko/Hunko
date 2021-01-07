@@ -1,13 +1,11 @@
-import org.assertj.core.util.Arrays;
+import org.junit.Assert;
 import org.testng.annotations.Test;
 
+import java.sql.Array;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static com.google.common.primitives.Ints.asList;
@@ -22,7 +20,7 @@ public class practice {
         System.out.println("You entered %3 = " + s%3);
     }
 
-    @Test
+    @Test (description = "format date")
     void method() {
         LocalDate currentDeviceDate = LocalDate.now();
         LocalDate strtDate = currentDeviceDate.minusDays(3);
@@ -56,5 +54,35 @@ public class practice {
         System.out.println("current date: "+currentDate+"; Start: "+startDate);
     }
 
+    @Test (description = "string to array")
+    void method_1 (){
+        String x = ".14.0 ccc, iii";
+        String y = x.replaceAll("\\W+", " ");
+        y = y.trim();
+        String [] s = y.split(" ");
+        System.out.println(Arrays.toString(s));
+    }
+
+
+    @Test (description = "work with Map")
+    void method_3(){
+        Map<Character, Integer> hMap = new HashMap<>();
+        String str = "Hello world here!";
+        String str2 = str.toLowerCase().replaceAll("\\W+", "");
+        char[] arr = str2.toCharArray();
+        for(char ch : arr){
+            if(hMap.containsKey(ch)){
+                hMap.put(ch, hMap.get(ch)+1);
+            }else{
+                hMap.put(ch, 1);
+            }
+        }
+
+        System.out.println(hMap.entrySet());
+        System.out.println(hMap.get('h'));
+        for(char c : hMap.keySet()) {
+            System.out.println(c);
+        }
+    }
 }
 

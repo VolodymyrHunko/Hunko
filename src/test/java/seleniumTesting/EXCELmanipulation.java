@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class EXCELmanipulation {
     @Test
     public void readFile() throws IOException {
 
-        FileInputStream fis = new FileInputStream(base + "/src/test/resources/Output.xlsx");
+
+        FileInputStream fis = new FileInputStream(new File(base + "/src/test/resources/Output.xlsx"));
         Workbook book = new XSSFWorkbook(fis);
         Sheet sheet = book.getSheetAt(0);
 
@@ -37,9 +39,9 @@ public class EXCELmanipulation {
 
     @Test
     public void wrightFile() throws IOException{
-        FileInputStream fis = new FileInputStream(base+"/src/test/resources/TestDataEXCEL.xlsx");
-        XSSFWorkbook book = new XSSFWorkbook(fis);
-        XSSFSheet sheet =book.getSheetAt(0);
+        FileInputStream fis = new FileInputStream(base+"/src/test/resources/Output.xlsx");
+        Workbook book = new XSSFWorkbook(fis);
+        Sheet sheet =book.getSheetAt(0);
         int lastRow = sheet.getLastRowNum();
         System.out.println("Last row: "+lastRow);
         Row row = sheet.createRow(lastRow+1);
