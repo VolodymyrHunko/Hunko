@@ -59,10 +59,11 @@ public class practice {
         String x = ".14.0 ccc, iii";
         String y = x.replaceAll("\\W+", " ");
         y = y.trim();
+        char [] ch = y.toCharArray();
         String [] s = y.split(" ");
         System.out.println(Arrays.toString(s));
+        System.out.println(Arrays.toString(ch));
     }
-
 
     @Test (description = "work with Map")
     void method_3(){
