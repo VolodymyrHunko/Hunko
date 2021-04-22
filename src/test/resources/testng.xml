@@ -1,5 +1,5 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite thread-count="2" verbose="1" name="Suite_1 defined in testng.xml fil" annotations="JDK" parallel="methods">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite thread-count="2" verbose="1" name="Suite_1 defined in testng.xml file" annotations="JDK" parallel="methods">
 
     <test name="Test_1" group-by-instances="true">
         <parameter name="browser" value="chrome"/>

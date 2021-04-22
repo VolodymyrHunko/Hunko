@@ -1,14 +1,12 @@
-import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import java.sql.Array;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.regex.Pattern;
 
-import static com.google.common.primitives.Ints.asList;
+import static java.time.LocalTime.now;
 
 public class practice {
 
@@ -51,7 +49,31 @@ public class practice {
         String currentDate = currentDeviceDate.format(currDateAppFormatter);
         String startDate = strtDate.format(startDateAppFormatter);
 
+        String month = String.valueOf(currentDeviceDate.getMonth());
+        int day = currentDeviceDate.getDayOfMonth();
+        LocalTime time =  now();
+        int hour = time.getHour();
+        int min = time.getMinute();
+
+        System.out.println(month+"_"+day+"_"+hour+":"+min);
+
         System.out.println("current date: "+currentDate+"; Start: "+startDate);
+    }
+
+    @Test (description = "settings of calendar")
+    void method_(){
+        Calendar c = Calendar.getInstance();
+        c.clear();
+        c.set(2020,4-1, 8, 03, 00);
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+        SimpleDateFormat sdfStart = new SimpleDateFormat("HH:mm");
+        String end = sdf.format(c.getTime());
+        c.add(Calendar.DATE, -6);
+        String start = sdfStart.format(c.getTime());
+
+
+        System.out.println("Calendar has settings: " + end + " - " + start );
+        System.out.println(c.get(Calendar.DATE));
     }
 
     @Test (description = "string to array")
@@ -84,6 +106,14 @@ public class practice {
         for(char c : hMap.keySet()) {
             System.out.println(c);
         }
+    }
+
+    @Test
+    void method_4(){
+        String a = "31 December 2019 – 6 January 2020";
+        String b = "31 December 2019 – 6 January 2020";
+        boolean x = a.equals(b);
+        System.err.println(x);
     }
 }
 

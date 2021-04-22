@@ -1,20 +1,22 @@
 package cucumberTest;
 
-import coreJava.SingletonClass;
+//import coreJava.SingletonClass;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import pageObjects.PageObjectExample;
+import org.springframework.test.context.TestContext;
+//import pageObjects.PageObjectExample;
 
 public class MyStepdefs {
     WebDriver driver;
-    PageObjectExample page;
+//    PageObjectExample page;
 
     public MyStepdefs(TestContext context){
-        page = context.getPage();
+//        page = context.getPage();
         System.out.println("Page madel instantiated...");
     }
 
@@ -27,7 +29,7 @@ public class MyStepdefs {
             driver = new FirefoxDriver();
         }else
             driver = new ChromeDriver();
-        driver.get(SingletonClass.getInstance().getReader().getUrlZoom());
+//        driver.get(SingletonClass.getInstance().getReader().getUrlZoom());
         driver.quit();
     }
 

@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class recipePage  {
+
+    recipePage(){
+
+    }
     static WebDriver driver;
     public recipePage(WebDriver driver){
         this.driver = driver;
