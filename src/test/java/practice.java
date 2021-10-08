@@ -127,5 +127,10 @@ public class practice {
      System.out.println(s);
  }
 
+    @Test
+    void m4(){
+
+    }
+
 }
 

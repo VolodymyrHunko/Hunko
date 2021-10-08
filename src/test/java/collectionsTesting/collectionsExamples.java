@@ -49,11 +49,11 @@ public class collectionsExamples {
         System.out.println("list.toString() => " + intList.toString());
 
         //print list's items by using forEach() and lambda as implementation of 'Consumer' interface !ONLY JAVA 8!
-        System.out.print("forEach() with lambda => ");
+        System.out.print("Stream API: forEach() with lambda => ");
         strList.forEach((n)->System.out.print(n + ", "));
 
         //iterate 'for' loop
-        System.out.print("\nforEach() iteration => ");
+        System.out.print("\nenhanced 'for' iteration => ");
         for (String n : strList) {
             System.out.print(n + ", ");
         }
