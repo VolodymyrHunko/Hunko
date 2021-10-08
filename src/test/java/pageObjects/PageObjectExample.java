@@ -1,6 +1,5 @@
 package pageObjects;
 
-import helpers.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -9,6 +8,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import seleniumTesting.eventHandler;
 
 import java.util.concurrent.TimeUnit;
 

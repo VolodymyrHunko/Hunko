@@ -1,4 +1,4 @@
-package helpers;
+package seleniumTesting;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;

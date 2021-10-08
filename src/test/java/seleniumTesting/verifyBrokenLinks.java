@@ -1,16 +1,12 @@
 package seleniumTesting;
 
-import helpers.eventHandler;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.ProfilesIni;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.io.IOException;
@@ -36,7 +32,7 @@ public class verifyBrokenLinks {
         eventDriver.register(handler);
        // driver.get("http://toolsqa.wpengine.com/automation-practice-switch-windows/");
        // driver.get("https://jquery.com/");
-        eventDriver.get("https://jquery.com/");
+        eventDriver.get("https://gobrief.com/");
 
         List<WebElement> allLinks = findAllLinks(driver);
         System.out.println("Total number of links: "+allLinks.size());

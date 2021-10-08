@@ -38,7 +38,7 @@
     </test>
 
     <listeners>
-        <listener class-name="helpers.listenerSimple"/>
+        <listener class-name="testNG.listenerSimple"/>
     </listeners>
 
 

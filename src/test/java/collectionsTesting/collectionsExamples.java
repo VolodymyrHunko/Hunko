@@ -253,6 +253,7 @@ public class collectionsExamples {
         //implement 'Consumer' interface for iteration
         set2.forEach(e->System.out.println(e));
     }
+    
 }
 
 
