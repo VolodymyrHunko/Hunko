@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public class SetWaits {
-    WebDriver driver = new FirefoxDriver();
+//    WebDriver driver = new FirefoxDriver();
+    WebDriver driver = new ChromeDriver();
     @Test
     public void implicitWait(){
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

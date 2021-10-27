@@ -3,6 +3,12 @@ import io.restassured.http.Method;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
@@ -110,7 +116,7 @@ public class practice {
         System.out.println(hMap.entrySet());
         System.out.println(hMap.get('h'));
         for (char c : hMap.keySet()) {
-            System.out.println(c);
+            System.out.println(c + "\n");
         }
     }
 
@@ -127,10 +133,25 @@ public class practice {
      System.out.println(s);
  }
 
-    @Test
+    @Test (description = "webdriver")
     void m4(){
+        WebDriver driver = new ChromeDriver();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
+        driver.get("https://zoom.com");
+
+
+        try{
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nnnn")));
+            System.out.println(element.getText());
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            driver.quit();
+        }
     }
+
+
 
 }
 
