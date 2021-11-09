@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         //dryRun = true,
         monochrome = true,
         format = {"pretty", "html:target/cucumber-html-report"},
-        tags = {"@FullTest","~@LongTest"}
+        tags = {"@experiment"}
 
 )
 

@@ -1,11 +1,8 @@
 package testNG;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.*;
-
-import java.util.concurrent.TimeUnit;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 /*
 Class able to run only with tesng.xml file configured as 'browser' value. To run as single test, need to
@@ -15,24 +12,24 @@ public class TestNGparemetrize {
         private static WebDriver driver;
         private String baseURL = "http://zoom.com";
 
-        @BeforeTest
-        @Parameters("browser")
-        public void launchBrowser(String browser) {
-            //parameter 'browser' accepted from testNG.xml file
-            if(browser.equals("firefox")) {
-                driver = new FirefoxDriver();
-                System.out.println("Browser is: " + browser);
-            }
-            else {
-                driver = new ChromeDriver();
-                System.out.println("Browser is: " + browser);
-            }
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            driver.manage().deleteAllCookies();
-            driver.manage().window().maximize();
-            driver.get(baseURL);
-            System.out.println("Before Test completed.");
-        }
+//        @BeforeTest
+//        @Parameters("browser")
+//        public void launchBrowser(String browser) {
+//            //parameter 'browser' accepted from testNG.xml file
+//            if(browser.equals("firefox")) {
+//                driver = new FirefoxDriver();
+//                System.out.println("Browser is: " + browser);
+//            }
+//            else {
+//                driver = new ChromeDriver();
+//                System.out.println("Browser is: " + browser);
+//            }
+//            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//            driver.manage().deleteAllCookies();
+//            driver.manage().window().maximize();
+//            driver.get(baseURL);
+//            System.out.println("Before Test completed.");
+//        }
 
         @Test(priority=2, enabled = true, dataProvider = "getData", singleThreaded = true)
         public void printTitle(String UID, String PSW) {
@@ -41,11 +38,11 @@ public class TestNGparemetrize {
             System.out.println("PSW is: "+ PSW);
         }
 
-        @AfterTest
-        public void terminateBrowser(){
-            driver.close();
-            System.out.println("DONE with After Test");
-        }
+//        @AfterTest
+//        public void terminateBrowser(){
+//            driver.close();
+//            System.out.println("DONE with After Test");
+//        }
 
         //If the name is not supplied, the data provider’s name automatically defaults to the method’s name.
         //A data provider returns an array of objects.

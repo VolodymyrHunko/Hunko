@@ -30,14 +30,9 @@ public class collectionsExamples {
         objList.add(object3);
         objList.add(object4);
         objList.add(object5);
-
-
     }
 
-    /**
-     *  1. Addition to, Replacing and printing of Array Lists
-     */
-    @Test
+    @Test (description = "1. Addition to, Replacing and printing of Array Lists")
     void test_1() {
         //insert new value into exact index
         intList.add(0,33);
@@ -77,10 +72,7 @@ public class collectionsExamples {
         }
     }
 
-    /**
-     * 2. Sorting of ArrayLists and Arrays, HashSet
-     */
-    @Test
+    @Test (description = "2. Sorting of ArrayLists and Arrays, HashSet")
     void test_2() {
         //sort ArrayList with comparator's method 'compareTo'
         intList.sort(Integer::compareTo);
@@ -106,28 +98,22 @@ public class collectionsExamples {
         listToTreeSet(intList);
         System.out.println("TreehSet from arrayList=> " + hSet.toString());
     }
-
     //2.a sort ArrayList
     private ArrayList<String> sortingMethod(ArrayList<String> noSort) {
         Collections.sort(noSort);
         return noSort;
     }
-
     //2.b overloaded sortingMethod() method
     private Integer[] sortingMethod(Integer[] intArray) {
         Arrays.sort(intArray);
         return intArray;
     }
-
     //2.c convert list to treeSet
     private void listToTreeSet(ArrayList<Integer> aList) {
         hSet = new TreeSet<>(aList);
     }
 
-    /**
-     * 3. swapping and get max/min value
-     */
-    @Test
+    @Test (description = "3. swapping and get max/min value")
     void test_3() {
         //swapping of ArrayList's first and Last elements
         swapElements(intList);
@@ -135,24 +121,19 @@ public class collectionsExamples {
         //get max/min value
         maxValue(intList);
     }
-
     //3.a swap arrayList elements
     private void swapElements(ArrayList<Integer> s) {
         System.out.println("before swapping=> " + s.toString());
         Collections.swap(s, 0, s.size() - 1);
         System.out.println("after swapping first and last => " + s.toString());
     }
-
     //3.b max value of Array
     private void maxValue(ArrayList<Integer> array) {
         System.out.println("Max value: " + Collections.max(array));
     }
 
-    /**
-     * 4. searching of values, linear and binary
-     */
-    @Test
-    // 4.a linear search/home/vlad
+    @Test (description = "4. searching of values, linear and binary")
+    // 4.a linear search
     void test_4() {
         int index = strList.indexOf("Axk");
         System.out.println("Index of 'Axk' => " + index);
@@ -167,7 +148,6 @@ public class collectionsExamples {
 
         System.out.println("Contains '...' - " + strList.contains("..."));
     }
-
     //4.b binary searching after sorting!
     private int search(String[] noSort, String comp) {
         Arrays.sort(noSort);
@@ -176,7 +156,6 @@ public class collectionsExamples {
         }
         return Collections.binarySearch(Arrays.asList(noSort), comp);
     }
-
     //4.c binary searching after sorting!
     private int search(Integer[] sort, Integer comp) {
         for(int i : sort){
@@ -185,20 +164,13 @@ public class collectionsExamples {
         return Arrays.binarySearch(sort, comp);
     }
 
-    /**
-     * 5. sort ArrayList of objects
-     */
-    @Test
+    @Test (description = "5. sort ArrayList of objects without comparator - we implemented Comparable interface in sorted class")
+        // compareTo method MUST be overridden in sorted class
     void test_5() {
         //5.a before sorting List of obj
         for (sampleCollectionClass str : objList) {
             System.out.println("before sort => " + str);
         }
-
-        // IMPLEMENTATION of COMPARABLE interface
-
-        /* 5.b sort without comparator - we implemented Comparable interface in sorted class ->
-         *  compareTo method MUST be overridden in sample class */
         Collections.sort(objList);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by rate and name => " + str);
@@ -209,23 +181,19 @@ public class collectionsExamples {
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by name => " + str);
         }
-
         //5.d sort arrayList of objects with users defined comparator by id
         objList.sort(sampleCollectionClass::idComparator);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by id => " + str);
         }
+    }
 
-        //IMPLEMENTATION of COMPARATOR interface ............................
-
-        /*
-        * 5.e sort by implement COMPARATOR interface with 'compare' method (not 'compareTo)
-         */
+    @Test (description = "6. sort by implement COMPARATOR interface with 'compare' method (not 'compareTo)")
+    void test_6(){
         objList.sort(sampleCollectionClass.id2Comparator);
         for (sampleCollectionClass str : objList) {
             System.out.println("after sort by id with comparator => " + str);
         }
-
         //5.f sort by implement COMPARATOR interface with 'compare' method (not 'compareTo)
         objList.sort(sampleCollectionClass.name2Comparator);
         for (sampleCollectionClass str : objList) {
@@ -233,12 +201,8 @@ public class collectionsExamples {
         }
     }
 
-    /*
-    * 6.a working with hashSet
-    * find double elements in int array
-     */
-    @Test
-    void test_6() {
+    @Test (description = "7. working with hashSet -> find double elements in int array")
+    void test_7() {
         // create a 2 new hashSet obj
         Set<Integer> set = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
@@ -254,6 +218,80 @@ public class collectionsExamples {
         set2.forEach(e->System.out.println(e));
     }
     
+}
+
+
+
+/*
+ *   Class for implementation examples of Collection interface as Generic type <T>
+ *   we need override class's CompareTo method to sort object's array
+ */
+class sampleCollectionClass implements Comparable<sampleCollectionClass> {
+
+    private int id;
+    private String name;
+    private double rate;
+
+    sampleCollectionClass(int id, String name, double rate) { //constructor
+        this.id = id;
+        this.name = name;
+        this.rate = rate;
+    }
+
+    public String getName() {
+        return name;
+    }//to get var 'name'
+
+    public Integer getId() {
+        return id;
+    }//to get var 'id'
+
+    public Double getRate() {
+        return rate;
+    }//to get var 'rate'
+
+    //to print out the object's data
+    @Override
+    public String toString() {
+        return " id= " + id + ", name= " + name + ", rate= " + rate ;
+    }
+
+    /*
+     * to use Comparable implementation of functional interface ...................................
+     */
+    @Override
+    public int compareTo(sampleCollectionClass o) {
+        // first compareTo Rate....
+        int minValue = this.getRate().compareTo(o.rate);
+        //if rate the same, sort by name
+        return minValue == 0 ? this.getName().compareTo(o.name) : minValue;
+    }
+    // we can customise
+    int idComparator(sampleCollectionClass o){
+        return this.getId().compareTo(o.id);
+    }
+    int nameComparator(sampleCollectionClass o){
+        return this.getName().compareTo(o.name);
+    }
+    //.............................................................................................
+
+    /*
+     * to use Comparator interface for sorting objects by 'name' property
+     */
+    static Comparator<sampleCollectionClass> name2Comparator = (o1, o2) -> {
+        String compName1 = o1.getName().toLowerCase();
+        String compName2 = o2.getName().toLowerCase();
+        //ascending order
+        return compName1.compareTo(compName2);
+    };
+
+    //use Comparator interface for sorting the list by var 'id' as lambda exp
+    // do not override 'compare' method
+    static Comparator<sampleCollectionClass> id2Comparator = (o1, o2) -> {
+        int compId1 = o1.getId();
+        int compId2 = o2.getId();
+        return compId1 - compId2;
+    };
 }
 
 

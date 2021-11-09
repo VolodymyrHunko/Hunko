@@ -1,4 +1,4 @@
-package cucumberTest;
+package seleniumTesting;
 
 import pageObjects.PageObjectExample;
 

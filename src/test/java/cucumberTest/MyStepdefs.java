@@ -8,17 +8,17 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.springframework.test.context.TestContext;
+//import org.springframework.test.context.TestContext;
 //import pageObjects.PageObjectExample;
 
 public class MyStepdefs {
     WebDriver driver;
 //    PageObjectExample page;
 
-    public MyStepdefs(TestContext context){
-//        page = context.getPage();
-        System.out.println("Page madel instantiated...");
-    }
+//    public MyStepdefs(TestContext context){
+////        page = context.getPage();
+//        System.out.println("Page madel instantiated...");
+//    }
 
     @Given("^User is on Home Page$")
     public void user_is_on_Home_Page()  {
@@ -60,6 +60,11 @@ public class MyStepdefs {
 
     @Given("^Chrome has launched$")
     public void chromeHasLaunched() {
-        System.out.println("browser launched");
+        System.out.println("Print out: browser launched");
+    }
+
+    @Given("^short output$")
+    public void shortOutput() {
+        System.err.println("example of step");
     }
 }

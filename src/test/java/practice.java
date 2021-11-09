@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
@@ -16,11 +17,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
+import static io.restassured.RestAssured.given;
 import static java.time.LocalTime.now;
 
 public class practice {
-
 
     //Scanner works only with main() method, not @Test
     public static void main(String[] args) {
@@ -120,38 +123,80 @@ public class practice {
         }
     }
 
-    @Test (description = "validate GET method")
-    void m3(){
-     RestAssured.baseURI = "http://dummy.restapiexample.com/api/v1/employee/1";
-     RequestSpecification thhpr = RestAssured.given();
-     Response resp = thhpr.request(Method.GET);
-     String str = resp.getBody().asString();
-     System.out.println(str);
+    @Test(description = "validate GET method")
+    void m3() {
+        RestAssured.baseURI = "http://dummy.restapiexample.com/api/v1/employee/1";
+        RequestSpecification thhpr = RestAssured.given();
+        Response resp = thhpr.request(Method.GET);
+        String str = resp.getBody().asString();
+        System.out.println(str);
 
-     JsonPath jp = resp.jsonPath();
-     String s = jp.get("data.employee_name");
-     System.out.println(s);
- }
+        JsonPath jp = resp.jsonPath();
+        String s = jp.get("data.employee_name");
+        System.out.println(s);
+// one more way to run GET method
+        given().
+                when().
+                get("http://restapi.demoqa.com/utilities/weather/city").
+                then().
+                assertThat().
+                statusCode(200);
+    }
 
-    @Test (description = "webdriver")
-    void m4(){
+    @Test (description = "working with ConcurrentHashMap to count parts of String")
+    void m5() {
+        Map<String, Integer> total = new ConcurrentHashMap<>(); //to avoid
+        total.put("1234.vvv.yahoo.com", 10);
+        total.put("yahoo.com", 5);
+        total.put("vvv.com", 1);
+
+        for (Map.Entry<String, Integer> entry : total.entrySet()) {
+            List<String> ls = new ArrayList<>();
+            String s = entry.getKey();
+            String[] sa = s.split("\\.");
+            String z = s;
+            //to get a list of String parts
+            for (String value : sa) {
+                z = z.replaceFirst(value + ".", "");
+                if (!z.contains(value))
+                    ls.add(z);
+            }
+            System.out.println(ls);
+            // if map contains key, increase value
+            // if no contains, put a new entry
+            for(String lsStr : ls){
+                if(total.containsKey(lsStr)){
+                    total.put(lsStr, total.get(lsStr) + entry.getValue());
+                }else{
+                    total.put(lsStr, entry.getValue());
+                }
+            }
+        }
+        System.err.println(total);
+    }
+
+    @Test(description = "WebDriver")
+    void m4() {
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         driver.get("https://zoom.com");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
+        WebElement solutions = driver.findElement(By.id("btnSolutions"));
+        Assert.assertEquals(solutions.getText(), "SOLUTIONS");
+        solutions.click();
 
-        try{
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nnnn")));
-            System.out.println(element.getText());
-        }catch (Exception e){
+        try {
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".Button[title = 'See Pricing']")));
+            System.out.println("text ->" + element.getText());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
-        }finally {
+        } finally {
             driver.quit();
         }
+
+
     }
-
-
-
 }
 

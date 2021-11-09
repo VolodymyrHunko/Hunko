@@ -22,3 +22,7 @@ Feature: Login Action
       | Message  | Amount|
       | Good by  |  2    |
       | Hello    |  4    |
+
+    @experiment
+    Scenario: some scenario
+      Given short output
